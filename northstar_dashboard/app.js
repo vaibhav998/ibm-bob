@@ -176,6 +176,212 @@ const reps = [
   }
 ];
 
+// Sample accounts data
+const accounts = [
+  { id: 'acc1', name: 'Acme Corporation', industry: 'Technology', revenue: 50000000, owner: 'Priya Shah', status: 'Active', lastContact: '2026-06-15' },
+  { id: 'acc2', name: 'Global Industries Inc', industry: 'Manufacturing', revenue: 120000000, owner: 'Maya Chen', status: 'Active', lastContact: '2026-06-10' },
+  { id: 'acc3', name: 'TechStart Solutions', industry: 'Technology', revenue: 25000000, owner: 'Sam Rivera', status: 'Prospect', lastContact: '2026-06-12' },
+  { id: 'acc4', name: 'Enterprise Systems Ltd', industry: 'Financial Services', revenue: 200000000, owner: 'Jordan Lee', status: 'Active', lastContact: '2026-06-08' },
+  { id: 'acc5', name: 'Retail Dynamics Corp', industry: 'Retail', revenue: 75000000, owner: 'Noah Williams', status: 'Active', lastContact: '2026-06-05' },
+  { id: 'acc6', name: 'Healthcare Partners', industry: 'Healthcare', revenue: 150000000, owner: 'Elena Garcia', status: 'Active', lastContact: '2026-06-16' },
+  { id: 'acc7', name: 'Innovation Labs', industry: 'Technology', revenue: 30000000, owner: 'Priya Shah', status: 'Prospect', lastContact: '2026-06-14' },
+  { id: 'acc8', name: 'Financial Group LLC', industry: 'Financial Services', revenue: 180000000, owner: 'Maya Chen', status: 'Active', lastContact: '2026-06-11' },
+  { id: 'acc9', name: 'Manufacturing Plus', industry: 'Manufacturing', revenue: 95000000, owner: 'Sam Rivera', status: 'Active', lastContact: '2026-06-13' },
+  { id: 'acc10', name: 'Digital Commerce Co', industry: 'Retail', revenue: 60000000, owner: 'Jordan Lee', status: 'Prospect', lastContact: '2026-06-09' },
+  { id: 'acc11', name: 'MedTech Innovations', industry: 'Healthcare', revenue: 110000000, owner: 'Noah Williams', status: 'Active', lastContact: '2026-06-07' },
+  { id: 'acc12', name: 'Cloud Services Inc', industry: 'Technology', revenue: 85000000, owner: 'Elena Garcia', status: 'Active', lastContact: '2026-06-17' }
+];
+
+// Sample opportunities data
+const opportunities = [
+  { id: 'opp1', name: 'Acme - Cloud Migration', account: 'Acme Corporation', value: 45000, stage: 'Proposal', owner: 'Priya Shah', closeDate: '2026-07-15', probability: 70 },
+  { id: 'opp2', name: 'Global Industries - ERP Upgrade', account: 'Global Industries Inc', value: 120000, stage: 'Negotiation', owner: 'Maya Chen', closeDate: '2026-08-01', probability: 80 },
+  { id: 'opp3', name: 'TechStart - Security Suite', account: 'TechStart Solutions', value: 28000, stage: 'Discovery', owner: 'Sam Rivera', closeDate: '2026-07-30', probability: 40 },
+  { id: 'opp4', name: 'Enterprise Systems - Data Analytics', account: 'Enterprise Systems Ltd', value: 95000, stage: 'Proposal', owner: 'Jordan Lee', closeDate: '2026-08-15', probability: 60 },
+  { id: 'opp5', name: 'Retail Dynamics - POS System', account: 'Retail Dynamics Corp', value: 52000, stage: 'Qualification', owner: 'Noah Williams', closeDate: '2026-09-01', probability: 30 },
+  { id: 'opp6', name: 'Healthcare Partners - Integration Platform', account: 'Healthcare Partners', value: 78000, stage: 'Negotiation', owner: 'Elena Garcia', closeDate: '2026-07-20', probability: 75 },
+  { id: 'opp7', name: 'Innovation Labs - AI Platform', account: 'Innovation Labs', value: 35000, stage: 'Discovery', owner: 'Priya Shah', closeDate: '2026-08-10', probability: 50 },
+  { id: 'opp8', name: 'Financial Group - Compliance Software', account: 'Financial Group LLC', value: 110000, stage: 'Proposal', owner: 'Maya Chen', closeDate: '2026-07-25', probability: 65 },
+  { id: 'opp9', name: 'Manufacturing Plus - IoT Solution', account: 'Manufacturing Plus', value: 42000, stage: 'Negotiation', owner: 'Sam Rivera', closeDate: '2026-08-05', probability: 70 },
+  { id: 'opp10', name: 'Digital Commerce - E-commerce Platform', account: 'Digital Commerce Co', value: 67000, stage: 'Discovery', owner: 'Jordan Lee', closeDate: '2026-09-15', probability: 45 },
+  { id: 'opp11', name: 'MedTech - Patient Management System', account: 'MedTech Innovations', value: 88000, stage: 'Qualification', owner: 'Noah Williams', closeDate: '2026-08-20', probability: 55 },
+  { id: 'opp12', name: 'Cloud Services - Infrastructure Upgrade', account: 'Cloud Services Inc', value: 72000, stage: 'Proposal', owner: 'Elena Garcia', closeDate: '2026-07-28', probability: 68 }
+];
+
+// Search functionality
+let searchResults = [];
+let selectedSearchIndex = -1;
+
+function performSearch(query) {
+  if (!query || query.length < 2) {
+    return [];
+  }
+  
+  const lowerQuery = query.toLowerCase();
+  const results = [];
+  
+  // Search sales reps
+  reps.forEach(rep => {
+    if (rep.name.toLowerCase().includes(lowerQuery) || 
+        rep.role.toLowerCase().includes(lowerQuery) ||
+        rep.region.toLowerCase().includes(lowerQuery)) {
+      results.push({
+        type: 'rep',
+        category: 'Sales Rep',
+        title: rep.name,
+        subtitle: `${rep.role} · ${rep.region}`,
+        data: rep,
+        action: () => openCoaching(rep.id)
+      });
+    }
+  });
+  
+  // Search accounts
+  accounts.forEach(account => {
+    if (account.name.toLowerCase().includes(lowerQuery) ||
+        account.industry.toLowerCase().includes(lowerQuery) ||
+        account.owner.toLowerCase().includes(lowerQuery)) {
+      results.push({
+        type: 'account',
+        category: 'Account',
+        title: account.name,
+        subtitle: `${account.industry} · Owner: ${account.owner}`,
+        data: account,
+        action: () => showAccountDetails(account)
+      });
+    }
+  });
+  
+  // Search opportunities
+  opportunities.forEach(opp => {
+    if (opp.name.toLowerCase().includes(lowerQuery) ||
+        opp.account.toLowerCase().includes(lowerQuery) ||
+        opp.stage.toLowerCase().includes(lowerQuery) ||
+        opp.owner.toLowerCase().includes(lowerQuery)) {
+      results.push({
+        type: 'opportunity',
+        category: 'Opportunity',
+        title: opp.name,
+        subtitle: `${opp.stage} · ${formatCurrency(opp.value)} · ${opp.owner}`,
+        data: opp,
+        action: () => showOpportunityDetails(opp)
+      });
+    }
+  });
+  
+  return results;
+}
+
+function showAccountDetails(account) {
+  alert(`Account: ${account.name}\nIndustry: ${account.industry}\nRevenue: ${formatCurrency(account.revenue)}\nOwner: ${account.owner}\nStatus: ${account.status}`);
+  closeSearch();
+}
+
+function showOpportunityDetails(opp) {
+  alert(`Opportunity: ${opp.name}\nAccount: ${opp.account}\nValue: ${formatCurrency(opp.value)}\nStage: ${opp.stage}\nOwner: ${opp.owner}\nClose Date: ${opp.closeDate}\nProbability: ${opp.probability}%`);
+  closeSearch();
+}
+
+function renderSearchResults(results) {
+  const searchModal = document.getElementById('search-modal');
+  const searchResultsContainer = document.getElementById('search-results');
+  
+  if (results.length === 0) {
+    searchResultsContainer.innerHTML = '<div class="search-empty">No results found</div>';
+    return;
+  }
+  
+  // Group results by category
+  const grouped = {};
+  results.forEach(result => {
+    if (!grouped[result.category]) {
+      grouped[result.category] = [];
+    }
+    grouped[result.category].push(result);
+  });
+  
+  let html = '';
+  Object.keys(grouped).forEach(category => {
+    html += `<div class="search-category">${category}</div>`;
+    grouped[category].forEach((result, index) => {
+      const globalIndex = results.indexOf(result);
+      html += `
+        <div class="search-result-item ${globalIndex === selectedSearchIndex ? 'selected' : ''}" data-index="${globalIndex}">
+          <div class="search-result-icon">${result.type === 'rep' ? '👤' : result.type === 'account' ? '🏢' : '💼'}</div>
+          <div class="search-result-content">
+            <div class="search-result-title">${highlightMatch(result.title, document.getElementById('search-input').value)}</div>
+            <div class="search-result-subtitle">${result.subtitle}</div>
+          </div>
+          <div class="search-result-badge">${result.category}</div>
+        </div>
+      `;
+    });
+  });
+  
+  searchResultsContainer.innerHTML = html;
+}
+
+function highlightMatch(text, query) {
+  if (!query) return text;
+  const regex = new RegExp(`(${query})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+
+function openSearch() {
+  const searchModal = document.getElementById('search-modal');
+  const searchInput = document.getElementById('search-input');
+  searchModal.classList.add('active');
+  searchInput.focus();
+  selectedSearchIndex = -1;
+}
+
+function closeSearch() {
+  const searchModal = document.getElementById('search-modal');
+  const searchInput = document.getElementById('search-input');
+  searchModal.classList.remove('active');
+  searchInput.value = '';
+  document.getElementById('search-results').innerHTML = '';
+  searchResults = [];
+  selectedSearchIndex = -1;
+}
+
+function handleSearchInput(e) {
+  const query = e.target.value;
+  searchResults = performSearch(query);
+  renderSearchResults(searchResults);
+  selectedSearchIndex = -1;
+}
+
+function handleSearchKeydown(e) {
+  if (e.key === 'Escape') {
+    closeSearch();
+    return;
+  }
+  
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    selectedSearchIndex = Math.min(selectedSearchIndex + 1, searchResults.length - 1);
+    renderSearchResults(searchResults);
+    scrollToSelected();
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    selectedSearchIndex = Math.max(selectedSearchIndex - 1, -1);
+    renderSearchResults(searchResults);
+    scrollToSelected();
+  } else if (e.key === 'Enter' && selectedSearchIndex >= 0) {
+    e.preventDefault();
+    searchResults[selectedSearchIndex].action();
+  }
+}
+
+function scrollToSelected() {
+  const selected = document.querySelector('.search-result-item.selected');
+  if (selected) {
+    selected.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+}
+
+
 let currentRep = reps[3]; // Default to Jordan Lee
 
 // Utility functions
@@ -529,6 +735,48 @@ function setupEventListeners() {
       } else {
         label.classList.remove('completed');
       }
+    }
+  });
+  
+  // Search functionality
+  const searchBtn = document.querySelector('.icon-btn[aria-label="Search"]');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', openSearch);
+  }
+  
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearchInput);
+    searchInput.addEventListener('keydown', handleSearchKeydown);
+  }
+  
+  // Search result clicks
+  document.addEventListener('click', (e) => {
+    const resultItem = e.target.closest('.search-result-item');
+    if (resultItem) {
+      const index = parseInt(resultItem.dataset.index);
+      if (searchResults[index]) {
+        searchResults[index].action();
+      }
+    }
+    
+    // Close search when clicking outside
+    if (e.target.closest('#search-modal') && !e.target.closest('.search-container')) {
+      closeSearch();
+    }
+  });
+  
+  // Close search button
+  const searchClose = document.getElementById('search-close');
+  if (searchClose) {
+    searchClose.addEventListener('click', closeSearch);
+  }
+  
+  // Global keyboard shortcut for search (Cmd/Ctrl + K)
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      openSearch();
     }
   });
 }

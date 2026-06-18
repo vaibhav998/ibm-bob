@@ -132,6 +132,35 @@
       </section>
     </main>
   </div>
+  
+  <!-- Search Modal -->
+  <div id="search-modal" class="search-modal">
+    <div class="search-container">
+      <div class="search-header">
+        <div class="search-input-wrap">
+          <span class="search-icon">⌕</span>
+          <input type="text" id="search-input" placeholder="Search sales reps, accounts, opportunities..." autocomplete="off" />
+          <kbd class="search-kbd">ESC</kbd>
+        </div>
+        <button class="search-close" id="search-close" aria-label="Close search">✕</button>
+      </div>
+      <div class="search-body">
+        <div id="search-results"></div>
+      </div>
+      <div class="search-footer">
+        <div class="search-hints">
+          <span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+          <span><kbd>↵</kbd> Select</span>
+          <span><kbd>ESC</kbd> Close</span>
+        </div>
+        <div class="search-shortcut">
+          <span>Quick search:</span>
+          <kbd>⌘</kbd><kbd>K</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <script src="app.js"></script>
 </body>
 </html>
