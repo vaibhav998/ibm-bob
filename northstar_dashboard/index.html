@@ -12,7 +12,15 @@
 <body>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
-      <a class="brand" href="#" aria-label="Northstar home"><span class="brand-mark">⭐</span><span>Northstar</span></a>
+      <a class="brand" href="#" aria-label="Northstar home">
+        <span class="brand-mark">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z" fill="currentColor"/>
+            <path d="M12 10L12.75 13.25L16 14L12.75 14.75L12 18L11.25 14.75L8 14L11.25 13.25L12 10Z" fill="currentColor" opacity="0.6"/>
+          </svg>
+        </span>
+        <span>Northstar</span>
+      </a>
       <nav class="nav" aria-label="Primary navigation">
         <button class="nav-item active" data-view="overview"><span class="nav-icon">⌂</span><span>Manager overview</span></button>
         <button class="nav-item" data-view="coaching"><span class="nav-icon">◎</span><span>Rep coaching</span><span class="nav-badge" id="coaching-badge">3</span></button>

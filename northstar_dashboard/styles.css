@@ -237,6 +237,12 @@ body {
   font-size: 15px;
 }
 
+.brand-mark svg {
+  width: 18px;
+  height: 18px;
+  color: #0d3334;
+}
+
 .nav {
   display: grid;
   gap: 4px;
