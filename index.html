@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Northstar · Sales Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Northstar home"><span class="brand-mark">N</span><span>Northstar</span></a>
+      <nav class="nav" aria-label="Primary navigation">
+        <button class="nav-item active" data-view="overview"><span class="nav-icon">⌂</span><span>Manager overview</span></button>
+        <button class="nav-item" data-view="coaching"><span class="nav-icon">◎</span><span>Rep coaching</span><span class="nav-badge" id="coaching-badge">3</span></button>
+        <button class="nav-item"><span class="nav-icon">◇</span><span>Opportunities</span></button>
+        <button class="nav-item"><span class="nav-icon">↗</span><span>Activity intelligence</span></button>
+        <button class="nav-item"><span class="nav-icon">◫</span><span>Reports</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sync-card"><div class="sync-head"><span class="live-dot"></span> Data connected</div><div class="integration-row"><span>OR</span><span>ISC</span><span>SL</span></div><small>Updated 8 min ago</small></div>
+        <button class="profile"><span class="avatar">AM</span><span><strong>Alex Morgan</strong><small>VP, Commercial Sales</small></span><span>⌄</span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" aria-label="Open menu" id="mobile-menu">☰</button>
+        <div class="crumb"><span>Sales intelligence</span><span>/</span><strong id="crumb-label">Manager overview</strong></div>
+        <div class="top-actions"><button class="icon-btn" aria-label="Search">⌕</button><button class="icon-btn notification" aria-label="Notifications">♢<i></i></button></div>
+      </header>
+
+      <section id="overview" class="view active">
+        <div class="page-head">
+          <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Good morning, Alex.</h1><p class="lede">Your team is pacing at <strong>82% of quota.</strong> Three reps need your attention this week.</p></div>
+          <div class="head-actions"><button class="button secondary">↗ Export brief</button><button class="button primary" id="open-coaching">Open coaching queue <span id="queue-count">3</span></button></div>
+        </div>
+
+        <div class="alert-banner">
+          <span class="alert-icon">✦</span><div><strong>Manager focus</strong><p>Pipeline is healthy overall, but new opportunity creation is down 14% month over month. Coach coverage now to protect next quarter.</p></div><button id="view-risk">Review at-risk reps →</button>
+        </div>
+
+        <div class="kpi-grid" id="kpi-grid"></div>
+
+        <div class="section-heading"><div><h2>Pipeline health</h2><p>Current quarter pipeline against rep-level goals</p></div><div class="legend"><span><i class="lg current"></i>Current pipeline</span><span><i class="lg goal"></i>Goal</span></div></div>
+        <div class="panel pipeline-panel">
+          <div class="panel-top"><div class="segmented"><button class="active">Pipeline vs goal</button><button>Coverage ratio</button></div><button class="filter-btn">All segments⌄</button></div>
+          <div class="pipeline-table" id="pipeline-table"></div>
+          <div class="panel-footer"><span><strong>Team outlook:</strong> <span id="team-gap">$278K pipeline gap</span> across <span id="at-risk-count">3</span> reps</span><button id="pipeline-coaching">View coaching opportunities →</button></div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <div class="card-head"><div><h2>Risk matrix</h2><p>Pipeline health × opportunity creation</p></div><span class="info">i</span></div>
+            <div class="matrix" id="risk-matrix">
+              <span class="axis y">OPPORTUNITY CREATION →</span><span class="axis x">PIPELINE HEALTH →</span>
+              <div class="quad q1"><strong>Conversion coaching</strong><small>Low pipeline · High creation</small></div>
+              <div class="quad q2"><strong>Healthy</strong><small>High pipeline · High creation</small></div>
+              <div class="quad q3"><strong>Immediate coaching</strong><small>Low pipeline · Low creation</small></div>
+              <div class="quad q4"><strong>Future pipeline risk</strong><small>High pipeline · Low creation</small></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="card-head"><div><h2>Opportunity creation</h2><p>This month versus previous month</p></div><button class="more">•••</button></div>
+            <div class="opp-summary"><div><small>OPPORTUNITIES</small><strong id="team-opps">43</strong><span class="down">↓ 14%</span></div><div><small>MEETINGS</small><strong id="team-meetings">128</strong><span class="up">↑ 6%</span></div></div>
+            <div class="insight-list" id="insight-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="coaching" class="view">
+        <div class="coaching-head">
+          <div class="rep-select-wrap"><button class="back-btn" id="back-overview">←</button><span class="avatar large" id="rep-avatar">JL</span><div><p class="eyebrow">COACHING WORKSPACE</p><button class="rep-select" id="rep-select"><span id="rep-name">Jordan Lee</span> <span>⌄</span></button><p class="rep-meta" id="rep-meta">Enterprise AE · Central region</p></div></div>
+          <div class="head-actions"><button class="button secondary">Add coaching note</button><button class="button primary">Start 1:1 session</button></div>
+          <div class="rep-menu" id="rep-menu"></div>
+        </div>
+
+        <div class="coach-alert"><div><span class="spark">✦</span><div><small>AI RISK SUMMARY</small><strong id="ai-summary">Jordan is unlikely to hit quota without creating 5 additional opportunities. Account engagement and meeting-to-opportunity conversion are the primary constraints.</strong></div></div><span class="risk-score"><b id="risk-score">72%</b> risk</span></div>
+        <div class="rep-kpis" id="rep-kpis"></div>
+
+        <div class="coach-layout">
+          <div class="coach-main">
+            <div class="panel pipeline-deep-dive">
+              <div class="card-head"><div><p class="eyebrow">01 · PIPELINE ANALYSIS</p><h2>Start with the gap</h2></div><span class="status-pill danger" id="pipeline-status">Needs attention</span></div>
+              <div class="gap-display"><div><small>CURRENT PIPELINE</small><strong id="deep-current">$182K</strong></div><div class="gap-arrow">→</div><div><small>GOAL</small><strong id="deep-goal">$240K</strong></div><div class="gap-box"><small>PIPELINE GAP</small><strong id="deep-gap">−$58K</strong></div></div>
+              <div class="progress-track"><span id="deep-progress" style="width:76%"></span></div>
+              <div class="question-box"><div class="question-title"><span>?</span><strong>Manager coaching questions</strong></div><ol><li>How did you get here, and what is the true gap?</li><li>Which deals are honestly not likely to close?</li><li>Which lever are you pulling this month?</li><li>What accelerator can speed up your top opportunity?</li></ol></div>
+            </div>
+
+            <div class="panel">
+              <div class="card-head"><div><p class="eyebrow">02 · ZOOM OUT ASSESSMENT</p><h2>Where is the system exposed?</h2></div><span class="most-exposed">Most exposed: <strong id="exposed-label">Quantity</strong></span></div>
+              <div class="exposure-grid" id="exposure-grid"></div>
+              
+              <div class="growth-strategy">
+                <h3>🎯 Growth Strategy Framework</h3>
+                <div class="growth-list">
+                  <div class="growth-item">Which of the six boxes will fill your gap?</div>
+                  <div class="growth-item">Where do you have a story to tell?</div>
+                  <div class="growth-item">Where can you add value the buyer hasn't considered?</div>
+                  <div class="growth-item">Which buying centers are experiencing change?</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel formula-panel">
+              <div class="card-head"><div><p class="eyebrow">03 · SALES FORMULA</p><h2>Creation pace is the leading indicator</h2></div><span class="status-pill warning" id="formula-status">Below pace</span></div>
+              <div class="formula-metrics" id="formula-metrics"></div>
+              <div class="formula-callout"><span>To close the creation gap</span><strong id="meetings-needed">6 more meetings needed</strong><small id="conversion-note">Based on Jordan's 28% meeting-to-opportunity conversion</small></div>
+              <div class="compact-questions"><strong>Ask in your 1:1</strong><span>Are you currently on pace?</span><span>What is preventing success?</span><span>What changes starting tomorrow?</span></div>
+            </div>
+          </div>
+
+          <aside class="coach-aside">
+            <div class="panel recovery-card">
+              <div class="card-head"><div><p class="eyebrow">QUOTA RECOVERY PLAN</p><h2>Path back to plan</h2></div><span class="magic">✦</span></div>
+              <div class="need-block"><small>ADDITIONAL PIPELINE REQUIRED</small><strong id="recovery-gap">+$58K</strong><span>to reach healthy coverage</span></div>
+              <p class="equivalent">Equivalent to</p>
+              <div class="recovery-options"><div><strong id="option-a">5 opportunities</strong><small>at $12K average</small></div><span>OR</span><div><strong id="option-b">3 opportunities</strong><small>at $20K average</small></div></div>
+              <div class="action-plan" id="action-plan"><strong>Recommended actions</strong><label><input type="checkbox"> <span>Touch <b id="action-accounts">15</b> additional accounts</span></label><label><input type="checkbox"> <span>Generate <b id="action-meetings">6</b> additional meetings</span></label><label><input type="checkbox"> <span>Advance <b id="action-stalled">2</b> stalled opportunities</span></label></div>
+              <button class="button primary full">Save recovery plan</button>
+            </div>
+
+            <div class="panel recommendations">
+              <div class="card-head"><div><p class="eyebrow">AI COACHING RECOMMENDATIONS</p><h2>What to coach next</h2></div><span class="magic">✦</span></div>
+              <div id="recommendation-list"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
