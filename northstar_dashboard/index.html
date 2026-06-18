@@ -47,6 +47,57 @@
           <span class="alert-icon">✦</span><div><strong>Manager focus</strong><p>Pipeline is healthy overall, but new opportunity creation is down 14% month over month. Coach coverage now to protect next quarter.</p></div><button id="view-risk">Review at-risk reps →</button>
         </div>
 
+        <!-- AI Insights Panel -->
+        <div class="ai-insights-panel">
+          <div class="ai-insights-header">
+            <div class="ai-insights-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+              <h3>AI Insights</h3>
+              <span class="ai-badge">watsonx.ai</span>
+            </div>
+            <button class="ai-insights-toggle">Collapse</button>
+          </div>
+          <div class="ai-insights-content">
+            <div class="ai-insight-card priority-high">
+              <div class="ai-insight-icon">🎯</div>
+              <div class="ai-insight-body">
+                <h4>Critical: watsonx.ai Underutilization</h4>
+                <p>Only 3 of 6 reps actively selling watsonx.ai despite its <strong>58% win rate</strong> (highest on team). Mentions down 32% this week.</p>
+                <div class="ai-insight-action">
+                  <strong>Recommended Action:</strong> Schedule AI product training for Jordan, Maya, and Noah this week
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Potential Impact:</span>
+                  <span class="impact-value">+$200K pipeline</span>
+                </div>
+              </div>
+            </div>
+            <div class="ai-insight-card priority-medium">
+              <div class="ai-insight-icon">📊</div>
+              <div class="ai-insight-body">
+                <h4>Opportunity Creation Trend</h4>
+                <p>Team created 43 opportunities vs 50 last month. If trend continues, Q4 pipeline will be <strong>$180K short</strong>.</p>
+                <div class="ai-insight-action">
+                  <strong>Recommended Action:</strong> Implement daily activity tracking and increase meeting targets by 15%
+                </div>
+              </div>
+            </div>
+            <div class="ai-insight-card priority-positive">
+              <div class="ai-insight-icon">✨</div>
+              <div class="ai-insight-body">
+                <h4>Success Pattern Identified</h4>
+                <p>Elena Garcia's activity pattern (15 calls/day, 44% connect rate) correlates with <strong>2.1x higher</strong> opportunity creation.</p>
+                <div class="ai-insight-action">
+                  <strong>Recommended Action:</strong> Share Elena's best practices in next team meeting
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="kpi-grid" id="kpi-grid"></div>
 
         <div class="section-heading"><div><h2>Pipeline health</h2><p>Current quarter pipeline against rep-level goals</p></div><div class="legend"><span><i class="lg current"></i>Current pipeline</span><span><i class="lg goal"></i>Goal</span></div></div>
@@ -161,6 +212,71 @@
           <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Opportunity Pipeline</h1><p class="lede">Track all active opportunities and identify deals requiring attention.</p></div>
           <div class="head-actions"><button class="button secondary">↗ Export</button><button class="button primary">+ New opportunity</button></div>
         </div>
+        <!-- AI Insights Panel for Opportunities -->
+        <div class="ai-insights-panel">
+          <div class="ai-insights-header">
+            <div class="ai-insights-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+              <h3>AI Opportunity Intelligence</h3>
+              <span class="ai-badge">Powered by watsonx.ai</span>
+            </div>
+            <button class="ai-insights-toggle" onclick="toggleAIInsights()">Hide Insights</button>
+          </div>
+          <div class="ai-insights-content">
+            <div class="ai-insight-card priority-high">
+              <div class="ai-insight-icon">🎯</div>
+              <div class="ai-insight-body">
+                <h4>High-Value Deal at Risk</h4>
+                <p>The <strong>$850K Acme Corp watsonx.ai</strong> opportunity has stalled for 18 days with no recent activity. Last engagement was a technical demo on May 15th.</p>
+                <div class="ai-insight-action">
+                  <strong>Recommended Action:</strong>
+                  Schedule executive briefing with CTO and CFO to address ROI concerns and accelerate decision timeline.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Potential Impact:</span>
+                  <span class="impact-value">$850K at risk</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-insight-card priority-positive">
+              <div class="ai-insight-icon">🚀</div>
+              <div class="ai-insight-body">
+                <h4>Fast-Moving Opportunity</h4>
+                <p><strong>TechStart Inc. - watsonx.data ($420K)</strong> has progressed through 3 stages in 12 days. Strong buying signals detected with 8 stakeholder engagements.</p>
+                <div class="ai-insight-action">
+                  <strong>Success Pattern:</strong>
+                  Elena Rodriguez is using a multi-threaded approach with technical and business stakeholders. Consider replicating this strategy.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Win Probability:</span>
+                  <span class="impact-value">78% (High)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-insight-card priority-medium">
+              <div class="ai-insight-icon">⚠️</div>
+              <div class="ai-insight-body">
+                <h4>Stage Progression Alert</h4>
+                <p>5 opportunities have been in <strong>Technical Validation</strong> stage for over 30 days. Average time in this stage should be 14-21 days.</p>
+                <div class="ai-insight-action">
+                  <strong>Coaching Opportunity:</strong>
+                  Review technical validation process with Jordan Lee and Noah Williams. May need SE support or clearer success criteria.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Pipeline Value:</span>
+                  <span class="impact-value">$1.8M delayed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <div class="kpi-grid">
           <div class="kpi"><small>TOTAL OPPORTUNITIES</small><strong>43</strong><span class="up">↑ 8%</span></div>
@@ -217,6 +333,71 @@
         <div class="alert-banner">
           <span class="alert-icon">✦</span><div><strong>Activity insight</strong><p>watsonx.ai mentions in calls are down 32% this week. Only 3 reps actively discussing AI solutions with prospects.</p></div><button>Review product training →</button>
         </div>
+        <!-- AI Insights Panel for Activity Intelligence -->
+        <div class="ai-insights-panel">
+          <div class="ai-insights-header">
+            <div class="ai-insights-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+              <h3>AI Activity Intelligence</h3>
+              <span class="ai-badge">Powered by watsonx.ai</span>
+            </div>
+            <button class="ai-insights-toggle" onclick="toggleAIInsights()">Hide Insights</button>
+          </div>
+          <div class="ai-insights-content">
+            <div class="ai-insight-card priority-high">
+              <div class="ai-insight-icon">📉</div>
+              <div class="ai-insight-body">
+                <h4>Critical Product Mention Gap</h4>
+                <p><strong>watsonx.ai mentions down 32%</strong> - Only 12% of calls include AI solution discussions. Elena Rodriguez leads with 45% mention rate, while Jordan Lee and Noah Williams are at 8% and 5% respectively.</p>
+                <div class="ai-insight-action">
+                  <strong>Immediate Action:</strong>
+                  Schedule watsonx.ai enablement session for Jordan and Noah. Share Elena's call recordings as best practice examples.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Revenue Impact:</span>
+                  <span class="impact-value">$2.1M opportunity missed</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-insight-card priority-medium">
+              <div class="ai-insight-icon">📧</div>
+              <div class="ai-insight-body">
+                <h4>Email Activity Decline</h4>
+                <p>Team email volume down <strong>12% week-over-week</strong>. However, reply rate improved to 24% (+3%), suggesting quality over quantity approach is working.</p>
+                <div class="ai-insight-action">
+                  <strong>Coaching Insight:</strong>
+                  Current personalization strategy is effective. Focus on maintaining quality while gradually increasing volume to optimal levels.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Efficiency Gain:</span>
+                  <span class="impact-value">+3% reply rate</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-insight-card priority-positive">
+              <div class="ai-insight-icon">🎯</div>
+              <div class="ai-insight-body">
+                <h4>Demo Success Pattern Identified</h4>
+                <p><strong>Demos up 15%</strong> with 68% conversion to next stage. Elena and Marcus are averaging 4.2 demos per week with 75% progression rate.</p>
+                <div class="ai-insight-action">
+                  <strong>Best Practice:</strong>
+                  Elena's pre-demo discovery calls (avg 22 min) correlate with higher conversion. Implement this as team standard.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Success Rate:</span>
+                  <span class="impact-value">68% demo conversion</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <div class="kpi-grid">
           <div class="kpi"><small>TOTAL CALLS</small><strong>342</strong><span class="up">↑ 6%</span></div>
@@ -273,6 +454,71 @@
         <div class="alert-banner">
           <span class="alert-icon">✦</span><div><strong>Product insight</strong><p>watsonx.ai has highest win rate (58%) but lowest pipeline coverage. Opportunity to increase AI solution awareness across team.</p></div><button>View AI training materials →</button>
         </div>
+        <!-- AI Insights Panel for Reports -->
+        <div class="ai-insights-panel">
+          <div class="ai-insights-header">
+            <div class="ai-insights-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+              <h3>AI Product Intelligence</h3>
+              <span class="ai-badge">Powered by watsonx.ai</span>
+            </div>
+            <button class="ai-insights-toggle" onclick="toggleAIInsights()">Hide Insights</button>
+          </div>
+          <div class="ai-insights-content">
+            <div class="ai-insight-card priority-high">
+              <div class="ai-insight-icon">🎯</div>
+              <div class="ai-insight-body">
+                <h4>watsonx.ai Underutilization</h4>
+                <p><strong>Highest win rate (58%) but lowest pipeline coverage</strong> - Only 8 opportunities worth $285K despite being IBM's strategic AI platform. Market demand is high but team awareness is low.</p>
+                <div class="ai-insight-action">
+                  <strong>Strategic Action:</strong>
+                  Launch watsonx.ai enablement program for all reps. Target: 20+ opportunities by end of quarter. Priya Shah to lead peer training sessions.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Revenue Opportunity:</span>
+                  <span class="impact-value">$500K+ potential</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-insight-card priority-positive">
+              <div class="ai-insight-icon">📊</div>
+              <div class="ai-insight-body">
+                <h4>Db2 Warehouse Stability</h4>
+                <p><strong>$320K pipeline with 47% win rate</strong> - Largest pipeline value and consistent performance. Sam Rivera has established strong positioning in data warehouse market.</p>
+                <div class="ai-insight-action">
+                  <strong>Cross-Sell Opportunity:</strong>
+                  Db2 customers are ideal candidates for watsonx.data. Create bundled offering and train Sam on data lakehouse positioning.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Cross-Sell Potential:</span>
+                  <span class="impact-value">$180K additional</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-insight-card priority-medium">
+              <div class="ai-insight-icon">🔄</div>
+              <div class="ai-insight-body">
+                <h4>Product Portfolio Balance</h4>
+                <p>Team is heavily focused on <strong>Db2 (6 opps) and watsonx products (15 opps)</strong>. Instana and Guardium are underrepresented despite strong market fit.</p>
+                <div class="ai-insight-action">
+                  <strong>Portfolio Strategy:</strong>
+                  Assign Elena and Marcus to focus on Instana/Guardium. These products have shorter sales cycles and can accelerate quarterly attainment.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Diversification Benefit:</span>
+                  <span class="impact-value">Reduced risk exposure</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <div class="section-heading"><div><h2>Product performance summary</h2><p>Sales metrics by IBM product</p></div></div>
         <div class="panel">

@@ -1,3 +1,11 @@
+// AI Insights Panel Toggle
+function toggleAIInsights() {
+  const panel = document.querySelector('.ai-insights-panel');
+  if (panel) {
+    panel.classList.toggle('collapsed');
+  }
+}
+
 // Coaching questions framework - contextual based on performance issues
 const coachingQuestions = {
   pipelineGap: {
