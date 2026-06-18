@@ -340,6 +340,84 @@
       </div>
     </div>
   </div>
+
+  <!-- AI Copilot Chat -->
+  <div id="copilot-container" class="copilot-container">
+    <button id="copilot-toggle" class="copilot-toggle" aria-label="Open AI Copilot">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <span class="copilot-badge">AI</span>
+    </button>
+
+    <div id="copilot-chat" class="copilot-chat">
+      <div class="copilot-header">
+        <div class="copilot-header-content">
+          <div class="copilot-avatar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4M12 8h.01"></path>
+            </svg>
+          </div>
+          <div>
+            <h3>Manager Copilot</h3>
+            <p>Powered by watsonx.ai</p>
+          </div>
+        </div>
+        <button id="copilot-close" class="copilot-close" aria-label="Close">✕</button>
+      </div>
+
+      <div class="copilot-suggestions">
+        <p class="copilot-suggestions-label">Try asking:</p>
+        <button class="copilot-suggestion" data-query="Why is Jordan behind quota?">
+          <span class="suggestion-icon">💡</span>
+          Why is Jordan behind quota?
+        </button>
+        <button class="copilot-suggestion" data-query="Which accounts should I target for watsonx.ai?">
+          <span class="suggestion-icon">🎯</span>
+          Which accounts should I target for watsonx.ai?
+        </button>
+        <button class="copilot-suggestion" data-query="Generate a coaching plan for Noah">
+          <span class="suggestion-icon">📋</span>
+          Generate a coaching plan for Noah
+        </button>
+        <button class="copilot-suggestion" data-query="What are my team's biggest risks this quarter?">
+          <span class="suggestion-icon">⚠️</span>
+          What are my team's biggest risks?
+        </button>
+      </div>
+
+      <div id="copilot-messages" class="copilot-messages">
+        <div class="copilot-message assistant">
+          <div class="message-avatar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4M12 8h.01"></path>
+            </svg>
+          </div>
+          <div class="message-content">
+            <p>Hi Alex! I'm your AI-powered sales coaching assistant. I can help you understand your team's performance, identify risks, and create coaching plans.</p>
+            <p>What would you like to know?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="copilot-input-container">
+        <textarea
+          id="copilot-input"
+          class="copilot-input"
+          placeholder="Ask me anything about your team..."
+          rows="1"
+        ></textarea>
+        <button id="copilot-send" class="copilot-send" aria-label="Send message">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="app.js"></script>
