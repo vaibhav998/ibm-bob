@@ -18,6 +18,7 @@
         <button class="nav-item" data-view="coaching"><span class="nav-icon">◎</span><span>Rep coaching</span><span class="nav-badge" id="coaching-badge">3</span></button>
         <button class="nav-item" data-view="opportunities"><span class="nav-icon">◇</span><span>Opportunities</span></button>
         <button class="nav-item" data-view="activity"><span class="nav-icon">↗</span><span>Activity intelligence</span></button>
+        <button class="nav-item" data-view="product-intelligence"><span class="nav-icon">◈</span><span>Product intelligence</span></button>
         <button class="nav-item" data-view="reports"><span class="nav-icon">◫</span><span>Reports</span></button>
       </nav>
       <div class="sidebar-bottom">
@@ -544,6 +545,392 @@
             </div>
           </div>
         </div>
+
+      <!-- Product Intelligence View -->
+      <section id="product-intelligence" class="view">
+        <div class="page-head">
+          <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Product Intelligence</h1><p class="lede">AI-powered product recommendations, competitive insights, and ROI analysis.</p></div>
+          <div class="head-actions"><button class="button secondary">↗ Export</button><button class="button primary">Generate report</button></div>
+        </div>
+
+        <!-- AI Insights Panel for Product Intelligence -->
+        <div class="ai-insights-panel">
+          <div class="ai-insights-header">
+            <div class="ai-insights-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+              <h3>AI Product Recommendations</h3>
+              <span class="ai-badge">Powered by watsonx.ai</span>
+            </div>
+            <button class="ai-insights-toggle" onclick="toggleAIInsights(event)">Hide Insights</button>
+          </div>
+          <div class="ai-insights-content">
+            <div class="ai-insight-card priority-high">
+              <div class="ai-insight-icon">🎯</div>
+              <div class="ai-insight-body">
+                <h4>High-Propensity Account Identified</h4>
+                <p><strong>Acme Corp is 85% likely to buy watsonx.data</strong> based on current Db2 usage, data volume growth (+40% YoY), and recent cloud migration initiative.</p>
+                <div class="ai-insight-action">
+                  <strong>Recommended Action:</strong>
+                  Schedule lakehouse architecture review with CTO. Emphasize 60% cost reduction vs traditional data warehouse expansion.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Estimated Deal Size:</span>
+                  <span class="impact-value">$420K ARR</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-insight-card priority-positive">
+              <div class="ai-insight-icon">📦</div>
+              <div class="ai-insight-body">
+                <h4>Product Pairing Opportunity</h4>
+                <p><strong>TechStart Inc.</strong> purchased Db2 Warehouse last quarter. Analysis shows 78% of similar customers also bought watsonx.data within 6 months.</p>
+                <div class="ai-insight-action">
+                  <strong>Cross-Sell Strategy:</strong>
+                  Position watsonx.data as natural extension for AI/ML workloads. Reference 3 similar customer success stories.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Cross-Sell Probability:</span>
+                  <span class="impact-value">78% (Very High)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-insight-card priority-medium">
+              <div class="ai-insight-icon">⚔️</div>
+              <div class="ai-insight-body">
+                <h4>Competitive Threat Detected</h4>
+                <p>Snowflake mentioned in <strong>3 recent calls</strong> with GlobalTech Corp. Competitor positioning around "ease of use" and "faster time to value".</p>
+                <div class="ai-insight-action">
+                  <strong>Counter Strategy:</strong>
+                  Emphasize IBM's enterprise security, hybrid cloud flexibility, and AI integration. Schedule competitive battle card review.
+                </div>
+                <div class="ai-insight-impact">
+                  <span class="impact-label">Deal at Risk:</span>
+                  <span class="impact-value">$650K opportunity</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Recommendation Engine -->
+        <div class="section-heading"><div><h2>🎯 Product Recommendation Engine</h2><p>AI-powered propensity scores for each account</p></div></div>
+        <div class="panel">
+          <div class="panel-top">
+            <div class="segmented"><button class="active">All accounts</button><button>High propensity</button><button>Cross-sell ready</button></div>
+            <button class="filter-btn">Filter by product⌄</button>
+          </div>
+          <div class="table-head"><div>ACCOUNT</div><div>RECOMMENDED PRODUCT</div><div>PROPENSITY SCORE</div><div>KEY SIGNALS</div><div>ESTIMATED VALUE</div><div>ASSIGNED REP</div><div>ACTION</div></div>
+          <div class="rep-row">
+            <div class="rep-ident"><span class="avatar" style="background: #d8653b; color: white;">AC</span><div><strong>Acme Corp</strong><small>Enterprise · Manufacturing</small></div></div>
+            <div><strong>watsonx.data</strong><small>Data Lakehouse</small></div>
+            <div><span class="up" style="font-size: 18px; font-weight: 700;">85%</span></div>
+            <div><small>Db2 customer, Cloud migration, Data growth +40%</small></div>
+            <div><strong>$420K</strong></div>
+            <div><small>Jordan Lee</small></div>
+            <div><button class="button primary" style="font-size: 12px; padding: 6px 12px;">Create opportunity</button></div>
+          </div>
+          <div class="rep-row">
+            <div class="rep-ident"><span class="avatar" style="background: #087f75; color: white;">TS</span><div><strong>TechStart Inc.</strong><small>Mid-Market · Technology</small></div></div>
+            <div><strong>watsonx.ai</strong><small>AI Platform</small></div>
+            <div><span class="up" style="font-size: 18px; font-weight: 700;">78%</span></div>
+            <div><small>ML team hired, API usage spike, Innovation budget</small></div>
+            <div><strong>$285K</strong></div>
+            <div><small>Elena Rodriguez</small></div>
+            <div><button class="button primary" style="font-size: 12px; padding: 6px 12px;">Create opportunity</button></div>
+          </div>
+          <div class="rep-row">
+            <div class="rep-ident"><span class="avatar" style="background: #6b5aa6; color: white;">GT</span><div><strong>GlobalTech Corp</strong><small>Enterprise · Financial Services</small></div></div>
+            <div><strong>Instana</strong><small>Observability</small></div>
+            <div><span class="up" style="font-size: 18px; font-weight: 700;">72%</span></div>
+            <div><small>Microservices migration, Performance issues, DevOps expansion</small></div>
+            <div><strong>$195K</strong></div>
+            <div><small>Marcus Johnson</small></div>
+            <div><button class="button primary" style="font-size: 12px; padding: 6px 12px;">Create opportunity</button></div>
+          </div>
+          <div class="rep-row">
+            <div class="rep-ident"><span class="avatar" style="background: #2e67b2; color: white;">DI</span><div><strong>DataFlow Inc.</strong><small>Mid-Market · Healthcare</small></div></div>
+            <div><strong>Guardium</strong><small>Data Security</small></div>
+            <div><span class="up" style="font-size: 18px; font-weight: 700;">68%</span></div>
+            <div><small>HIPAA compliance, Recent breach, Security audit</small></div>
+            <div><strong>$145K</strong></div>
+            <div><small>Priya Shah</small></div>
+            <div><button class="button primary" style="font-size: 12px; padding: 6px 12px;">Create opportunity</button></div>
+          </div>
+          <div class="rep-row">
+            <div class="rep-ident"><span class="avatar" style="background: #10a195; color: white;">RT</span><div><strong>RetailMax</strong><small>Enterprise · Retail</small></div></div>
+            <div><strong>watsonx.data</strong><small>Data Lakehouse</small></div>
+            <div><span style="font-size: 18px; font-weight: 700; color: #a66e00;">62%</span></div>
+            <div><small>E-commerce growth, Customer analytics, Real-time needs</small></div>
+            <div><strong>$380K</strong></div>
+            <div><small>Sam Rivera</small></div>
+            <div><button class="button secondary" style="font-size: 12px; padding: 6px 12px;">Nurture</button></div>
+          </div>
+        </div>
+
+        <!-- Competitive Intelligence & Product Pairing -->
+        <div class="two-col">
+          <div class="panel">
+            <div class="card-head"><div><h2>⚔️ Competitive Intelligence</h2><p>Competitor mentions and win/loss analysis</p></div></div>
+            <div style="padding: 20px;">
+              <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <strong style="font-size: 15px;">Competitor Mentions (Last 30 Days)</strong>
+                  <span style="font-size: 12px; color: #68767d;">42 total mentions</span>
+                </div>
+                <div style="margin-bottom: 16px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                    <span style="font-size: 13px;"><strong>Snowflake</strong> (Data)</span>
+                    <span style="font-size: 13px; font-weight: 600;">18 mentions</span>
+                  </div>
+                  <div style="background: #fff0e8; height: 8px; border-radius: 4px;">
+                    <div style="background: #d8653b; width: 43%; height: 100%; border-radius: 4px;"></div>
+                  </div>
+                  <p style="margin: 4px 0 0; font-size: 11px; color: #68767d;">Key objections: "Easier to use", "Faster deployment"</p>
+                </div>
+                <div style="margin-bottom: 16px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                    <span style="font-size: 13px;"><strong>Datadog</strong> (Observability)</span>
+                    <span style="font-size: 13px; font-weight: 600;">12 mentions</span>
+                  </div>
+                  <div style="background: #fff6d8; height: 8px; border-radius: 4px;">
+                    <div style="background: #a66e00; width: 29%; height: 100%; border-radius: 4px;"></div>
+                  </div>
+                  <p style="margin: 4px 0 0; font-size: 11px; color: #68767d;">Key objections: "Modern UI", "Better dashboards"</p>
+                </div>
+                <div style="margin-bottom: 16px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                    <span style="font-size: 13px;"><strong>OpenAI</strong> (AI/ML)</span>
+                    <span style="font-size: 13px; font-weight: 600;">8 mentions</span>
+                  </div>
+                  <div style="background: #dff3ef; height: 8px; border-radius: 4px;">
+                    <div style="background: #087f75; width: 19%; height: 100%; border-radius: 4px;"></div>
+                  </div>
+                  <p style="margin: 4px 0 0; font-size: 11px; color: #68767d;">Key objections: "API simplicity", "Developer experience"</p>
+                </div>
+                <div style="margin-bottom: 16px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                    <span style="font-size: 13px;"><strong>Others</strong></span>
+                    <span style="font-size: 13px; font-weight: 600;">4 mentions</span>
+                  </div>
+                  <div style="background: #f4f7f7; height: 8px; border-radius: 4px;">
+                    <div style="background: #68767d; width: 10%; height: 100%; border-radius: 4px;"></div>
+                  </div>
+                </div>
+              </div>
+              <div style="padding: 16px; background: #e8f1ff; border-radius: 8px; border-left: 3px solid #2e67b2;">
+                <strong style="display: block; margin-bottom: 8px; color: #2e67b2;">💡 Win Strategy</strong>
+                <p style="margin: 0; font-size: 13px; color: #68767d;">Emphasize enterprise security, hybrid cloud, and AI integration. Use customer success stories to counter "ease of use" objections.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="card-head"><div><h2>📦 Product Pairing Insights</h2><p>"Customers who bought X also bought Y"</p></div></div>
+            <div style="padding: 20px;">
+              <div style="margin-bottom: 20px; padding: 16px; background: linear-gradient(135deg, #dff3ef 0%, #ffffff 100%); border-radius: 8px; border: 1px solid #087f75;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                  <span style="font-size: 24px;">🔗</span>
+                  <div>
+                    <strong style="display: block; font-size: 14px;">Db2 → watsonx.data</strong>
+                    <span style="font-size: 12px; color: #68767d;">Most common pairing</span>
+                  </div>
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="font-size: 12px; color: #68767d;">Cross-sell rate</span>
+                    <strong style="font-size: 14px; color: #087f75;">78%</strong>
+                  </div>
+                  <div style="background: #dff3ef; height: 6px; border-radius: 3px;">
+                    <div style="background: #087f75; width: 78%; height: 100%; border-radius: 3px;"></div>
+                  </div>
+                </div>
+                <p style="margin: 12px 0 0; font-size: 12px; color: #68767d;"><strong>Avg time to purchase:</strong> 4.2 months | <strong>Avg deal size:</strong> $385K</p>
+              </div>
+
+              <div style="margin-bottom: 16px; padding: 12px; background: #f4f7f7; border-radius: 6px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 13px;"><strong>watsonx.ai → Instana</strong></span>
+                  <span style="font-size: 13px; font-weight: 600; color: #087f75;">64%</span>
+                </div>
+                <p style="margin: 0; font-size: 11px; color: #68767d;">AI workloads need observability. Avg 3.8 months, $195K deal size.</p>
+              </div>
+
+              <div style="margin-bottom: 16px; padding: 12px; background: #f4f7f7; border-radius: 6px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 13px;"><strong>watsonx.data → Guardium</strong></span>
+                  <span style="font-size: 13px; font-weight: 600; color: #087f75;">58%</span>
+                </div>
+                <p style="margin: 0; font-size: 11px; color: #68767d;">Data security follows data platform. Avg 5.1 months, $145K deal size.</p>
+              </div>
+
+              <div style="margin-bottom: 16px; padding: 12px; background: #f4f7f7; border-radius: 6px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 13px;"><strong>Instana → Turbonomic</strong></span>
+                  <span style="font-size: 13px; font-weight: 600; color: #087f75;">52%</span>
+                </div>
+                <p style="margin: 0; font-size: 11px; color: #68767d;">Observability + optimization. Avg 4.5 months, $165K deal size.</p>
+              </div>
+
+              <button style="width: 100%; padding: 10px; background: white; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--ink);">View all pairings →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROI Calculator & Product Comparison -->
+        <div class="two-col">
+          <div class="panel">
+            <div class="card-head"><div><h2>💰 ROI Calculator</h2><p>Calculate customer value for each product</p></div></div>
+            <div style="padding: 20px;">
+              <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink);">Select Product</label>
+                <select style="width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px; font-size: 14px;">
+                  <option>watsonx.ai - AI Platform</option>
+                  <option>watsonx.data - Data Lakehouse</option>
+                  <option>Db2 Warehouse - Data Warehouse</option>
+                  <option>Instana - Observability</option>
+                  <option>Guardium - Data Security</option>
+                  <option>Turbonomic - Application Resource Management</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink);">Customer Profile</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div>
+                    <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Company Size</label>
+                    <select style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                      <option>Enterprise (1000+)</option>
+                      <option>Mid-Market (100-999)</option>
+                      <option>SMB (<100)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Industry</label>
+                    <select style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                      <option>Financial Services</option>
+                      <option>Healthcare</option>
+                      <option>Retail</option>
+                      <option>Manufacturing</option>
+                      <option>Technology</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink);">Current State Metrics</label>
+                <div style="margin-bottom: 12px;">
+                  <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Data Volume (TB)</label>
+                  <input type="number" value="500" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                </div>
+                <div style="margin-bottom: 12px;">
+                  <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Annual Data Growth (%)</label>
+                  <input type="number" value="40" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                </div>
+                <div style="margin-bottom: 12px;">
+                  <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Current Annual Cost ($)</label>
+                  <input type="number" value="850000" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                </div>
+              </div>
+
+              <button style="width: 100%; padding: 12px; background: linear-gradient(135deg, #087f75 0%, #10a195 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600;">Calculate ROI →</button>
+
+              <div style="margin-top: 20px; padding: 16px; background: linear-gradient(135deg, #dff3ef 0%, #ffffff 100%); border-radius: 8px; border: 1px solid #087f75;">
+                <div style="text-align: center; margin-bottom: 12px;">
+                  <span style="display: block; font-size: 12px; color: #68767d; margin-bottom: 4px;">Estimated 3-Year ROI</span>
+                  <strong style="font-size: 32px; color: #087f75;">287%</strong>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+                  <div style="text-align: center;">
+                    <span style="display: block; font-size: 11px; color: #68767d;">Cost Savings</span>
+                    <strong style="font-size: 18px; color: var(--ink);">$1.2M</strong>
+                  </div>
+                  <div style="text-align: center;">
+                    <span style="display: block; font-size: 11px; color: #68767d;">Payback Period</span>
+                    <strong style="font-size: 18px; color: var(--ink);">8 months</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="card-head"><div><h2>⚖️ Product Comparison Matrix</h2><p>Side-by-side product comparisons</p></div></div>
+            <div style="padding: 20px;">
+              <div style="margin-bottom: 16px;">
+                <label style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink);">Compare Products</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                  <select style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                    <option>watsonx.ai</option>
+                    <option>watsonx.data</option>
+                    <option>Db2 Warehouse</option>
+                  </select>
+                  <select style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                    <option>watsonx.data</option>
+                    <option>watsonx.ai</option>
+                    <option>Instana</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="border: 1px solid var(--line); border-radius: 8px; overflow: hidden;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; background: #f4f7f7;">
+                  <div style="padding: 10px; font-size: 11px; font-weight: 600; color: #68767d;"></div>
+                  <div style="padding: 10px; font-size: 11px; font-weight: 600; text-align: center; border-left: 1px solid var(--line);">watsonx.ai</div>
+                  <div style="padding: 10px; font-size: 11px; font-weight: 600; text-align: center; border-left: 1px solid var(--line);">watsonx.data</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line);">
+                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Avg Deal Size</div>
+                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);"><strong>$35.6K</strong></div>
+                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);"><strong>$35.0K</strong></div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line); background: #fafbfb;">
+                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Win Rate</div>
+                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);"><strong style="color: #087f75;">58%</strong></div>
+                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);"><strong style="color: #087f75;">51%</strong></div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line);">
+                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Sales Cycle</div>
+                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);">89 days</div>
+                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);">76 days</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line); background: #fafbfb;">
+                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Deployment</div>
+                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);">Cloud/On-prem</div>
+                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);">Cloud/On-prem</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line);">
+                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Primary Use Case</div>
+                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">AI/ML Models</div>
+                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">Data Lakehouse</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line); background: #fafbfb;">
+                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Target Buyer</div>
+                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">CDO, CTO</div>
+                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">CDO, CIO</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line);">
+                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Top Competitor</div>
+                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">OpenAI</div>
+                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">Snowflake</div>
+                </div>
+              </div>
+
+              <div style="margin-top: 16px; padding: 12px; background: #e8f1ff; border-radius: 6px;">
+                <strong style="display: block; margin-bottom: 6px; font-size: 12px; color: #2e67b2;">💡 Positioning Tip</strong>
+                <p style="margin: 0; font-size: 11px; color: #68767d;">watsonx.ai has higher win rate but longer sales cycle. Position together for comprehensive AI + Data solution.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
       </section>
     </main>
   </div>
