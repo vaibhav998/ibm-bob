@@ -1,3 +1,138 @@
+// AI Insights Panel Toggle
+function toggleAIInsights(event) {
+  // Find the closest parent panel from the clicked button
+  const button = event.target;
+  const panel = button.closest('.ai-insights-panel');
+  if (panel) {
+    panel.classList.toggle('collapsed');
+  }
+}
+
+// ROI Calculator
+const roiCalculator = {
+  products: {
+    'watsonx.ai': {
+      baseCost: 50000,
+      costPerTB: 200,
+      efficiencyGain: 0.35,
+      timeToValue: 6
+    },
+    'watsonx.data': {
+      baseCost: 40000,
+      costPerTB: 150,
+      efficiencyGain: 0.60,
+      timeToValue: 4
+    },
+    'Db2 Warehouse': {
+      baseCost: 35000,
+      costPerTB: 180,
+      efficiencyGain: 0.40,
+      timeToValue: 5
+    },
+    'Instana': {
+      baseCost: 25000,
+      costPerTB: 100,
+      efficiencyGain: 0.45,
+      timeToValue: 3
+    },
+    'Guardium': {
+      baseCost: 30000,
+      costPerTB: 120,
+      efficiencyGain: 0.30,
+      timeToValue: 4
+    },
+    'Turbonomic': {
+      baseCost: 28000,
+      costPerTB: 110,
+      efficiencyGain: 0.50,
+      timeToValue: 3
+    }
+  },
+  
+  sizeMultipliers: {
+    'Enterprise (1000+)': 1.5,
+    'Mid-Market (100-999)': 1.0,
+    'SMB (<100)': 0.6
+  },
+  
+  industryMultipliers: {
+    'Financial Services': 1.3,
+    'Healthcare': 1.2,
+    'Retail': 1.0,
+    'Manufacturing': 1.1,
+    'Technology': 0.9
+  },
+  
+  calculate: function(productName, companySize, industry, dataVolume, growthRate, currentCost) {
+    const product = this.products[productName];
+    if (!product) return null;
+    
+    const sizeMultiplier = this.sizeMultipliers[companySize] || 1.0;
+    const industryMultiplier = this.industryMultipliers[industry] || 1.0;
+    
+    // Calculate IBM solution cost
+    const yearOneCost = (product.baseCost + (dataVolume * product.costPerTB)) * sizeMultiplier * industryMultiplier;
+    
+    // Calculate 3-year costs with growth
+    const year2Volume = dataVolume * (1 + growthRate / 100);
+    const year3Volume = year2Volume * (1 + growthRate / 100);
+    
+    const year2Cost = yearOneCost * 1.05; // 5% annual increase
+    const year3Cost = year2Cost * 1.05;
+    
+    const totalIBMCost = yearOneCost + year2Cost + year3Cost;
+    
+    // Calculate current solution 3-year cost with growth
+    const currentYear2Cost = currentCost * (1 + growthRate / 100) * 1.08; // 8% annual increase
+    const currentYear3Cost = currentYear2Cost * (1 + growthRate / 100) * 1.08;
+    const totalCurrentCost = currentCost + currentYear2Cost + currentYear3Cost;
+    
+    // Calculate efficiency gains
+    const efficiencyValue = currentCost * product.efficiencyGain * 3; // 3 years
+    
+    // Calculate total savings
+    const totalSavings = (totalCurrentCost - totalIBMCost) + efficiencyValue;
+    
+    // Calculate ROI
+    const roi = ((totalSavings / totalIBMCost) * 100).toFixed(0);
+    
+    // Calculate payback period (months)
+    const monthlySavings = totalSavings / 36;
+    const paybackMonths = Math.ceil(yearOneCost / monthlySavings);
+    
+    return {
+      roi: roi,
+      savings: Math.round(totalSavings),
+      paybackMonths: paybackMonths,
+      yearOneCost: Math.round(yearOneCost),
+      totalCost: Math.round(totalIBMCost)
+    };
+  }
+};
+
+function calculateROI() {
+  const product = document.getElementById('roi-product').value;
+  const companySize = document.getElementById('roi-size').value;
+  const industry = document.getElementById('roi-industry').value;
+  const dataVolume = parseFloat(document.getElementById('roi-data-volume').value) || 0;
+  const growthRate = parseFloat(document.getElementById('roi-growth-rate').value) || 0;
+  const currentCost = parseFloat(document.getElementById('roi-current-cost').value) || 0;
+  
+  if (dataVolume === 0 || currentCost === 0) {
+    alert('Please enter data volume and current cost');
+    return;
+  }
+  
+  const result = roiCalculator.calculate(product, companySize, industry, dataVolume, growthRate, currentCost);
+  
+  if (result) {
+    document.getElementById('roi-result-value').textContent = result.roi + '%';
+    document.getElementById('roi-savings-value').textContent = '$' + (result.savings / 1000000).toFixed(1) + 'M';
+    document.getElementById('roi-payback-value').textContent = result.paybackMonths + ' months';
+    document.getElementById('roi-result-panel').style.display = 'block';
+  }
+}
+
 // Coaching questions framework - contextual based on performance issues
 const coachingQuestions = {
   pipelineGap: {
@@ -980,6 +1115,7 @@ function switchView(view) {
     'coaching': { id: 'coaching', label: 'Rep coaching' },
     'opportunities': { id: 'opportunities', label: 'Opportunities' },
     'activity': { id: 'activity', label: 'Activity intelligence' },
+    'product-intelligence': { id: 'product-intelligence', label: 'Product intelligence' },
     'reports': { id: 'reports', label: 'Reports' }
   };
   
@@ -1395,3 +1531,579 @@ function initEnhancements() {
     console.error('Error initializing enhancements:', error);
   }
 }
+
+
+// AI Copilot Functionality
+const copilot = {
+  isOpen: false,
+  isTyping: false,
+  
+  // Knowledge base for intelligent responses
+  knowledge: {
+    reps: reps,
+    accounts: accounts,
+    opportunities: opportunities
+  },
+  
+  // Pre-defined responses for common queries
+  responses: {
+    'why is jordan behind quota': {
+      answer: `Jordan Lee is behind quota primarily due to **low account coverage** and **insufficient opportunity creation**.
+
+**Key Issues:**
+• Only **26% of territory engaged** (19 of 74 accounts touched)
+• Created **4 opportunities** vs team average of **7**
+• Meeting-to-opportunity conversion at **28%** vs team average **35%**
+• Pipeline gap of **-$58K** with only **2.6× coverage**
+
+**Root Causes:**
+1. **Territory Coverage**: Jordan is leaving 74% of assigned accounts untouched, limiting pipeline potential
+2. **Activity Efficiency**: While call volume is adequate (48 calls/week), connect rate is below average at 32%
+3. **Product Knowledge**: Not actively discussing watsonx.ai despite its 58% win rate
+
+**Recommended Actions:**
+1. **Immediate**: Touch 15 additional accounts this week
+2. **This Month**: Generate 6 additional meetings to close opportunity gap
+3. **Training**: Schedule watsonx.ai product training
+4. **Coaching**: Review account prioritization strategy`,
+      sources: ['Risk Assessment', 'Territory Coverage', 'Activity Intelligence']
+    },
+    
+    'which accounts should i target for watsonx.ai': {
+      answer: `Based on propensity scoring and current customer profiles, here are the **top accounts for watsonx.ai**:
+
+**High Priority (85%+ propensity):**
+1. **Acme Corporation** (Priya Shah)
+   • Currently using Azure OpenAI
+   • High AI spend, looking for cost optimization
+   • Next step: Schedule AI strategy discussion
+
+2. **Enterprise Systems Ltd** (Jordan Lee)
+   • Existing Db2 customer with large data volumes
+   • Exploring ML/AI capabilities
+   • Next step: Demo watsonx.ai on their data
+
+3. **TechStart Solutions** (Sam Rivera)
+   • Technology company, AI-forward culture
+   • Recently hired data science team
+   • Next step: Technical deep-dive session
+
+**Medium Priority (70-84% propensity):**
+4. **Global Industries Inc** (Maya Chen)
+   • Manufacturing automation interest
+   • Quality control AI use case
+   
+5. **Healthcare Partners** (Elena Garcia)
+   • Patient data analytics opportunity
+   • Compliance-friendly AI needed
+
+**Coaching Note:** Only 3 of 6 reps are actively selling watsonx.ai. Consider team-wide AI solution training.`,
+      sources: ['Product Propensity Engine', 'Account Intelligence', 'Opportunity Data']
+    },
+    
+    'generate a coaching plan for noah': {
+      answer: `# Coaching Plan: Noah Williams
+
+**Status:** 🔴 High Risk - Immediate intervention required
+
+**Current Performance:**
+• Pipeline: $164K (goal: $220K) - **25% below quota**
+• Risk Score: **81%** (Critical)
+• Coverage: Only **29% of territory** engaged
+• Activity: **38 calls/week** vs team avg **57**
+
+---
+
+## 🎯 30-Day Coaching Plan
+
+### Week 1: Activity Foundation
+**Goal:** Double daily prospecting activity
+
+**Actions:**
+1. **Daily Check-ins** (15 min)
+   - Review previous day's activity
+   - Set daily call targets (minimum 12 calls/day)
+   - Remove blockers
+
+2. **Territory Audit** (60 min session)
+   - Review all 62 assigned accounts
+   - Prioritize top 30 accounts
+   - Create account engagement plan
+
+3. **Metrics to Track:**
+   - Calls per day: Target 12+ (currently 7.6)
+   - Connect rate: Target 35%+ (currently 28%)
+
+### Week 2: Conversion Skills
+**Goal:** Improve meeting-to-opportunity conversion
+
+**Actions:**
+1. **Call Recording Review** (45 min)
+   - Listen to 3 recent calls together
+   - Identify discovery question gaps
+   - Practice value proposition
+
+2. **Product Training** (90 min)
+   - watsonx.ai positioning (Noah's weak area)
+   - Instana best practices (Noah's strength - build on it)
+
+3. **Metrics to Track:**
+   - Meetings booked: Target 15+ (currently 11)
+   - Product mentions: Track watsonx.ai discussions
+
+### Week 3: Pipeline Building
+**Goal:** Create 5 new qualified opportunities
+
+**Actions:**
+1. **Account Strategy Sessions** (30 min each)
+   - Deep dive on top 5 accounts
+   - Identify buying signals
+   - Create opportunity plans
+
+2. **Joint Calls** (2-3 calls)
+   - Shadow Noah on discovery calls
+   - Provide real-time coaching
+   - Model effective questioning
+
+3. **Metrics to Track:**
+   - New opportunities created: Target 5
+   - Pipeline added: Target $50K+
+
+### Week 4: Momentum & Accountability
+**Goal:** Establish sustainable habits
+
+**Actions:**
+1. **Progress Review** (60 min)
+   - Celebrate wins
+   - Analyze what's working
+   - Adjust approach as needed
+
+2. **Peer Learning** (30 min)
+   - Pair with Elena Garcia (top performer)
+   - Learn her Instana positioning
+   - Share best practices
+
+3. **Set Next Month Goals:**
+   - Activity targets
+   - Pipeline goals
+   - Skill development focus
+
+---
+
+## 📊 Success Metrics
+
+**By End of Month:**
+- [ ] Calls per day: 12+ (from 7.6)
+- [ ] Territory coverage: 45%+ (from 29%)
+- [ ] New opportunities: 5+ (from 3/month)
+- [ ] Pipeline: $200K+ (from $164K)
+- [ ] Risk score: <60% (from 81%)
+
+---
+
+## 🚨 Red Flags to Watch
+
+- Missing daily check-ins
+- Call volume not improving by Week 2
+- No new opportunities by Week 3
+- Resistance to coaching
+
+**Escalation Plan:** If no improvement by Week 2, involve Director for PIP discussion.`,
+      sources: ['Risk Assessment', 'Activity Intelligence', 'Coaching Recommendations']
+    },
+    
+    'what are my team\'s biggest risks this quarter': {
+      answer: `# Team Risk Analysis - Q3 Week 8
+
+**Overall Status:** ⚠️ **3 of 6 reps at risk** - Team pacing at 82% of quota
+
+---
+
+## 🔴 Critical Risks
+
+### 1. Opportunity Creation Decline (-14% MoM)
+**Impact:** Future pipeline at risk
+
+**Details:**
+• Team created **43 opportunities** vs **50 last month**
+• Primary driver: Reduced meeting activity
+• **Jordan, Maya, and Noah** below team average
+
+**Action:** Implement daily activity tracking for at-risk reps
+
+---
+
+### 2. watsonx.ai Underutilization
+**Impact:** Missing $200K+ pipeline opportunity
+
+**Details:**
+• Only **12% of calls** mention watsonx.ai (down 32%)
+• Product has **58% win rate** (highest on team)
+• Only **3 of 6 reps** actively selling it
+
+**Action:** Schedule urgent watsonx.ai training for Jordan, Maya, Noah
+
+---
+
+### 3. Noah Williams - Critical Risk (81%)
+**Impact:** $56K quota gap, trending worse
+
+**Details:**
+• Only **29% territory coverage**
+• **38 calls/week** vs team avg **57**
+• **3 opportunities** vs team avg **7**
+
+**Action:** Immediate coaching intervention (see coaching plan)
+
+---
+
+## ⚠️ Medium Risks
+
+### 4. Jordan Lee - Territory Coverage (72% risk)
+• Only **26% of accounts** engaged
+• **4 opportunities** created vs team avg **7**
+• Action: Territory audit and account prioritization
+
+### 5. Maya Chen - Future Pipeline Risk (38% risk)
+• Strong pipeline **today** ($286K)
+• But opportunity creation **down 38%**
+• Action: Protect current deals while rebuilding pipeline
+
+---
+
+## ✅ Strengths to Leverage
+
+### Priya Shah - Top Performer
+• **4.2× coverage**, exceeding quota
+• Strong watsonx.ai expertise
+• **Action:** Share best practices with team
+
+### Elena Garcia - High Activity
+• **15 calls/day** with **44% connect rate**
+• Strong Instana positioning
+• **Action:** Pair with Noah for peer coaching
+
+---
+
+## 📈 Recommended Actions (Priority Order)
+
+1. **This Week:**
+   - [ ] Schedule watsonx.ai training (Jordan, Maya, Noah)
+   - [ ] Start daily check-ins with Noah
+   - [ ] Territory audit with Jordan
+
+2. **This Month:**
+   - [ ] Implement activity tracking dashboard
+   - [ ] Create product positioning playbook
+   - [ ] Establish peer coaching program
+
+3. **This Quarter:**
+   - [ ] Rebuild opportunity creation to 50+/month
+   - [ ] Increase watsonx.ai pipeline by $200K
+   - [ ] Get all reps to 3.5× coverage minimum
+
+**Bottom Line:** Focus on Noah (critical) and opportunity creation (systemic). Success here protects Q4.`,
+      sources: ['Risk Assessments', 'Team Analytics', 'Product Intelligence']
+    }
+  },
+  
+  init() {
+    this.setupEventListeners();
+  },
+  
+  setupEventListeners() {
+    const toggle = document.getElementById('copilot-toggle');
+    const close = document.getElementById('copilot-close');
+    const send = document.getElementById('copilot-send');
+    const input = document.getElementById('copilot-input');
+    const suggestions = document.querySelectorAll('.copilot-suggestion');
+    
+    if (toggle) {
+      toggle.addEventListener('click', () => this.toggleChat());
+    }
+    
+    if (close) {
+      close.addEventListener('click', () => this.closeChat());
+    }
+    
+    if (send) {
+      send.addEventListener('click', () => this.sendMessage());
+    }
+    
+    if (input) {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          this.sendMessage();
+        }
+      });
+      
+      // Auto-resize textarea
+      input.addEventListener('input', (e) => {
+        e.target.style.height = 'auto';
+        e.target.style.height = e.target.scrollHeight + 'px';
+      });
+    }
+    
+    suggestions.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const query = btn.dataset.query;
+        this.sendMessage(query);
+      });
+    });
+  },
+  
+  toggleChat() {
+    const chat = document.getElementById('copilot-chat');
+    this.isOpen = !this.isOpen;
+    
+    if (this.isOpen) {
+      chat.classList.add('active');
+      document.getElementById('copilot-input').focus();
+    } else {
+      chat.classList.remove('active');
+    }
+  },
+  
+  closeChat() {
+    const chat = document.getElementById('copilot-chat');
+    chat.classList.remove('active');
+    this.isOpen = false;
+  },
+  
+  sendMessage(text) {
+    const input = document.getElementById('copilot-input');
+    const message = text || input.value.trim();
+    
+    if (!message || this.isTyping) return;
+    
+    // Add user message
+    this.addMessage(message, 'user');
+    
+    // Clear input
+    if (!text) {
+      input.value = '';
+      input.style.height = 'auto';
+    }
+    
+    // Show typing indicator
+    this.showTyping();
+    
+    // Simulate AI response delay
+    setTimeout(() => {
+      this.hideTyping();
+      this.generateResponse(message);
+    }, 1500 + Math.random() * 1000);
+  },
+  
+  addMessage(content, type = 'assistant', sources = []) {
+    const messagesContainer = document.getElementById('copilot-messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `copilot-message ${type}`;
+    
+    const avatar = type === 'user' ? 'AM' : `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M12 16v-4M12 8h.01"></path>
+      </svg>
+    `;
+    
+    // Convert markdown-style formatting to HTML
+    const formattedContent = this.formatMessage(content);
+    
+    let sourcesHTML = '';
+    if (sources.length > 0) {
+      sourcesHTML = `
+        <div class="message-meta">
+          ${sources.map(s => `<span class="message-source">📊 ${s}</span>`).join('')}
+        </div>
+      `;
+    }
+    
+    messageDiv.innerHTML = `
+      <div class="message-avatar">${avatar}</div>
+      <div class="message-content">
+        ${formattedContent}
+        ${sourcesHTML}
+      </div>
+    `;
+    
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  },
+  
+  formatMessage(text) {
+    // Convert markdown-style formatting to HTML
+    let formatted = text
+      // Headers
+      .replace(/^# (.+)$/gm, '<h3 style="margin: 0 0 12px; font-size: 16px; font-weight: 600;">$1</h3>')
+      .replace(/^## (.+)$/gm, '<h4 style="margin: 12px 0 8px; font-size: 14px; font-weight: 600;">$1</h4>')
+      .replace(/^### (.+)$/gm, '<h5 style="margin: 8px 0 6px; font-size: 13px; font-weight: 600;">$1</h5>')
+      // Bold
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      // Bullet points
+      .replace(/^• (.+)$/gm, '<li>$1</li>')
+      // Checkboxes
+      .replace(/^\- \[ \] (.+)$/gm, '<li style="list-style: none;"><input type="checkbox" disabled> $1</li>')
+      .replace(/^\- \[x\] (.+)$/gm, '<li style="list-style: none;"><input type="checkbox" checked disabled> $1</li>')
+      // Line breaks
+      .replace(/\n\n/g, '</p><p>')
+      // Horizontal rules
+      .replace(/^---$/gm, '<hr style="margin: 16px 0; border: none; border-top: 1px solid #dde4e6;">');
+    
+    // Wrap in paragraphs if not already wrapped
+    if (!formatted.startsWith('<')) {
+      formatted = '<p>' + formatted + '</p>';
+    }
+    
+    // Wrap bullet points in ul
+    formatted = formatted.replace(/(<li>.*<\/li>)/s, '<ul style="margin: 8px 0; padding-left: 20px;">$1</ul>');
+    
+    return formatted;
+  },
+  
+  showTyping() {
+    this.isTyping = true;
+    const messagesContainer = document.getElementById('copilot-messages');
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'copilot-typing';
+    typingDiv.id = 'typing-indicator';
+    typingDiv.innerHTML = `
+      <div class="message-avatar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4M12 8h.01"></path>
+        </svg>
+      </div>
+      <div class="typing-indicator">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    `;
+    messagesContainer.appendChild(typingDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  },
+  
+  hideTyping() {
+    this.isTyping = false;
+    const typingIndicator = document.getElementById('typing-indicator');
+    if (typingIndicator) {
+      typingIndicator.remove();
+    }
+  },
+  
+  generateResponse(query) {
+    const lowerQuery = query.toLowerCase();
+    
+    // Check for pre-defined responses
+    for (const [key, response] of Object.entries(this.responses)) {
+      if (lowerQuery.includes(key) || key.includes(lowerQuery)) {
+        this.addMessage(response.answer, 'assistant', response.sources);
+        return;
+      }
+    }
+    
+    // Generate contextual response based on query keywords
+    if (lowerQuery.includes('risk') || lowerQuery.includes('at risk')) {
+      this.addMessage(this.generateRiskResponse(), 'assistant', ['Risk Assessments']);
+    } else if (lowerQuery.includes('product') || lowerQuery.includes('watsonx') || lowerQuery.includes('ibm')) {
+      this.addMessage(this.generateProductResponse(), 'assistant', ['Product Intelligence']);
+    } else if (lowerQuery.includes('pipeline') || lowerQuery.includes('quota')) {
+      this.addMessage(this.generatePipelineResponse(), 'assistant', ['Pipeline Analytics']);
+    } else if (lowerQuery.includes('activity') || lowerQuery.includes('calls') || lowerQuery.includes('meetings')) {
+      this.addMessage(this.generateActivityResponse(), 'assistant', ['Activity Intelligence']);
+    } else {
+      // Default helpful response
+      this.addMessage(`I can help you with:
+
+• **Team Performance**: Ask about quota attainment, pipeline health, or at-risk reps
+• **Individual Coaching**: Get detailed coaching plans for any rep
+• **Product Intelligence**: Find accounts to target for specific IBM products
+• **Risk Analysis**: Understand your team's biggest risks and how to address them
+• **Activity Insights**: Analyze call patterns, meeting effectiveness, and more
+
+Try asking: "Why is Jordan behind quota?" or "Which accounts should I target for watsonx.ai?"`, 'assistant');
+    }
+  },
+  
+  generateRiskResponse() {
+    const atRiskReps = this.knowledge.reps.filter(r => r.risk >= 50);
+    return `Your team currently has **${atRiskReps.length} reps at risk**:
+
+${atRiskReps.map(r => `• **${r.name}**: ${r.risk}% risk score - ${r.exposedArea} exposure`).join('\n')}
+
+The primary team-wide risk is **opportunity creation down 14%** month-over-month. This threatens future pipeline.
+
+Would you like a detailed coaching plan for any specific rep?`;
+  },
+  
+  generateProductResponse() {
+    return `**IBM Product Performance Summary:**
+
+**Top Performers:**
+• **watsonx.ai**: 58% win rate (highest!) but only 12% call mentions
+• **Db2 Warehouse**: $320K pipeline, 47% win rate
+• **Instana**: Trending up 15%, strong with Elena & Noah
+
+**Opportunities:**
+• **watsonx.ai training needed** for Jordan, Maya, and Noah
+• Cross-sell Db2 customers to watsonx.data (high propensity)
+• Leverage Priya's AI expertise across team
+
+Which product would you like to focus on?`;
+  },
+  
+  generatePipelineResponse() {
+    const totalPipeline = this.knowledge.reps.reduce((sum, r) => sum + r.pipeline, 0);
+    const totalGoal = this.knowledge.reps.reduce((sum, r) => sum + r.goal, 0);
+    const pacing = ((totalPipeline / totalGoal) * 100).toFixed(0);
+    
+    return `**Team Pipeline Status:**
+
+• Total Pipeline: **${formatCurrency(totalPipeline)}**
+• Team Quota: **${formatCurrency(totalGoal)}**
+• Pacing: **${pacing}% of quota**
+• Coverage: **3.2×** (target: 3.5×)
+
+**Key Issues:**
+• 3 reps below quota (Jordan, Noah, Sam)
+• Combined gap: **$278K**
+• Opportunity creation down 14%
+
+**Recommended Focus:**
+1. Increase opportunity creation (team-wide)
+2. Coach Jordan on territory coverage
+3. Accelerate Noah's activity levels
+
+Need a detailed plan for any of these?`;
+  },
+  
+  generateActivityResponse() {
+    return `**Team Activity Summary:**
+
+**Strong Performers:**
+• **Elena Garcia**: 15 calls/day, 44% connect rate
+• **Priya Shah**: 13.6 calls/day, 42% connect rate
+
+**Need Coaching:**
+• **Noah Williams**: Only 7.6 calls/day, 28% connect rate
+• **Jordan Lee**: 9.6 calls/day, 32% connect rate
+
+**Product Mention Alert:**
+• watsonx.ai mentions down 32% (only 12% of calls)
+• Only 3 reps actively discussing AI solutions
+
+**Action Items:**
+1. Pair Noah with Elena for activity coaching
+2. Schedule watsonx.ai training for team
+3. Implement daily activity tracking
+
+Would you like specific coaching recommendations?`;
+  }
+};
+
+// Initialize copilot when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  copilot.init();
+});
