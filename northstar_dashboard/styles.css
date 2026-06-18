@@ -1480,6 +1480,92 @@ body {
   color: #385958;
 }
 
+/* Coaching Questions Panel */
+.coaching-questions-panel {
+  margin-bottom: 16px;
+}
+
+.coaching-question-section {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #dde4e6;
+}
+
+.coaching-question-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.question-section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.question-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.question-section-head strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2d3d;
+}
+
+.coaching-questions-list {
+  list-style: none;
+  counter-reset: question-counter;
+  padding: 0;
+  margin: 0;
+}
+
+.coaching-questions-list li {
+  counter-increment: question-counter;
+  position: relative;
+  padding: 12px 12px 12px 40px;
+  margin-bottom: 8px;
+  background: #f4f7f7;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1f2d3d;
+  transition: all 0.2s ease;
+}
+
+.coaching-questions-list li:hover {
+  background: #e8f1f1;
+  transform: translateX(2px);
+}
+
+.coaching-questions-list li::before {
+  content: counter(question-counter);
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  width: 20px;
+  height: 20px;
+  background: #087f75;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.no-questions {
+  padding: 24px;
+  text-align: center;
+  color: #68767d;
+  font-size: 14px;
+  background: #dff3ef;
+  border-radius: 8px;
+}
+
 .growth-strategy {
   margin-top: 20px;
   background: #f4f8f7;
