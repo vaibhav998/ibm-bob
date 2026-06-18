@@ -267,6 +267,11 @@ body {
   cursor: pointer;
 }
 
+.icon-btn[aria-label="Search"] {
+  font-size: 22px;
+  transform: scaleX(-1);
+}
+
 .notification {
   position: relative;
 }
