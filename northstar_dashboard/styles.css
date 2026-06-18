@@ -2709,9 +2709,9 @@ body {
 }
 
 .copilot-chat {
-  position: absolute;
-  bottom: 76px;
-  right: 0;
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
   width: 420px;
   max-height: min(600px, calc(100vh - 120px));
   background: white;
@@ -2721,6 +2721,7 @@ body {
   flex-direction: column;
   overflow: hidden;
   animation: slideUp 0.3s ease;
+  z-index: 1000;
 }
 
 .copilot-chat.active {
