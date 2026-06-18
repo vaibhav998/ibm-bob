@@ -86,6 +86,74 @@
   background: #161616;
 }
 
+/* Dark Mode Text Color Overrides */
+[data-theme="dark"] .crumb strong,
+[data-theme="dark"] .lede,
+[data-theme="dark"] .kpi small,
+[data-theme="dark"] .panel-footer,
+[data-theme="dark"] .table-head,
+[data-theme="dark"] .metric-cell small,
+[data-theme="dark"] .bar-labels span,
+[data-theme="dark"] .insight-row small,
+[data-theme="dark"] .rep-ident small,
+[data-theme="dark"] .rep-meta,
+[data-theme="dark"] .rep-kpi small,
+[data-theme="dark"] .question-box li,
+[data-theme="dark"] .exposure small,
+[data-theme="dark"] .formula-metrics small,
+[data-theme="dark"] .compact-questions span,
+[data-theme="dark"] .rec p,
+[data-theme="dark"] .rec-action,
+[data-theme="dark"] .coaching-questions-list li,
+[data-theme="dark"] .search-result-item small,
+[data-theme="dark"] small {
+  color: #c6c6c6 !important;
+}
+
+[data-theme="dark"] .eyebrow,
+[data-theme="dark"] .crumb,
+[data-theme="dark"] .filter-btn,
+[data-theme="dark"] .segmented button:not(.active) {
+  color: #a8a8a8 !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] strong:not(.risk):not([style*="color"]),
+[data-theme="dark"] .kpi strong,
+[data-theme="dark"] .rep-ident strong,
+[data-theme="dark"] .rep-kpi strong,
+[data-theme="dark"] .metric-cell strong:not([style*="color"]),
+[data-theme="dark"] .panel strong,
+[data-theme="dark"] .gap-display strong,
+[data-theme="dark"] .need-block strong,
+[data-theme="dark"] .recovery-options strong {
+  color: #f4f4f4 !important;
+}
+
+[data-theme="dark"] p,
+[data-theme="dark"] .panel-footer span {
+  color: #c6c6c6 !important;
+}
+
+/* Additional dark mode fixes for coaching page */
+[data-theme="dark"] .rep-kpis {
+  background: var(--soft);
+  border-color: var(--line);
+}
+
+[data-theme="dark"] .coach-alert {
+  background: #1a3a3c;
+  border-color: #2a4a4c;
+}
+
+[data-theme="dark"] .gap-display,
+[data-theme="dark"] .formula-metrics,
+[data-theme="dark"] .exposure-grid {
+  color: #f4f4f4;
+}
+
 * {
   box-sizing: border-box;
 }
