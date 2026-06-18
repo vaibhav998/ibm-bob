@@ -1,3 +1,73 @@
+// Coaching questions framework - contextual based on performance issues
+const coachingQuestions = {
+  pipelineGap: {
+    category: 'Pipeline Gap Analysis',
+    icon: '📊',
+    questions: [
+      'Walk me through how you got to this pipeline position. What changed?',
+      'Which deals in your pipeline are honestly not likely to close this quarter?',
+      'If you had to remove the weakest 20% of your pipeline, what would remain?',
+      'What is the true gap we need to close, accounting for realistic win rates?',
+      'Which lever are you pulling this month to close the gap - new opportunities, deal acceleration, or deal size?'
+    ]
+  },
+  lowActivity: {
+    category: 'Activity & Engagement',
+    icon: '⚡',
+    questions: [
+      'What is preventing you from reaching your activity targets?',
+      'Walk me through your typical day. Where is time being lost?',
+      'How many accounts have you touched in the last two weeks?',
+      'What percentage of your assigned territory are you actively working?',
+      'What changes are you making tomorrow to increase your activity level?'
+    ]
+  },
+  opportunityCreation: {
+    category: 'Opportunity Creation',
+    icon: '🎯',
+    questions: [
+      'Why is opportunity creation down compared to previous months?',
+      'What is your current meeting-to-opportunity conversion rate?',
+      'Are you currently on pace to hit your creation targets?',
+      'Which accounts have the highest potential for new opportunities?',
+      'What is blocking you from generating more qualified meetings?'
+    ]
+  },
+  conversionIssues: {
+    category: 'Conversion & Deal Progression',
+    icon: '🔄',
+    questions: [
+      'Why are deals stalling at this stage?',
+      'What objections are you hearing most frequently?',
+      'Who are the key stakeholders you haven\'t engaged yet?',
+      'What accelerator can speed up your top opportunity?',
+      'Which deals need executive involvement to move forward?'
+    ]
+  },
+  accountCoverage: {
+    category: 'Territory & Account Management',
+    icon: '🗺️',
+    questions: [
+      'Why are so many accounts in your territory untouched?',
+      'Which accounts should be your top priority this week?',
+      'What is your strategy for penetrating your largest accounts?',
+      'Are you focusing on the right accounts, or spreading too thin?',
+      'Which accounts have buying signals you haven\'t acted on?'
+    ]
+  },
+  skillDevelopment: {
+    category: 'Skills & Capability',
+    icon: '📚',
+    questions: [
+      'What skill would have the biggest impact on your performance?',
+      'Where do you need additional product knowledge or training?',
+      'What are you learning from your most successful deals?',
+      'Who on the team could you shadow to improve your approach?',
+      'What support or resources do you need that you don\'t have?'
+    ]
+  }
+};
+
 // Rep data with IBM coaching metrics
 const reps = [
   {
@@ -618,6 +688,12 @@ function renderCoaching() {
   // Update Recommendations
   renderRecommendations(rep);
   
+  // Update Coaching Questions
+  const coachingQuestionsContainer = document.getElementById('coaching-questions-container');
+  if (coachingQuestionsContainer) {
+    coachingQuestionsContainer.innerHTML = renderCoachingQuestions(rep);
+  }
+  
   // Update rep menu
   renderRepMenu();
 }
@@ -649,6 +725,43 @@ function renderZoomOut(rep) {
   document.getElementById('exposed-label').textContent = rep.exposedArea;
 }
 
+function getContextualCoachingQuestions(rep) {
+  const questions = [];
+  
+  // Pipeline gap - if below goal
+  if (rep.pipeline < rep.goal) {
+    questions.push(coachingQuestions.pipelineGap);
+  }
+  
+  // Low activity - if untouched accounts > 30% or meetings below average
+  const untouchedPercent = ((rep.accountsAssigned - rep.accountsTouched) / rep.accountsAssigned) * 100;
+  if (untouchedPercent > 30 || rep.meetings < 18) {
+    questions.push(coachingQuestions.lowActivity);
+  }
+  
+  // Opportunity creation - if below team average
+  if (rep.opportunities < rep.teamAvg) {
+    questions.push(coachingQuestions.opportunityCreation);
+  }
+  
+  // Conversion issues - if conversion rate is low
+  if (rep.conversion < 30) {
+    questions.push(coachingQuestions.conversionIssues);
+  }
+  
+  // Account coverage - if untouched accounts > 25%
+  if (untouchedPercent > 25) {
+    questions.push(coachingQuestions.accountCoverage);
+  }
+  
+  // Always include skill development for high-risk reps
+  if (rep.risk >= 60) {
+    questions.push(coachingQuestions.skillDevelopment);
+  }
+  
+  return questions;
+}
+
 function renderRecommendations(rep) {
   document.getElementById('recommendation-list').innerHTML = rep.recommendations.map(rec => `
     <div class="rec">
@@ -658,6 +771,26 @@ function renderRecommendations(rep) {
       </div>
       <p><strong>Reason:</strong> ${rec.reason}</p>
       <div class="rec-action"><strong>Action:</strong> ${rec.action}</div>
+    </div>
+  `).join('');
+}
+
+function renderCoachingQuestions(rep) {
+  const questions = getContextualCoachingQuestions(rep);
+  
+  if (questions.length === 0) {
+    return '<div class="no-questions">No specific coaching questions needed - rep is performing well!</div>';
+  }
+  
+  return questions.map(section => `
+    <div class="coaching-question-section">
+      <div class="question-section-head">
+        <span class="question-icon">${section.icon}</span>
+        <strong>${section.category}</strong>
+      </div>
+      <ol class="coaching-questions-list">
+        ${section.questions.map(q => `<li>${q}</li>`).join('')}
+      </ol>
     </div>
   `).join('');
 }
