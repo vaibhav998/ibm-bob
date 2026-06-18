@@ -791,13 +791,13 @@
             <div style="padding: 20px;">
               <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink);">Select Product</label>
-                <select style="width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px; font-size: 14px;">
-                  <option>watsonx.ai - AI Platform</option>
-                  <option>watsonx.data - Data Lakehouse</option>
-                  <option>Db2 Warehouse - Data Warehouse</option>
-                  <option>Instana - Observability</option>
-                  <option>Guardium - Data Security</option>
-                  <option>Turbonomic - Application Resource Management</option>
+                <select id="roi-product" style="width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px; font-size: 14px;">
+                  <option>watsonx.ai</option>
+                  <option>watsonx.data</option>
+                  <option>Db2 Warehouse</option>
+                  <option>Instana</option>
+                  <option>Guardium</option>
+                  <option>Turbonomic</option>
                 </select>
               </div>
 
@@ -806,7 +806,7 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                   <div>
                     <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Company Size</label>
-                    <select style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                    <select id="roi-size" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
                       <option>Enterprise (1000+)</option>
                       <option>Mid-Market (100-999)</option>
                       <option>SMB (<100)</option>
@@ -814,7 +814,7 @@
                   </div>
                   <div>
                     <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Industry</label>
-                    <select style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                    <select id="roi-industry" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
                       <option>Financial Services</option>
                       <option>Healthcare</option>
                       <option>Retail</option>
@@ -829,33 +829,33 @@
                 <label style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink);">Current State Metrics</label>
                 <div style="margin-bottom: 12px;">
                   <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Data Volume (TB)</label>
-                  <input type="number" value="500" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                  <input type="number" id="roi-data-volume" value="500" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
                 </div>
                 <div style="margin-bottom: 12px;">
                   <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Annual Data Growth (%)</label>
-                  <input type="number" value="40" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                  <input type="number" id="roi-growth-rate" value="40" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
                 </div>
                 <div style="margin-bottom: 12px;">
                   <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Current Annual Cost ($)</label>
-                  <input type="number" value="850000" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
+                  <input type="number" id="roi-current-cost" value="850000" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
                 </div>
               </div>
 
-              <button style="width: 100%; padding: 12px; background: linear-gradient(135deg, #087f75 0%, #10a195 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600;">Calculate ROI →</button>
+              <button onclick="calculateROI()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #087f75 0%, #10a195 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600;">Calculate ROI →</button>
 
-              <div style="margin-top: 20px; padding: 16px; background: linear-gradient(135deg, #dff3ef 0%, #ffffff 100%); border-radius: 8px; border: 1px solid #087f75;">
+              <div id="roi-result-panel" style="margin-top: 20px; padding: 16px; background: linear-gradient(135deg, #dff3ef 0%, #ffffff 100%); border-radius: 8px; border: 1px solid #087f75;">
                 <div style="text-align: center; margin-bottom: 12px;">
                   <span style="display: block; font-size: 12px; color: #68767d; margin-bottom: 4px;">Estimated 3-Year ROI</span>
-                  <strong style="font-size: 32px; color: #087f75;">287%</strong>
+                  <strong id="roi-result-value" style="font-size: 32px; color: #087f75;">287%</strong>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
                   <div style="text-align: center;">
                     <span style="display: block; font-size: 11px; color: #68767d;">Cost Savings</span>
-                    <strong style="font-size: 18px; color: var(--ink);">$1.2M</strong>
+                    <strong id="roi-savings-value" style="font-size: 18px; color: var(--ink);">$1.2M</strong>
                   </div>
                   <div style="text-align: center;">
                     <span style="display: block; font-size: 11px; color: #68767d;">Payback Period</span>
-                    <strong style="font-size: 18px; color: var(--ink);">8 months</strong>
+                    <strong id="roi-payback-value" style="font-size: 18px; color: var(--ink);">8 months</strong>
                   </div>
                 </div>
               </div>

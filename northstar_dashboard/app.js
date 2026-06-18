@@ -4,6 +4,132 @@ function toggleAIInsights(event) {
   const button = event.target;
   const panel = button.closest('.ai-insights-panel');
   if (panel) {
+
+// ROI Calculator
+const roiCalculator = {
+  products: {
+    'watsonx.ai': {
+      baseCost: 50000,
+      costPerTB: 200,
+      efficiencyGain: 0.35,
+      timeToValue: 6
+    },
+    'watsonx.data': {
+      baseCost: 40000,
+      costPerTB: 150,
+      efficiencyGain: 0.60,
+      timeToValue: 4
+    },
+    'Db2 Warehouse': {
+      baseCost: 35000,
+      costPerTB: 180,
+      efficiencyGain: 0.40,
+      timeToValue: 5
+    },
+    'Instana': {
+      baseCost: 25000,
+      costPerTB: 100,
+      efficiencyGain: 0.45,
+      timeToValue: 3
+    },
+    'Guardium': {
+      baseCost: 30000,
+      costPerTB: 120,
+      efficiencyGain: 0.30,
+      timeToValue: 4
+    },
+    'Turbonomic': {
+      baseCost: 28000,
+      costPerTB: 110,
+      efficiencyGain: 0.50,
+      timeToValue: 3
+    }
+  },
+  
+  sizeMultipliers: {
+    'Enterprise (1000+)': 1.5,
+    'Mid-Market (100-999)': 1.0,
+    'SMB (<100)': 0.6
+  },
+  
+  industryMultipliers: {
+    'Financial Services': 1.3,
+    'Healthcare': 1.2,
+    'Retail': 1.0,
+    'Manufacturing': 1.1,
+    'Technology': 0.9
+  },
+  
+  calculate: function(productName, companySize, industry, dataVolume, growthRate, currentCost) {
+    const product = this.products[productName];
+    if (!product) return null;
+    
+    const sizeMultiplier = this.sizeMultipliers[companySize] || 1.0;
+    const industryMultiplier = this.industryMultipliers[industry] || 1.0;
+    
+    // Calculate IBM solution cost
+    const yearOneCost = (product.baseCost + (dataVolume * product.costPerTB)) * sizeMultiplier * industryMultiplier;
+    
+    // Calculate 3-year costs with growth
+    const year2Volume = dataVolume * (1 + growthRate / 100);
+    const year3Volume = year2Volume * (1 + growthRate / 100);
+    
+    const year2Cost = yearOneCost * 1.05; // 5% annual increase
+    const year3Cost = year2Cost * 1.05;
+    
+    const totalIBMCost = yearOneCost + year2Cost + year3Cost;
+    
+    // Calculate current solution 3-year cost with growth
+    const currentYear2Cost = currentCost * (1 + growthRate / 100) * 1.08; // 8% annual increase
+    const currentYear3Cost = currentYear2Cost * (1 + growthRate / 100) * 1.08;
+    const totalCurrentCost = currentCost + currentYear2Cost + currentYear3Cost;
+    
+    // Calculate efficiency gains
+    const efficiencyValue = currentCost * product.efficiencyGain * 3; // 3 years
+    
+    // Calculate total savings
+    const totalSavings = (totalCurrentCost - totalIBMCost) + efficiencyValue;
+    
+    // Calculate ROI
+    const roi = ((totalSavings / totalIBMCost) * 100).toFixed(0);
+    
+    // Calculate payback period (months)
+    const monthlySavings = totalSavings / 36;
+    const paybackMonths = Math.ceil(yearOneCost / monthlySavings);
+    
+    return {
+      roi: roi,
+      savings: Math.round(totalSavings),
+      paybackMonths: paybackMonths,
+      yearOneCost: Math.round(yearOneCost),
+      totalCost: Math.round(totalIBMCost)
+    };
+  }
+};
+
+function calculateROI() {
+  const product = document.getElementById('roi-product').value;
+  const companySize = document.getElementById('roi-size').value;
+  const industry = document.getElementById('roi-industry').value;
+  const dataVolume = parseFloat(document.getElementById('roi-data-volume').value) || 0;
+  const growthRate = parseFloat(document.getElementById('roi-growth-rate').value) || 0;
+  const currentCost = parseFloat(document.getElementById('roi-current-cost').value) || 0;
+  
+  if (dataVolume === 0 || currentCost === 0) {
+    alert('Please enter data volume and current cost');
+    return;
+  }
+  
+  const result = roiCalculator.calculate(product, companySize, industry, dataVolume, growthRate, currentCost);
+  
+  if (result) {
+    document.getElementById('roi-result-value').textContent = result.roi + '%';
+    document.getElementById('roi-savings-value').textContent = '$' + (result.savings / 1000000).toFixed(1) + 'M';
+    document.getElementById('roi-payback-value').textContent = result.paybackMonths + ' months';
+    document.getElementById('roi-result-panel').style.display = 'block';
+  }
+}
+
     panel.classList.toggle('collapsed');
   }
 }
