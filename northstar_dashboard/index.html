@@ -6,8 +6,9 @@
   <title>Northstar · Sales Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <div class="app-shell">
@@ -30,7 +31,11 @@
       <header class="topbar">
         <button class="mobile-menu" aria-label="Open menu" id="mobile-menu">☰</button>
         <div class="crumb"><span>Sales intelligence</span><span>/</span><strong id="crumb-label">Manager overview</strong></div>
-        <div class="top-actions"><button class="icon-btn" aria-label="Search">⌕</button><button class="icon-btn notification" aria-label="Notifications">♢<i></i></button></div>
+        <div class="top-actions">
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"></button>
+          <button class="icon-btn" aria-label="Search">⌕</button>
+          <button class="icon-btn notification" aria-label="Notifications">♢<i></i></button>
+        </div>
       </header>
 
       <section id="overview" class="view active">
@@ -54,7 +59,22 @@
 
         <div class="two-col">
           <div class="panel">
-            <div class="card-head"><div><h2>Risk matrix</h2><p>Pipeline health × opportunity creation</p></div><span class="info">i</span></div>
+            <div class="card-head"><div><h2>Pipeline Trend</h2><p>8-week pipeline growth</p></div></div>
+            <div style="height: 240px; padding: 10px;">
+              <canvas id="pipeline-trend-chart"></canvas>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="card-head"><div><h2>Rep Performance</h2><p>Pipeline by sales rep</p></div></div>
+            <div style="height: 240px; padding: 10px;">
+              <canvas id="rep-performance-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <div class="card-head"><div><h2>Risk matrix</h2><p>Pipeline health × opportunity creation</p></div><span class="info tooltip" data-tooltip="Quadrant analysis of rep performance">i</span></div>
             <div class="matrix" id="risk-matrix">
               <span class="axis y">OPPORTUNITY CREATION →</span><span class="axis x">PIPELINE HEALTH →</span>
               <div class="quad q1"><strong>Conversion coaching</strong><small>Low pipeline · High creation</small></div>
@@ -64,9 +84,10 @@
             </div>
           </div>
           <div class="panel">
-            <div class="card-head"><div><h2>Opportunity creation</h2><p>This month versus previous month</p></div><button class="more">•••</button></div>
-            <div class="opp-summary"><div><small>OPPORTUNITIES</small><strong id="team-opps">43</strong><span class="down">↓ 14%</span></div><div><small>MEETINGS</small><strong id="team-meetings">128</strong><span class="up">↑ 6%</span></div></div>
-            <div class="insight-list" id="insight-list"></div>
+            <div class="card-head"><div><h2>Opportunity Distribution</h2><p>By sales stage</p></div></div>
+            <div style="height: 240px; padding: 10px;">
+              <canvas id="opportunity-chart"></canvas>
+            </div>
           </div>
         </div>
       </section>

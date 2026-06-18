@@ -953,6 +953,387 @@ function selectRep(repId) {
 }
 
 // Initialize on load
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  initEnhancements();
+});
 
 // Made with Bob
+
+// ============================================
+// DARK MODE TOGGLE
+// ============================================
+
+function initDarkMode() {
+  const themeToggle = document.getElementById('theme-toggle');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  }
+}
+
+// ============================================
+// CHART.JS CONFIGURATIONS
+// ============================================
+
+const chartColors = {
+  primary: '#0f62fe',
+  success: '#24a148',
+  warning: '#f1c21b',
+  danger: '#da1e28',
+  teal: '#087f75',
+  purple: '#8a3ffc',
+  grid: 'rgba(0, 0, 0, 0.05)',
+  text: '#525252'
+};
+
+const chartDefaults = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: false
+    },
+    tooltip: {
+      backgroundColor: '#161616',
+      titleColor: '#ffffff',
+      bodyColor: '#ffffff',
+      borderColor: '#393939',
+      borderWidth: 1,
+      padding: 12,
+      displayColors: false,
+      callbacks: {
+        label: function(context) {
+          return context.parsed.y !== null ? formatCurrency(context.parsed.y) : '';
+        }
+      }
+    }
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+      grid: {
+        color: chartColors.grid,
+        drawBorder: false
+      },
+      ticks: {
+        color: chartColors.text,
+        font: {
+          size: 11
+        },
+        callback: function(value) {
+          return formatCurrency(value);
+        }
+      }
+    },
+    x: {
+      grid: {
+        display: false,
+        drawBorder: false
+      },
+      ticks: {
+        color: chartColors.text,
+        font: {
+          size: 11
+        }
+      }
+    }
+  }
+};
+
+// ============================================
+// SPARKLINE GENERATOR
+// ============================================
+
+function createSparkline(data, trend = 'neutral') {
+  const max = Math.max(...data);
+  const min = Math.min(...data);
+  const range = max - min;
+  
+  const points = data.map((value, index) => {
+    const x = (index / (data.length - 1)) * 60;
+    const y = 24 - ((value - min) / range) * 20;
+    return `${x},${y}`;
+  }).join(' ');
+  
+  const trendClass = trend === 'up' ? 'trend-up' : trend === 'down' ? 'trend-down' : '';
+  
+  return `
+    <svg class="sparkline ${trendClass}" viewBox="0 0 60 24">
+      <polyline class="sparkline-path" points="${points}" />
+    </svg>
+  `;
+}
+
+// ============================================
+// PROGRESS RING GENERATOR
+// ============================================
+
+function createProgressRing(percentage, size = 120) {
+  const radius = (size - 16) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (percentage / 100) * circumference;
+  
+  return `
+    <div class="progress-ring" style="width: ${size}px; height: ${size}px;">
+      <svg width="${size}" height="${size}">
+        <circle class="progress-ring-bg" cx="${size/2}" cy="${size/2}" r="${radius}" />
+        <circle class="progress-ring-progress" cx="${size/2}" cy="${size/2}" r="${radius}"
+                style="stroke-dashoffset: ${offset};" />
+      </svg>
+      <div class="progress-ring-text">${percentage}%</div>
+    </div>
+  `;
+}
+
+// ============================================
+// TOOLTIP HELPER
+// ============================================
+
+function addTooltip(element, text, position = 'top') {
+  element.classList.add('tooltip');
+  if (position !== 'top') {
+    element.classList.add(`tooltip-${position}`);
+  }
+  element.setAttribute('data-tooltip', text);
+}
+
+// ============================================
+// LOADING STATE HELPERS
+// ============================================
+
+function showLoading(element) {
+  element.classList.add('loading');
+}
+
+function hideLoading(element) {
+  element.classList.remove('loading');
+}
+
+function createSkeleton(type = 'text') {
+  const skeletonClasses = {
+    text: 'skeleton skeleton-text',
+    title: 'skeleton skeleton-title',
+    card: 'skeleton skeleton-card',
+    avatar: 'skeleton skeleton-avatar'
+  };
+  
+  const div = document.createElement('div');
+  div.className = skeletonClasses[type] || skeletonClasses.text;
+  return div;
+}
+
+// ============================================
+// EMPTY STATE GENERATOR
+// ============================================
+
+function createEmptyState(icon, title, message, actionText, actionCallback) {
+  return `
+    <div class="empty-state">
+      <div class="empty-state-icon">${icon}</div>
+      <h3>${title}</h3>
+      <p>${message}</p>
+      ${actionText ? `<button class="button primary" onclick="${actionCallback}">${actionText}</button>` : ''}
+    </div>
+  `;
+}
+
+// ============================================
+// PIPELINE TREND CHART
+// ============================================
+
+function renderPipelineTrendChart() {
+  const canvas = document.getElementById('pipeline-trend-chart');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+      datasets: [{
+        label: 'Pipeline',
+        data: [980000, 1050000, 1120000, 1180000, 1240000, 1290000, 1340000, 1372000],
+        borderColor: chartColors.teal,
+        backgroundColor: 'rgba(8, 127, 117, 0.1)',
+        fill: true,
+        tension: 0.4,
+        borderWidth: 3,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        pointBackgroundColor: '#ffffff',
+        pointBorderColor: chartColors.teal,
+        pointBorderWidth: 2
+      }]
+    },
+    options: {
+      ...chartDefaults,
+      plugins: {
+        ...chartDefaults.plugins,
+        tooltip: {
+          ...chartDefaults.plugins.tooltip,
+          callbacks: {
+            label: function(context) {
+              return 'Pipeline: ' + formatCurrency(context.parsed.y);
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// ============================================
+// OPPORTUNITY DISTRIBUTION CHART
+// ============================================
+
+function renderOpportunityChart() {
+  const canvas = document.getElementById('opportunity-chart');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Discovery', 'Qualification', 'Proposal', 'Negotiation', 'Closing'],
+      datasets: [{
+        data: [12, 9, 11, 8, 3],
+        backgroundColor: [
+          chartColors.primary,
+          chartColors.teal,
+          chartColors.purple,
+          chartColors.warning,
+          chartColors.success
+        ],
+        borderWidth: 0,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'right',
+          labels: {
+            padding: 15,
+            font: {
+              size: 12
+            },
+            color: chartColors.text,
+            usePointStyle: true,
+            pointStyle: 'circle'
+          }
+        },
+        tooltip: {
+          backgroundColor: '#161616',
+          titleColor: '#ffffff',
+          bodyColor: '#ffffff',
+          padding: 12,
+          callbacks: {
+            label: function(context) {
+              return context.label + ': ' + context.parsed + ' opportunities';
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// ============================================
+// REP PERFORMANCE CHART
+// ============================================
+
+function renderRepPerformanceChart() {
+  const canvas = document.getElementById('rep-performance-chart');
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: reps.map(r => r.name.split(' ')[0]),
+      datasets: [{
+        label: 'Pipeline',
+        data: reps.map(r => r.pipeline),
+        backgroundColor: reps.map(r => r.risk >= 70 ? chartColors.danger : 
+                                       r.risk >= 40 ? chartColors.warning : 
+                                       chartColors.success),
+        borderRadius: 6,
+        barThickness: 32
+      }]
+    },
+    options: {
+      ...chartDefaults,
+      plugins: {
+        ...chartDefaults.plugins,
+        tooltip: {
+          ...chartDefaults.plugins.tooltip,
+          callbacks: {
+            label: function(context) {
+              const rep = reps[context.dataIndex];
+              return [
+                'Pipeline: ' + formatCurrency(context.parsed.y),
+                'Goal: ' + formatCurrency(rep.goal),
+                'Risk: ' + rep.risk + '%'
+              ];
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// ============================================
+// INITIALIZE ENHANCEMENTS
+// ============================================
+
+function initEnhancements() {
+  // Initialize dark mode
+  initDarkMode();
+  
+  // Add fade-in animations to main sections
+  document.querySelectorAll('.panel, .kpi').forEach((el, index) => {
+    el.classList.add('stagger-item');
+    el.style.animationDelay = `${index * 0.05}s`;
+  });
+  
+  // Add tooltips to key metrics
+  document.querySelectorAll('.kpi small').forEach(el => {
+    const tooltipText = {
+      'TEAM PIPELINE': 'Total value of all active opportunities across the team',
+      'TEAM QUOTA': 'Combined quarterly quota target for all reps',
+      'PIPELINE COVERAGE': 'Ratio of pipeline to quota (target: 3.5×)',
+      'OPPORTUNITIES CREATED': 'New opportunities generated this month',
+      'AT-RISK REPS': 'Reps with >50% risk of missing quota',
+      'UNTOUCHED ACCOUNTS': 'Assigned accounts with no recent activity',
+      'PIPELINE GAP': 'Total shortfall across underperforming reps'
+    }[el.textContent];
+    
+    if (tooltipText) {
+      addTooltip(el.parentElement, tooltipText);
+    }
+  });
+  
+  // Initialize charts if canvases exist
+  setTimeout(() => {
+    renderPipelineTrendChart();
+    renderOpportunityChart();
+    renderRepPerformanceChart();
+  }, 100);
+}
