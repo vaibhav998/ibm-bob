@@ -505,13 +505,16 @@ function renderKPIs() {
     { label: 'PIPELINE GAP', value: formatCurrency(pipelineGap), change: 'Across 3 reps', up: false, attention: true }
   ];
 
-  document.getElementById('kpi-grid').innerHTML = kpis.map(kpi => `
+  const kpiGrid = document.getElementById('kpi-grid');
+  if (kpiGrid) {
+    kpiGrid.innerHTML = kpis.map(kpi => `
     <div class="kpi${kpi.attention ? ' attention' : ''}">
       <small>${kpi.label}</small>
       <strong>${kpi.value}</strong>
       <span class="${kpi.up ? 'up' : 'down'}">${kpi.change}</span>
     </div>
-  `).join('');
+    `).join('');
+  }
 }
 
 function renderPipelineTable() {
@@ -563,7 +566,10 @@ function renderPipelineTable() {
     `;
   }).join('');
 
-  document.getElementById('pipeline-table').innerHTML = tableHead + rows;
+  const pipelineTable = document.getElementById('pipeline-table');
+  if (pipelineTable) {
+    pipelineTable.innerHTML = tableHead + rows;
+  }
 }
 
 function renderRiskMatrix() {
@@ -601,7 +607,9 @@ function renderInsightList() {
     { rep: reps[0], text: 'Pipeline and creation on pace', tag: 'healthy', tagText: 'Healthy' }
   ];
 
-  document.getElementById('insight-list').innerHTML = insights.map((insight, index) => `
+  const insightList = document.getElementById('insight-list');
+  if (insightList) {
+    insightList.innerHTML = insights.map((insight, index) => `
     <button class="insight-row" data-rep="${insight.rep.id}">
       <span class="avatar ${getAvatarClass(index)}">${insight.rep.initials}</span>
       <span>
@@ -610,7 +618,8 @@ function renderInsightList() {
       </span>
       <span class="risk-tag ${insight.tag}">${insight.tagText}</span>
     </button>
-  `).join('');
+    `).join('');
+  }
 }
 
 // Render Rep Coaching
@@ -620,19 +629,30 @@ function renderCoaching() {
   const percent = (rep.pipeline / rep.goal) * 100;
   
   // Update header
-  document.getElementById('rep-avatar').textContent = rep.initials;
-  document.getElementById('rep-avatar').className = `avatar large ${getAvatarClass(reps.indexOf(rep))}`;
-  document.getElementById('rep-name').textContent = rep.name;
-  document.getElementById('rep-meta').textContent = `${rep.role} · ${rep.region} region`;
-  document.getElementById('crumb-label').textContent = 'Rep coaching';
+  const repAvatar = document.getElementById('rep-avatar');
+  const repName = document.getElementById('rep-name');
+  const repMeta = document.getElementById('rep-meta');
+  const crumbLabel = document.getElementById('crumb-label');
+  
+  if (repAvatar) {
+    repAvatar.textContent = rep.initials;
+    repAvatar.className = `avatar large ${getAvatarClass(reps.indexOf(rep))}`;
+  }
+  if (repName) repName.textContent = rep.name;
+  if (repMeta) repMeta.textContent = `${rep.role} · ${rep.region} region`;
+  if (crumbLabel) crumbLabel.textContent = 'Rep coaching';
   
   // Update AI summary
-  document.getElementById('ai-summary').textContent = rep.aiSummary;
-  document.getElementById('risk-score').textContent = `${rep.risk}%`;
+  const aiSummary = document.getElementById('ai-summary');
+  const riskScore = document.getElementById('risk-score');
+  if (aiSummary) aiSummary.textContent = rep.aiSummary;
+  if (riskScore) riskScore.textContent = `${rep.risk}%`;
   
   // Update KPIs
   const untouched = rep.accountsAssigned - rep.accountsTouched;
-  document.getElementById('rep-kpis').innerHTML = `
+  const repKpis = document.getElementById('rep-kpis');
+  if (repKpis) {
+    repKpis.innerHTML = `
     <div class="rep-kpi"><small>CURRENT PIPELINE</small><strong>${formatCurrency(rep.pipeline)}</strong></div>
     <div class="rep-kpi"><small>GOAL</small><strong>${formatCurrency(rep.goal)}</strong></div>
     <div class="rep-kpi"><small>GAP TO QUOTA</small><strong class="${gap > 0 ? 'danger' : ''}">${formatCurrency(-gap)}</strong></div>
@@ -642,15 +662,24 @@ function renderCoaching() {
     <div class="rep-kpi"><small>ACCOUNTS ASSIGNED</small><strong>${rep.accountsAssigned}</strong></div>
     <div class="rep-kpi"><small>ACCOUNTS TOUCHED</small><strong>${rep.accountsTouched}</strong></div>
     <div class="rep-kpi"><small>UNTOUCHED ACCOUNTS</small><strong class="${untouched > 20 ? 'danger' : ''}">${untouched}</strong></div>
-  `;
+    `;
+  }
   
   // Update pipeline analysis
-  document.getElementById('deep-current').textContent = formatCurrency(rep.pipeline);
-  document.getElementById('deep-goal').textContent = formatCurrency(rep.goal);
-  document.getElementById('deep-gap').textContent = formatCurrency(-gap);
-  document.getElementById('deep-progress').style.width = `${Math.min(percent, 100)}%`;
-  document.getElementById('pipeline-status').textContent = gap > 0 ? 'Needs attention' : 'On track';
-  document.getElementById('pipeline-status').className = `status-pill ${gap > 0 ? 'danger' : 'warning'}`;
+  const deepCurrent = document.getElementById('deep-current');
+  const deepGoal = document.getElementById('deep-goal');
+  const deepGap = document.getElementById('deep-gap');
+  const deepProgress = document.getElementById('deep-progress');
+  const pipelineStatus = document.getElementById('pipeline-status');
+  
+  if (deepCurrent) deepCurrent.textContent = formatCurrency(rep.pipeline);
+  if (deepGoal) deepGoal.textContent = formatCurrency(rep.goal);
+  if (deepGap) deepGap.textContent = formatCurrency(-gap);
+  if (deepProgress) deepProgress.style.width = `${Math.min(percent, 100)}%`;
+  if (pipelineStatus) {
+    pipelineStatus.textContent = gap > 0 ? 'Needs attention' : 'On track';
+    pipelineStatus.className = `status-pill ${gap > 0 ? 'danger' : 'warning'}`;
+  }
   
   // Update Zoom Out
   renderZoomOut(rep);
@@ -659,31 +688,49 @@ function renderCoaching() {
   const oppGap = rep.teamAvg - rep.opportunities;
   const meetingsNeeded = Math.ceil(oppGap / (rep.conversion / 100));
   
-  document.getElementById('formula-metrics').innerHTML = `
+  const formulaMetrics = document.getElementById('formula-metrics');
+  if (formulaMetrics) {
+    formulaMetrics.innerHTML = `
     <div><small>OPPORTUNITIES CREATED</small><strong>${rep.opportunities}</strong></div>
     <div><small>TEAM AVERAGE</small><strong>${rep.teamAvg}</strong></div>
     <div><small>OPPORTUNITY GAP</small><strong style="color: ${oppGap > 0 ? '#d8653b' : '#087f75'}">${oppGap > 0 ? '-' : '+'}${Math.abs(oppGap)}</strong></div>
     <div><small>MEETINGS NEEDED</small><strong>${meetingsNeeded}</strong></div>
-  `;
+    `;
+  }
   
-  document.getElementById('meetings-needed').textContent = `${meetingsNeeded} more meetings needed`;
-  document.getElementById('conversion-note').textContent = `Based on ${rep.name.split(' ')[0]}'s ${rep.conversion}% meeting-to-opportunity conversion`;
-  document.getElementById('formula-status').textContent = oppGap > 0 ? 'Below pace' : 'On pace';
+  const meetingsNeededEl = document.getElementById('meetings-needed');
+  const conversionNote = document.getElementById('conversion-note');
+  const formulaStatus = document.getElementById('formula-status');
+  
+  if (meetingsNeededEl) meetingsNeededEl.textContent = `${meetingsNeeded} more meetings needed`;
+  if (conversionNote) conversionNote.textContent = `Based on ${rep.name.split(' ')[0]}'s ${rep.conversion}% meeting-to-opportunity conversion`;
+  if (formulaStatus) formulaStatus.textContent = oppGap > 0 ? 'Below pace' : 'On pace';
   
   // Update Recovery Plan
   const avgDeal = rep.pipeline / rep.opportunities;
   const oppsNeeded = Math.ceil(gap / avgDeal);
   const largeOppsNeeded = Math.ceil(gap / (avgDeal * 1.5));
   
-  document.getElementById('recovery-gap').textContent = formatCurrency(gap);
-  document.getElementById('option-a').textContent = `${oppsNeeded} opportunities`;
-  document.getElementById('option-a').nextElementSibling.textContent = `at ${formatCurrency(avgDeal)} average`;
-  document.getElementById('option-b').textContent = `${largeOppsNeeded} opportunities`;
-  document.getElementById('option-b').nextElementSibling.textContent = `at ${formatCurrency(avgDeal * 1.5)} average`;
+  const recoveryGap = document.getElementById('recovery-gap');
+  const optionA = document.getElementById('option-a');
+  const optionB = document.getElementById('option-b');
+  const actionAccounts = document.getElementById('action-accounts');
+  const actionMeetings = document.getElementById('action-meetings');
+  const actionStalled = document.getElementById('action-stalled');
   
-  document.getElementById('action-accounts').textContent = Math.ceil(untouched * 0.3);
-  document.getElementById('action-meetings').textContent = meetingsNeeded;
-  document.getElementById('action-stalled').textContent = Math.min(rep.opportunities, 2);
+  if (recoveryGap) recoveryGap.textContent = formatCurrency(gap);
+  if (optionA) {
+    optionA.textContent = `${oppsNeeded} opportunities`;
+    if (optionA.nextElementSibling) optionA.nextElementSibling.textContent = `at ${formatCurrency(avgDeal)} average`;
+  }
+  if (optionB) {
+    optionB.textContent = `${largeOppsNeeded} opportunities`;
+    if (optionB.nextElementSibling) optionB.nextElementSibling.textContent = `at ${formatCurrency(avgDeal * 1.5)} average`;
+  }
+  
+  if (actionAccounts) actionAccounts.textContent = Math.ceil(untouched * 0.3);
+  if (actionMeetings) actionMeetings.textContent = meetingsNeeded;
+  if (actionStalled) actionStalled.textContent = Math.min(rep.opportunities, 2);
   
   // Update Recommendations
   renderRecommendations(rep);
@@ -706,7 +753,9 @@ function renderZoomOut(rep) {
     { label: 'Balance', ...rep.zoomOut.balance }
   ];
   
-  document.getElementById('exposure-grid').innerHTML = exposures.map(exp => `
+  const exposureGrid = document.getElementById('exposure-grid');
+  if (exposureGrid) {
+    exposureGrid.innerHTML = exposures.map(exp => `
     <div class="exposure ${exp.status === 'exposed' ? 'exposed' : ''}">
       <div class="exposure-head">
         <strong>${exp.label}</strong>
@@ -720,9 +769,11 @@ function renderZoomOut(rep) {
               exp.label === 'Mix' ? 'Product and segment diversity' :
               'Distribution across accounts'}</small>
     </div>
-  `).join('');
+    `).join('');
+  }
   
-  document.getElementById('exposed-label').textContent = rep.exposedArea;
+  const exposedLabel = document.getElementById('exposed-label');
+  if (exposedLabel) exposedLabel.textContent = rep.exposedArea;
 }
 
 function getContextualCoachingQuestions(rep) {
@@ -763,7 +814,9 @@ function getContextualCoachingQuestions(rep) {
 }
 
 function renderRecommendations(rep) {
-  document.getElementById('recommendation-list').innerHTML = rep.recommendations.map(rec => `
+  const recommendationList = document.getElementById('recommendation-list');
+  if (recommendationList) {
+    recommendationList.innerHTML = rep.recommendations.map(rec => `
     <div class="rec">
       <div class="rec-head">
         <strong>Priority #${rec.priority}: ${rec.title}</strong>
@@ -772,7 +825,8 @@ function renderRecommendations(rep) {
       <p><strong>Reason:</strong> ${rec.reason}</p>
       <div class="rec-action"><strong>Action:</strong> ${rec.action}</div>
     </div>
-  `).join('');
+    `).join('');
+  }
 }
 
 function renderCoachingQuestions(rep) {
@@ -796,9 +850,12 @@ function renderCoachingQuestions(rep) {
 }
 
 function renderRepMenu() {
-  document.getElementById('rep-menu').innerHTML = reps.map(rep => `
+  const repMenu = document.getElementById('rep-menu');
+  if (repMenu) {
+    repMenu.innerHTML = reps.map(rep => `
     <button data-rep="${rep.id}">${rep.name}</button>
-  `).join('');
+    `).join('');
+  }
 }
 
 // Event listeners
@@ -1152,12 +1209,13 @@ function createEmptyState(icon, title, message, actionText, actionCallback) {
 // ============================================
 
 function renderPipelineTrendChart() {
-  const canvas = document.getElementById('pipeline-trend-chart');
-  if (!canvas) return;
-  
-  const ctx = canvas.getContext('2d');
-  
-  new Chart(ctx, {
+  try {
+    const canvas = document.getElementById('pipeline-trend-chart');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    new Chart(ctx, {
     type: 'line',
     data: {
       labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
@@ -1190,7 +1248,10 @@ function renderPipelineTrendChart() {
         }
       }
     }
-  });
+    });
+  } catch (error) {
+    console.error('Error rendering pipeline trend chart:', error);
+  }
 }
 
 // ============================================
@@ -1198,12 +1259,13 @@ function renderPipelineTrendChart() {
 // ============================================
 
 function renderOpportunityChart() {
-  const canvas = document.getElementById('opportunity-chart');
-  if (!canvas) return;
-  
-  const ctx = canvas.getContext('2d');
-  
-  new Chart(ctx, {
+  try {
+    const canvas = document.getElementById('opportunity-chart');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    new Chart(ctx, {
     type: 'doughnut',
     data: {
       labels: ['Discovery', 'Qualification', 'Proposal', 'Negotiation', 'Closing'],
@@ -1250,7 +1312,10 @@ function renderOpportunityChart() {
         }
       }
     }
-  });
+    });
+  } catch (error) {
+    console.error('Error rendering opportunity chart:', error);
+  }
 }
 
 // ============================================
@@ -1258,12 +1323,13 @@ function renderOpportunityChart() {
 // ============================================
 
 function renderRepPerformanceChart() {
-  const canvas = document.getElementById('rep-performance-chart');
-  if (!canvas) return;
-  
-  const ctx = canvas.getContext('2d');
-  
-  new Chart(ctx, {
+  try {
+    const canvas = document.getElementById('rep-performance-chart');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    new Chart(ctx, {
     type: 'bar',
     data: {
       labels: reps.map(r => r.name.split(' ')[0]),
@@ -1296,7 +1362,10 @@ function renderRepPerformanceChart() {
         }
       }
     }
-  });
+    });
+  } catch (error) {
+    console.error('Error rendering rep performance chart:', error);
+  }
 }
 
 // ============================================
@@ -1304,36 +1373,25 @@ function renderRepPerformanceChart() {
 // ============================================
 
 function initEnhancements() {
-  // Initialize dark mode
-  initDarkMode();
-  
-  // Add fade-in animations to main sections
-  document.querySelectorAll('.panel, .kpi').forEach((el, index) => {
-    el.classList.add('stagger-item');
-    el.style.animationDelay = `${index * 0.05}s`;
-  });
-  
-  // Add tooltips to key metrics
-  document.querySelectorAll('.kpi small').forEach(el => {
-    const tooltipText = {
-      'TEAM PIPELINE': 'Total value of all active opportunities across the team',
-      'TEAM QUOTA': 'Combined quarterly quota target for all reps',
-      'PIPELINE COVERAGE': 'Ratio of pipeline to quota (target: 3.5×)',
-      'OPPORTUNITIES CREATED': 'New opportunities generated this month',
-      'AT-RISK REPS': 'Reps with >50% risk of missing quota',
-      'UNTOUCHED ACCOUNTS': 'Assigned accounts with no recent activity',
-      'PIPELINE GAP': 'Total shortfall across underperforming reps'
-    }[el.textContent];
+  try {
+    // Initialize dark mode
+    initDarkMode();
     
-    if (tooltipText) {
-      addTooltip(el.parentElement, tooltipText);
-    }
-  });
-  
-  // Initialize charts if canvases exist
-  setTimeout(() => {
-    renderPipelineTrendChart();
-    renderOpportunityChart();
-    renderRepPerformanceChart();
-  }, 100);
+    // Add fade-in animations to main sections
+    document.querySelectorAll('.panel, .kpi').forEach((el, index) => {
+      el.classList.add('stagger-item');
+      el.style.animationDelay = `${index * 0.05}s`;
+    });
+    
+    // Initialize charts if canvases exist and Chart.js is loaded
+    setTimeout(() => {
+      if (typeof Chart !== 'undefined') {
+        renderPipelineTrendChart();
+        renderOpportunityChart();
+        renderRepPerformanceChart();
+      }
+    }, 100);
+  } catch (error) {
+    console.error('Error initializing enhancements:', error);
+  }
 }
