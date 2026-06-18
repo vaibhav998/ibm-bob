@@ -4,6 +4,9 @@ function toggleAIInsights(event) {
   const button = event.target;
   const panel = button.closest('.ai-insights-panel');
   if (panel) {
+    panel.classList.toggle('collapsed');
+  }
+}
 
 // ROI Calculator
 const roiCalculator = {
@@ -127,10 +130,6 @@ function calculateROI() {
     document.getElementById('roi-savings-value').textContent = '$' + (result.savings / 1000000).toFixed(1) + 'M';
     document.getElementById('roi-payback-value').textContent = result.paybackMonths + ' months';
     document.getElementById('roi-result-panel').style.display = 'block';
-  }
-}
-
-    panel.classList.toggle('collapsed');
   }
 }
 
