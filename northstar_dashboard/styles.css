@@ -154,6 +154,63 @@
   color: #f4f4f4;
 }
 
+/* Comprehensive dark mode text fixes */
+[data-theme="dark"] .gap-box small,
+[data-theme="dark"] .gap-box strong,
+[data-theme="dark"] .question-box strong,
+[data-theme="dark"] .question-box li,
+[data-theme="dark"] .question-title strong,
+[data-theme="dark"] .exposure-head strong,
+[data-theme="dark"] .exposure-head span,
+[data-theme="dark"] .exposure small,
+[data-theme="dark"] .growth-strategy h3,
+[data-theme="dark"] .growth-item,
+[data-theme="dark"] .formula-callout strong,
+[data-theme="dark"] .formula-callout span,
+[data-theme="dark"] .compact-questions strong,
+[data-theme="dark"] .compact-questions span,
+[data-theme="dark"] .need-block span,
+[data-theme="dark"] .equivalent,
+[data-theme="dark"] .recovery-options small,
+[data-theme="dark"] .recovery-options > span,
+[data-theme="dark"] .action-plan strong,
+[data-theme="dark"] .action-plan label,
+[data-theme="dark"] .action-plan span,
+[data-theme="dark"] .coaching-question-section strong,
+[data-theme="dark"] .coaching-questions-list li,
+[data-theme="dark"] .rec-head strong,
+[data-theme="dark"] .rec p,
+[data-theme="dark"] .rec-action,
+[data-theme="dark"] .most-exposed,
+[data-theme="dark"] .formula-status,
+[data-theme="dark"] .pipeline-status {
+  color: #f4f4f4 !important;
+}
+
+[data-theme="dark"] .question-box,
+[data-theme="dark"] .growth-strategy,
+[data-theme="dark"] .recovery-card,
+[data-theme="dark"] .coaching-questions-panel,
+[data-theme="dark"] .recommendations {
+  background: var(--soft);
+  border-color: var(--line);
+}
+
+[data-theme="dark"] .question-box ol,
+[data-theme="dark"] .growth-list,
+[data-theme="dark"] .coaching-questions-list {
+  color: #c6c6c6;
+}
+
+[data-theme="dark"] .action-plan label {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--line);
+}
+
+[data-theme="dark"] .action-plan label:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
 * {
   box-sizing: border-box;
 }
