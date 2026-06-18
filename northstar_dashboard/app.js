@@ -1,6 +1,8 @@
 // AI Insights Panel Toggle
-function toggleAIInsights() {
-  const panel = document.querySelector('.ai-insights-panel');
+function toggleAIInsights(event) {
+  // Find the closest parent panel from the clicked button
+  const button = event.target;
+  const panel = button.closest('.ai-insights-panel');
   if (panel) {
     panel.classList.toggle('collapsed');
   }
