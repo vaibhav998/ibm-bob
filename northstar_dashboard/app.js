@@ -785,14 +785,22 @@ function switchView(view) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
   
-  if (view === 'overview') {
-    document.getElementById('overview').classList.add('active');
-    document.querySelector('[data-view="overview"]').classList.add('active');
-    document.getElementById('crumb-label').textContent = 'Manager overview';
-  } else if (view === 'coaching') {
-    document.getElementById('coaching').classList.add('active');
-    document.querySelector('[data-view="coaching"]').classList.add('active');
-    document.getElementById('crumb-label').textContent = 'Rep coaching';
+  const viewConfig = {
+    'overview': { id: 'overview', label: 'Manager overview' },
+    'coaching': { id: 'coaching', label: 'Rep coaching' },
+    'opportunities': { id: 'opportunities', label: 'Opportunities' },
+    'activity': { id: 'activity', label: 'Activity intelligence' },
+    'reports': { id: 'reports', label: 'Reports' }
+  };
+  
+  if (viewConfig[view]) {
+    const config = viewConfig[view];
+    const viewElement = document.getElementById(config.id);
+    const navElement = document.querySelector(`[data-view="${view}"]`);
+    
+    if (viewElement) viewElement.classList.add('active');
+    if (navElement) navElement.classList.add('active');
+    document.getElementById('crumb-label').textContent = config.label;
   }
   
   window.scrollTo({ top: 0, behavior: 'smooth' });
