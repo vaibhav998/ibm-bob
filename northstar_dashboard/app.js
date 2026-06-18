@@ -990,6 +990,7 @@ function switchView(view) {
     'coaching': { id: 'coaching', label: 'Rep coaching' },
     'opportunities': { id: 'opportunities', label: 'Opportunities' },
     'activity': { id: 'activity', label: 'Activity intelligence' },
+    'product-intelligence': { id: 'product-intelligence', label: 'Product intelligence' },
     'reports': { id: 'reports', label: 'Reports' }
   };
   
