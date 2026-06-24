@@ -399,18 +399,21 @@ const accounts = [
 
 // Sample opportunities data
 const opportunities = [
-  { id: 'opp1', name: 'Acme - Cloud Migration', account: 'Acme Corporation', value: 45000, stage: 'Proposal', owner: 'Priya Shah', closeDate: '2026-07-15', probability: 70 },
-  { id: 'opp2', name: 'Global Industries - ERP Upgrade', account: 'Global Industries Inc', value: 120000, stage: 'Negotiation', owner: 'Maya Chen', closeDate: '2026-08-01', probability: 80 },
-  { id: 'opp3', name: 'TechStart - Security Suite', account: 'TechStart Solutions', value: 28000, stage: 'Discovery', owner: 'Sam Rivera', closeDate: '2026-07-30', probability: 40 },
-  { id: 'opp4', name: 'Enterprise Systems - Data Analytics', account: 'Enterprise Systems Ltd', value: 95000, stage: 'Proposal', owner: 'Jordan Lee', closeDate: '2026-08-15', probability: 60 },
-  { id: 'opp5', name: 'Retail Dynamics - POS System', account: 'Retail Dynamics Corp', value: 52000, stage: 'Qualification', owner: 'Noah Williams', closeDate: '2026-09-01', probability: 30 },
-  { id: 'opp6', name: 'Healthcare Partners - Integration Platform', account: 'Healthcare Partners', value: 78000, stage: 'Negotiation', owner: 'Elena Garcia', closeDate: '2026-07-20', probability: 75 },
-  { id: 'opp7', name: 'Innovation Labs - AI Platform', account: 'Innovation Labs', value: 35000, stage: 'Discovery', owner: 'Priya Shah', closeDate: '2026-08-10', probability: 50 },
-  { id: 'opp8', name: 'Financial Group - Compliance Software', account: 'Financial Group LLC', value: 110000, stage: 'Proposal', owner: 'Maya Chen', closeDate: '2026-07-25', probability: 65 },
-  { id: 'opp9', name: 'Manufacturing Plus - IoT Solution', account: 'Manufacturing Plus', value: 42000, stage: 'Negotiation', owner: 'Sam Rivera', closeDate: '2026-08-05', probability: 70 },
-  { id: 'opp10', name: 'Digital Commerce - E-commerce Platform', account: 'Digital Commerce Co', value: 67000, stage: 'Discovery', owner: 'Jordan Lee', closeDate: '2026-09-15', probability: 45 },
-  { id: 'opp11', name: 'MedTech - Patient Management System', account: 'MedTech Innovations', value: 88000, stage: 'Qualification', owner: 'Noah Williams', closeDate: '2026-08-20', probability: 55 },
-  { id: 'opp12', name: 'Cloud Services - Infrastructure Upgrade', account: 'Cloud Services Inc', value: 72000, stage: 'Proposal', owner: 'Elena Garcia', closeDate: '2026-07-28', probability: 68 }
+  { id: 'opp1', name: 'Acme - Cloud Migration', account: 'Acme Corporation', value: 45000, stage: 'Proposal', owner: 'Priya Shah', closeDate: '2026-07-15', probability: 70, lastActivity: '2026-06-20', daysStalled: 4, product: 'watsonx.data' },
+  { id: 'opp2', name: 'Global Industries - ERP Upgrade', account: 'Global Industries Inc', value: 120000, stage: 'Negotiation', owner: 'Maya Chen', closeDate: '2026-08-01', probability: 80, lastActivity: '2026-06-23', daysStalled: 1, product: 'Db2 Warehouse' },
+  { id: 'opp3', name: 'TechStart - Security Suite', account: 'TechStart Solutions', value: 28000, stage: 'Discovery', owner: 'Sam Rivera', closeDate: '2026-07-30', probability: 40, lastActivity: '2026-05-28', daysStalled: 27, product: 'Guardium' },
+  { id: 'opp4', name: 'Enterprise Systems - Data Analytics', account: 'Enterprise Systems Ltd', value: 95000, stage: 'Proposal', owner: 'Jordan Lee', closeDate: '2026-08-15', probability: 60, lastActivity: '2026-06-22', daysStalled: 2, product: 'watsonx.ai' },
+  { id: 'opp5', name: 'Retail Dynamics - POS System', account: 'Retail Dynamics Corp', value: 52000, stage: 'Qualification', owner: 'Noah Williams', closeDate: '2026-09-01', probability: 30, lastActivity: '2026-06-01', daysStalled: 23, product: 'Instana' },
+  { id: 'opp6', name: 'Healthcare Partners - Integration Platform', account: 'Healthcare Partners', value: 78000, stage: 'Negotiation', owner: 'Elena Garcia', closeDate: '2026-07-20', probability: 75, lastActivity: '2026-06-23', daysStalled: 1, product: 'DataStage' },
+  { id: 'opp7', name: 'Innovation Labs - AI Platform', account: 'Innovation Labs', value: 35000, stage: 'Discovery', owner: 'Priya Shah', closeDate: '2026-08-10', probability: 50, lastActivity: '2026-06-18', daysStalled: 6, product: 'watsonx.ai' },
+  { id: 'opp8', name: 'Financial Group - Compliance Software', account: 'Financial Group LLC', value: 110000, stage: 'Proposal', owner: 'Maya Chen', closeDate: '2026-07-25', probability: 65, lastActivity: '2026-05-15', daysStalled: 40, product: 'Guardium' },
+  { id: 'opp9', name: 'Manufacturing Plus - IoT Solution', account: 'Manufacturing Plus', value: 42000, stage: 'Negotiation', owner: 'Sam Rivera', closeDate: '2026-08-05', probability: 70, lastActivity: '2026-06-21', daysStalled: 3, product: 'Instana' },
+  { id: 'opp10', name: 'Digital Commerce - E-commerce Platform', account: 'Digital Commerce Co', value: 67000, stage: 'Discovery', owner: 'Jordan Lee', closeDate: '2026-09-15', probability: 45, lastActivity: '2026-06-10', daysStalled: 14, product: 'watsonx.data' },
+  { id: 'opp11', name: 'MedTech - Patient Management System', account: 'MedTech Innovations', value: 88000, stage: 'Qualification', owner: 'Noah Williams', closeDate: '2026-08-20', probability: 55, lastActivity: '2026-06-05', daysStalled: 19, product: 'watsonx.ai' },
+  { id: 'opp12', name: 'Cloud Services - Infrastructure Upgrade', account: 'Cloud Services Inc', value: 72000, stage: 'Proposal', owner: 'Elena Garcia', closeDate: '2026-07-28', probability: 68, lastActivity: '2026-06-19', daysStalled: 5, product: 'Db2 Warehouse' },
+  { id: 'opp13', name: 'DataFlow Corp - Lakehouse Migration', account: 'DataFlow Corp', value: 135000, stage: 'Proposal', owner: 'Priya Shah', closeDate: '2026-07-18', probability: 55, lastActivity: '2026-05-20', daysStalled: 35, product: 'watsonx.data' },
+  { id: 'opp14', name: 'SecureBank - Security Audit Platform', account: 'SecureBank', value: 92000, stage: 'Discovery', owner: 'Jordan Lee', closeDate: '2026-08-25', probability: 35, lastActivity: '2026-06-08', daysStalled: 16, product: 'Guardium' },
+  { id: 'opp15', name: 'AutoMotive Inc - Observability Suite', account: 'AutoMotive Inc', value: 58000, stage: 'Qualification', owner: 'Sam Rivera', closeDate: '2026-09-10', probability: 50, lastActivity: '2026-05-25', daysStalled: 30, product: 'Instana' }
 ];
 
 // Search functionality
@@ -1149,6 +1152,7 @@ function selectRep(repId) {
 document.addEventListener('DOMContentLoaded', () => {
   init();
   initEnhancements();
+  initOpportunityFilters();
 });
 
 // Made with Bob
@@ -1531,6 +1535,108 @@ function initEnhancements() {
     console.error('Error initializing enhancements:', error);
   }
 }
+
+// ============================================
+// OPPORTUNITY FILTERING
+// ============================================
+
+function initOpportunityFilters() {
+  const opportunitiesSection = document.getElementById('opportunities');
+  if (!opportunitiesSection) return;
+  
+  const segmentedButtons = opportunitiesSection.querySelectorAll('.segmented button');
+  const opportunityTable = opportunitiesSection.querySelector('.panel');
+  
+  if (!segmentedButtons.length || !opportunityTable) return;
+  
+  segmentedButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Update active state
+      segmentedButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Filter opportunities based on button text
+      const filterType = this.textContent.trim();
+      filterOpportunities(filterType, opportunityTable);
+    });
+  });
+}
+
+function filterOpportunities(filterType, tableContainer) {
+  let filteredOpps = [];
+  
+  if (filterType === 'All opportunities') {
+    filteredOpps = opportunities;
+  } else if (filterType === 'Stalled') {
+    // Stalled = no activity in 21+ days
+    filteredOpps = opportunities.filter(opp => opp.daysStalled >= 21);
+  } else if (filterType === 'Closing this month') {
+    // Opportunities closing in July 2026
+    filteredOpps = opportunities.filter(opp => {
+      const closeDate = new Date(opp.closeDate);
+      return closeDate.getMonth() === 6 && closeDate.getFullYear() === 2026; // July = month 6
+    });
+  }
+  
+  renderOpportunityTable(filteredOpps, tableContainer);
+}
+
+function renderOpportunityTable(opps, tableContainer) {
+  // Find the existing rows container or create structure
+  const existingRows = tableContainer.querySelectorAll('.rep-row');
+  existingRows.forEach(row => row.remove());
+  
+  if (opps.length === 0) {
+    const noDataRow = document.createElement('div');
+    noDataRow.className = 'rep-row';
+    noDataRow.style.padding = '40px';
+    noDataRow.style.textAlign = 'center';
+    noDataRow.style.color = '#68767d';
+    noDataRow.innerHTML = '<p>No opportunities match this filter.</p>';
+    tableContainer.appendChild(noDataRow);
+    return;
+  }
+  
+  opps.forEach(opp => {
+    const row = document.createElement('div');
+    row.className = 'rep-row';
+    
+    // Determine avatar color based on stage
+    const avatarColors = {
+      'Discovery': '',
+      'Qualification': 'peach',
+      'Proposal': 'blue',
+      'Negotiation': 'purple',
+      'Closing': 'blue'
+    };
+    
+    const avatarClass = avatarColors[opp.stage] || '';
+    const initials = opp.account.split(' ').map(w => w[0]).join('').substring(0, 2);
+    
+    // Add stalled indicator if applicable
+    const stalledBadge = opp.daysStalled >= 21 ? 
+      `<span style="background: #d8653b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 8px;">STALLED ${opp.daysStalled}d</span>` : '';
+    
+    row.innerHTML = `
+      <div class="rep-ident">
+        <span class="avatar ${avatarClass}">${initials}</span>
+        <div>
+          <strong>${opp.name}</strong>${stalledBadge}
+          <small>Last activity: ${opp.lastActivity}</small>
+        </div>
+      </div>
+      <div><small>${opp.account}</small></div>
+      <div><span class="badge">${opp.product}</span></div>
+      <div><strong>$${(opp.value / 1000).toFixed(0)}K</strong></div>
+      <div><span class="stage">${opp.stage}</span></div>
+      <div><small>${opp.owner}</small></div>
+      <div><small>${opp.closeDate}</small></div>
+    `;
+    
+    tableContainer.appendChild(row);
+  });
+}
+
 
 
 // AI Copilot Functionality
