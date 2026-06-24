@@ -1833,24 +1833,29 @@ body {
   counter-reset: question-counter;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .coaching-questions-list li {
   counter-increment: question-counter;
   position: relative;
   padding: 12px 12px 12px 40px;
-  margin-bottom: 8px;
   background: #f4f7f7;
   border-radius: 6px;
   font-size: 14px;
   line-height: 1.5;
   color: #1f2d3d;
   transition: all 0.2s ease;
+  flex: 1 1 calc(50% - 6px);
+  min-width: 280px;
 }
 
 .coaching-questions-list li:hover {
   background: #e8f1f1;
-  transform: translateX(2px);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .coaching-questions-list li::before {
