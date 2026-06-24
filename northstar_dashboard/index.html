@@ -55,6 +55,49 @@
           <span class="alert-icon">✦</span><div><strong>Manager focus</strong><p>Pipeline is healthy overall, but new opportunity creation is down 14% month over month. Coach coverage now to protect next quarter.</p></div><button id="view-risk">Review at-risk reps →</button>
         </div>
 
+        <div class="kpi-grid" id="kpi-grid"></div>
+
+        <div class="section-heading"><div><h2>Pipeline health</h2><p>Current quarter pipeline against rep-level goals</p></div><div class="legend"><span><i class="lg current"></i>Current pipeline</span><span><i class="lg goal"></i>Goal</span></div></div>
+        <div class="panel pipeline-panel">
+          <div class="panel-top"><div class="segmented"><button class="active">Pipeline vs goal</button><button>Coverage ratio</button></div><button class="filter-btn">All segments⌄</button></div>
+          <div class="pipeline-table" id="pipeline-table"></div>
+          <div class="panel-footer"><span><strong>Team outlook:</strong> <span id="team-gap">$278K pipeline gap</span> across <span id="at-risk-count">3</span> reps</span><button id="pipeline-coaching">View coaching opportunities →</button></div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <div class="card-head"><div><h2>Pipeline Trend</h2><p>8-week pipeline growth</p></div></div>
+            <div style="height: 240px; padding: 10px;">
+              <canvas id="pipeline-trend-chart"></canvas>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="card-head"><div><h2>Rep Performance</h2><p>Pipeline by sales rep</p></div></div>
+            <div style="height: 240px; padding: 10px;">
+              <canvas id="rep-performance-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <div class="card-head"><div><h2>Risk matrix</h2><p>Pipeline health × opportunity creation</p></div><span class="info tooltip" data-tooltip="Quadrant analysis of rep performance">i</span></div>
+            <div class="matrix" id="risk-matrix">
+              <span class="axis y">OPPORTUNITY CREATION →</span><span class="axis x">PIPELINE HEALTH →</span>
+              <div class="quad q1"><strong>Conversion coaching</strong><small>Low pipeline · High creation</small></div>
+              <div class="quad q2"><strong>Healthy</strong><small>High pipeline · High creation</small></div>
+              <div class="quad q3"><strong>Immediate coaching</strong><small>Low pipeline · Low creation</small></div>
+              <div class="quad q4"><strong>Future pipeline risk</strong><small>High pipeline · Low creation</small></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="card-head"><div><h2>Opportunity Distribution</h2><p>By sales stage</p></div></div>
+            <div style="height: 240px; padding: 10px;">
+              <canvas id="opportunity-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
         <!-- AI Insights Panel -->
         <div class="ai-insights-panel">
           <div class="ai-insights-header">
@@ -102,49 +145,6 @@
                   <strong>Recommended Action:</strong> Share Elena's best practices in next team meeting
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="kpi-grid" id="kpi-grid"></div>
-
-        <div class="section-heading"><div><h2>Pipeline health</h2><p>Current quarter pipeline against rep-level goals</p></div><div class="legend"><span><i class="lg current"></i>Current pipeline</span><span><i class="lg goal"></i>Goal</span></div></div>
-        <div class="panel pipeline-panel">
-          <div class="panel-top"><div class="segmented"><button class="active">Pipeline vs goal</button><button>Coverage ratio</button></div><button class="filter-btn">All segments⌄</button></div>
-          <div class="pipeline-table" id="pipeline-table"></div>
-          <div class="panel-footer"><span><strong>Team outlook:</strong> <span id="team-gap">$278K pipeline gap</span> across <span id="at-risk-count">3</span> reps</span><button id="pipeline-coaching">View coaching opportunities →</button></div>
-        </div>
-
-        <div class="two-col">
-          <div class="panel">
-            <div class="card-head"><div><h2>Pipeline Trend</h2><p>8-week pipeline growth</p></div></div>
-            <div style="height: 240px; padding: 10px;">
-              <canvas id="pipeline-trend-chart"></canvas>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="card-head"><div><h2>Rep Performance</h2><p>Pipeline by sales rep</p></div></div>
-            <div style="height: 240px; padding: 10px;">
-              <canvas id="rep-performance-chart"></canvas>
-            </div>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="panel">
-            <div class="card-head"><div><h2>Risk matrix</h2><p>Pipeline health × opportunity creation</p></div><span class="info tooltip" data-tooltip="Quadrant analysis of rep performance">i</span></div>
-            <div class="matrix" id="risk-matrix">
-              <span class="axis y">OPPORTUNITY CREATION →</span><span class="axis x">PIPELINE HEALTH →</span>
-              <div class="quad q1"><strong>Conversion coaching</strong><small>Low pipeline · High creation</small></div>
-              <div class="quad q2"><strong>Healthy</strong><small>High pipeline · High creation</small></div>
-              <div class="quad q3"><strong>Immediate coaching</strong><small>Low pipeline · Low creation</small></div>
-              <div class="quad q4"><strong>Future pipeline risk</strong><small>High pipeline · Low creation</small></div>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="card-head"><div><h2>Opportunity Distribution</h2><p>By sales stage</p></div></div>
-            <div style="height: 240px; padding: 10px;">
-              <canvas id="opportunity-chart"></canvas>
             </div>
           </div>
         </div>
