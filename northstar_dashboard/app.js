@@ -1008,6 +1008,11 @@ function setupEventListeners() {
     document.getElementById('sidebar').classList.toggle('open');
   });
   
+  // Brand toggle (Northstar logo)
+  document.getElementById('brand-toggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+  
   // Open coaching buttons
   document.getElementById('open-coaching').addEventListener('click', () => switchView('coaching'));
   document.getElementById('view-risk').addEventListener('click', () => switchView('coaching'));
