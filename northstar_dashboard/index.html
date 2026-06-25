@@ -22,12 +22,27 @@
         <span>Northstar</span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
-        <button class="nav-item active" data-view="overview"><span class="nav-icon">⌂</span><span>Manager overview</span></button>
-        <button class="nav-item" data-view="coaching"><span class="nav-icon">◎</span><span>Rep coaching</span><span class="nav-badge" id="coaching-badge">3</span></button>
-        <button class="nav-item" data-view="opportunities"><span class="nav-icon">◇</span><span>Opportunities</span></button>
-        <button class="nav-item" data-view="activity"><span class="nav-icon">↗</span><span>Activity intelligence</span></button>
-        <button class="nav-item" data-view="product-intelligence"><span class="nav-icon">◈</span><span>Product intelligence</span></button>
-        <button class="nav-item" data-view="reports"><span class="nav-icon">◫</span><span>Reports</span></button>
+        <button class="nav-item active" data-view="overview">
+          <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span>
+          <span>Manager overview</span>
+        </button>
+        <button class="nav-item" data-view="coaching">
+          <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span>Rep coaching</span>
+          <span class="nav-badge" id="coaching-badge">3</span>
+        </button>
+        <button class="nav-item" data-view="opportunities">
+          <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+          <span>Opportunities</span>
+        </button>
+        <button class="nav-item" data-view="activity">
+          <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+          <span>Activity intelligence</span>
+        </button>
+        <button class="nav-item" data-view="compare">
+          <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="9" height="18" rx="1"/><rect x="13" y="3" width="9" height="18" rx="1"/></svg></span>
+          <span>Rep comparison</span>
+        </button>
       </nav>
       <div class="sidebar-bottom">
         <div class="sync-card"><div class="sync-head"><span class="live-dot"></span> Data connected</div><div class="integration-row"><span>OR</span><span>ISC</span><span>SL</span></div><small>Updated 8 min ago</small></div>
@@ -40,10 +55,20 @@
         <button class="mobile-menu" aria-label="Open menu" id="mobile-menu">☰</button>
         <div class="crumb"><span>Sales intelligence</span><span>/</span><strong id="crumb-label">Manager overview</strong></div>
         <div class="top-actions">
-          <button class="icon-btn" aria-label="Search">⌕</button>
+          <button class="icon-btn search-btn" aria-label="Search" title="Search (⌘K)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <kbd class="topbar-kbd">⌘K</kbd>
+          </button>
           <button class="icon-btn notification" aria-label="Notifications">♢<i></i></button>
         </div>
       </header>
+
+      <!-- Quarter progress bar — shown at top of every view -->
+      <div class="quarter-bar" id="quarter-bar">
+        <span class="quarter-label">Q3 · Week 8 of 13</span>
+        <div class="quarter-track"><div class="quarter-fill" style="width:61.5%"></div></div>
+        <span class="quarter-pct">61%</span>
+      </div>
 
       <section id="overview" class="view active">
         <div class="page-head">
@@ -153,7 +178,7 @@
       <section id="coaching" class="view">
         <div class="coaching-head">
           <div class="rep-select-wrap"><button class="back-btn" id="back-overview">←</button><span class="avatar large" id="rep-avatar">JL</span><div><p class="eyebrow">COACHING WORKSPACE</p><button class="rep-select" id="rep-select"><span id="rep-name">Jordan Lee</span> <span>⌄</span></button><p class="rep-meta" id="rep-meta">Enterprise AE · Central region</p></div></div>
-          <div class="head-actions"><button class="button secondary">Add coaching note</button><button class="button primary">Start 1:1 session</button></div>
+          <div class="head-actions"><button class="button secondary" id="add-coaching-note">Add coaching note</button><button class="button primary">Start 1:1 session</button></div>
           <div class="rep-menu" id="rep-menu"></div>
         </div>
 
@@ -251,70 +276,6 @@
           </div>
         </div>
 
-        <!-- AI Insights Panel for Opportunities -->
-        <div class="ai-insights-panel">
-          <div class="ai-insights-header">
-            <div class="ai-insights-title">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5"/>
-                <path d="M2 12l10 5 10-5"/>
-              </svg>
-              <h3>AI Opportunity Intelligence</h3>
-              <span class="ai-badge">Powered by watsonx.ai</span>
-            </div>
-            <button class="ai-insights-toggle" onclick="toggleAIInsights(event)">Hide Insights</button>
-          </div>
-          <div class="ai-insights-content">
-            <div class="ai-insight-card priority-high">
-              <div class="ai-insight-icon">🎯</div>
-              <div class="ai-insight-body">
-                <h4>High-Value Deal at Risk</h4>
-                <p>The <strong>$850K Acme Corp watsonx.ai</strong> opportunity has stalled for 18 days with no recent activity. Last engagement was a technical demo on May 15th.</p>
-                <div class="ai-insight-action">
-                  <strong>Recommended Action:</strong>
-                  Schedule executive briefing with CTO and CFO to address ROI concerns and accelerate decision timeline.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Potential Impact:</span>
-                  <span class="impact-value">$850K at risk</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="ai-insight-card priority-positive">
-              <div class="ai-insight-icon">🚀</div>
-              <div class="ai-insight-body">
-                <h4>Fast-Moving Opportunity</h4>
-                <p><strong>TechStart Inc. - watsonx.data ($420K)</strong> has progressed through 3 stages in 12 days. Strong buying signals detected with 8 stakeholder engagements.</p>
-                <div class="ai-insight-action">
-                  <strong>Success Pattern:</strong>
-                  Elena Rodriguez is using a multi-threaded approach with technical and business stakeholders. Consider replicating this strategy.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Win Probability:</span>
-                  <span class="impact-value">78% (High)</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="ai-insight-card priority-medium">
-              <div class="ai-insight-icon">⚠️</div>
-              <div class="ai-insight-body">
-                <h4>Stage Progression Alert</h4>
-                <p>5 opportunities have been in <strong>Technical Validation</strong> stage for over 30 days. Average time in this stage should be 14-21 days.</p>
-                <div class="ai-insight-action">
-                  <strong>Coaching Opportunity:</strong>
-                  Review technical validation process with Jordan Lee and Noah Williams. May need SE support or clearer success criteria.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Pipeline Value:</span>
-                  <span class="impact-value">$1.8M delayed</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
       <section id="activity" class="view">
@@ -372,573 +333,47 @@
           </div>
         </div>
 
-        <!-- AI Insights Panel for Activity Intelligence -->
-        <div class="ai-insights-panel">
-          <div class="ai-insights-header">
-            <div class="ai-insights-title">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5"/>
-                <path d="M2 12l10 5 10-5"/>
-              </svg>
-              <h3>AI Activity Intelligence</h3>
-              <span class="ai-badge">Powered by watsonx.ai</span>
-            </div>
-            <button class="ai-insights-toggle" onclick="toggleAIInsights(event)">Hide Insights</button>
-          </div>
-          <div class="ai-insights-content">
-            <div class="ai-insight-card priority-high">
-              <div class="ai-insight-icon">📉</div>
-              <div class="ai-insight-body">
-                <h4>Critical Product Mention Gap</h4>
-                <p><strong>watsonx.ai mentions down 32%</strong> - Only 12% of calls include AI solution discussions. Elena Rodriguez leads with 45% mention rate, while Jordan Lee and Noah Williams are at 8% and 5% respectively.</p>
-                <div class="ai-insight-action">
-                  <strong>Immediate Action:</strong>
-                  Schedule watsonx.ai enablement session for Jordan and Noah. Share Elena's call recordings as best practice examples.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Revenue Impact:</span>
-                  <span class="impact-value">$2.1M opportunity missed</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="ai-insight-card priority-medium">
-              <div class="ai-insight-icon">📧</div>
-              <div class="ai-insight-body">
-                <h4>Email Activity Decline</h4>
-                <p>Team email volume down <strong>12% week-over-week</strong>. However, reply rate improved to 24% (+3%), suggesting quality over quantity approach is working.</p>
-                <div class="ai-insight-action">
-                  <strong>Coaching Insight:</strong>
-                  Current personalization strategy is effective. Focus on maintaining quality while gradually increasing volume to optimal levels.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Efficiency Gain:</span>
-                  <span class="impact-value">+3% reply rate</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="ai-insight-card priority-positive">
-              <div class="ai-insight-icon">🎯</div>
-              <div class="ai-insight-body">
-                <h4>Demo Success Pattern Identified</h4>
-                <p><strong>Demos up 15%</strong> with 68% conversion to next stage. Elena and Marcus are averaging 4.2 demos per week with 75% progression rate.</p>
-                <div class="ai-insight-action">
-                  <strong>Best Practice:</strong>
-                  Elena's pre-demo discovery calls (avg 22 min) correlate with higher conversion. Implement this as team standard.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Success Rate:</span>
-                  <span class="impact-value">68% demo conversion</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
-      <section id="reports" class="view">
+      <section id="compare" class="view">
         <div class="page-head">
-          <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Product Performance Report</h1><p class="lede">IBM product adoption and sales performance across the team.</p></div>
-          <div class="head-actions"><button class="button secondary">↗ Export PDF</button><button class="button primary">Schedule report</button></div>
+          <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Rep Comparison</h1><p class="lede">Compare performance metrics side-by-side across your team.</p></div>
+          <div class="head-actions"><button class="button secondary" onclick="window.print()">↗ Export brief</button></div>
         </div>
-
-        <div class="alert-banner">
-          <span class="alert-icon">✦</span><div><strong>Product insight</strong><p>watsonx.ai has highest win rate (58%) but lowest pipeline coverage. Opportunity to increase AI solution awareness across team.</p></div><button>View AI training materials →</button>
+        <div id="compare-controls" class="compare-controls">
+          <label>Compare rep: <select id="compare-rep-a" class="compare-select"></select></label>
+          <label>vs. <select id="compare-rep-b" class="compare-select"></select></label>
+          <label>vs. <select id="compare-rep-c" class="compare-select"><option value="">— optional —</option></select></label>
         </div>
-
-        <div class="section-heading"><div><h2>Product performance summary</h2><p>Sales metrics by IBM product</p></div></div>
-        <div class="panel">
-          <div class="panel-top"><div class="segmented"><button class="active">This quarter</button><button>Last quarter</button><button>Year to date</button></div><button class="filter-btn">All products⌄</button></div>
-          <div class="table-head"><div>PRODUCT</div><div>PIPELINE</div><div>OPPORTUNITIES</div><div>AVG DEAL SIZE</div><div>WIN RATE</div><div>TOP REP</div><div>TREND</div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar" style="background: #087f75; color: white;">AI</span><div><strong>watsonx.ai</strong><small>AI & Machine Learning</small></div></div><div><strong>$285K</strong><small>8 opportunities</small></div><div><strong>8</strong></div><div><strong>$35.6K</strong></div><div><span class="up">58%</span></div><div><small>Priya Shah</small></div><div><span class="up">↑ 12%</span></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar peach" style="background: #10a195; color: white;">DA</span><div><strong>watsonx.data</strong><small>Data Lakehouse</small></div></div><div><strong>$245K</strong><small>7 opportunities</small></div><div><strong>7</strong></div><div><strong>$35.0K</strong></div><div><span class="up">51%</span></div><div><small>Maya Chen</small></div><div><span class="up">↑ 8%</span></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar blue" style="background: #2e67b2; color: white;">DB</span><div><strong>Db2 Warehouse</strong><small>Data Warehouse</small></div></div><div><strong>$320K</strong><small>6 opportunities</small></div><div><strong>6</strong></div><div><strong>$53.3K</strong></div><div><span class="up">47%</span></div><div><small>Sam Rivera</small></div><div><span>→ 0%</span></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar purple" style="background: #6b5aa6; color: white;">IN</span><div><strong>Instana</strong><small>Observability</small></div></div><div><strong>$195K</strong><small>5 opportunities</small></div><div><strong>5</strong></div><div><strong>$39.0K</strong></div><div><span class="up">44%</span></div><div><small>Elena Garcia</small></div><div><span class="up">↑ 15%</span></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar peach" style="background: #d8653b; color: white;">GU</span><div><strong>Guardium</strong><small>Data Security</small></div></div><div><strong>$165K</strong><small>4 opportunities</small></div><div><strong>4</strong></div><div><strong>$41.3K</strong></div><div><span>38%</span></div><div><small>Jordan Lee</small></div><div><span class="down">↓ 5%</span></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar blue" style="background: #087f75; color: white;">DS</span><div><strong>DataStage</strong><small>Data Integration</small></div></div><div><strong>$160K</strong><small>4 opportunities</small></div><div><strong>4</strong></div><div><strong>$40.0K</strong></div><div><span class="up">42%</span></div><div><small>Priya Shah</small></div><div><span class="up">↑ 6%</span></div></div>
-        </div>
-
-        <div class="two-col">
-          <div class="panel">
-            <div class="card-head"><div><h2>Rep product expertise</h2><p>Product mentions by rep</p></div></div>
-            <div style="padding: 20px;">
-              <div style="margin-bottom: 20px;"><strong style="display: block; margin-bottom: 8px;">Priya Shah</strong><div style="display: flex; gap: 6px; flex-wrap: wrap;"><span style="background: #087f75; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">watsonx.ai ⭐</span><span style="background: #10a195; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">watsonx.data</span><span style="background: #2e67b2; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Db2</span><span style="background: #6b5aa6; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">DataStage</span></div></div>
-              <div style="margin-bottom: 20px;"><strong style="display: block; margin-bottom: 8px;">Maya Chen</strong><div style="display: flex; gap: 6px; flex-wrap: wrap;"><span style="background: #10a195; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">watsonx.data ⭐</span><span style="background: #2e67b2; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Db2</span><span style="background: #6b5aa6; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Instana</span></div></div>
-              <div style="margin-bottom: 20px;"><strong style="display: block; margin-bottom: 8px;">Sam Rivera</strong><div style="display: flex; gap: 6px; flex-wrap: wrap;"><span style="background: #2e67b2; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Db2 ⭐</span><span style="background: #087f75; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">watsonx.ai</span><span style="background: #6b5aa6; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Instana</span></div></div>
-              <div style="margin-bottom: 20px;"><strong style="display: block; margin-bottom: 8px;">Jordan Lee</strong><div style="display: flex; gap: 6px; flex-wrap: wrap;"><span style="background: #d8653b; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Guardium ⭐</span><span style="background: #2e67b2; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Db2</span><span style="background: #dde4e6; color: #68767d; padding: 4px 10px; border-radius: 4px; font-size: 12px;">watsonx.ai ⚠</span></div></div>
-              <div style="margin-bottom: 20px;"><strong style="display: block; margin-bottom: 8px;">Noah Williams</strong><div style="display: flex; gap: 6px; flex-wrap: wrap;"><span style="background: #6b5aa6; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Instana ⭐</span><span style="background: #2e67b2; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Db2</span><span style="background: #dde4e6; color: #68767d; padding: 4px 10px; border-radius: 4px; font-size: 12px;">watsonx.ai ⚠</span></div></div>
-              <div style="margin-bottom: 20px;"><strong style="display: block; margin-bottom: 8px;">Elena Garcia</strong><div style="display: flex; gap: 6px; flex-wrap: wrap;"><span style="background: #6b5aa6; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Instana ⭐</span><span style="background: #087f75; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">watsonx.ai</span><span style="background: #10a195; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px;">watsonx.data</span></div></div>
-              <p style="margin-top: 16px; font-size: 12px; color: #68767d;">⭐ = Primary expertise | ⚠ = Low mentions</p>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="card-head"><div><h2>Product coaching priorities</h2><p>Training recommendations</p></div></div>
-            <div style="padding: 20px;">
-              <div style="margin-bottom: 16px; padding: 12px; background: #fff0e8; border-left: 3px solid #d8653b; border-radius: 4px;"><strong style="color: #d8653b; display: block; margin-bottom: 4px;">🎯 watsonx.ai Training</strong><p style="margin: 0; font-size: 13px; color: #68767d;"><strong>Priority: URGENT</strong><br/>Jordan, Maya, and Noah need AI solution training. Only 3 of 6 reps actively selling watsonx.ai despite 58% win rate.</p><button style="margin-top: 8px; padding: 6px 12px; background: #d8653b; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">Schedule training →</button></div>
-              <div style="margin-bottom: 16px; padding: 12px; background: #fff6d8; border-left: 3px solid #a66e00; border-radius: 4px;"><strong style="color: #a66e00; display: block; margin-bottom: 4px;">📊 watsonx.data Positioning</strong><p style="margin: 0; font-size: 13px; color: #68767d;"><strong>Priority: HIGH</strong><br/>Strong pipeline but conversion needs improvement. Share Maya's successful positioning strategies.</p></div>
-              <div style="margin-bottom: 16px; padding: 12px; background: #dff3ef; border-left: 3px solid #087f75; border-radius: 4px;"><strong style="color: #087f75; display: block; margin-bottom: 4px;">✅ Instana Success</strong><p style="margin: 0; font-size: 13px; color: #68767d;"><strong>Priority: SHARE</strong><br/>Elena and Noah showing strong Instana expertise. Document best practices for team enablement.</p></div>
-              <div style="margin-bottom: 16px; padding: 12px; background: #e8f1ff; border-left: 3px solid #2e67b2; border-radius: 4px;"><strong style="color: #2e67b2; display: block; margin-bottom: 4px;">💡 Cross-sell Opportunities</strong><p style="margin: 0; font-size: 13px; color: #68767d;"><strong>Priority: MEDIUM</strong><br/>Db2 customers are prime targets for watsonx.data. Train team on lakehouse positioning.</p></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- AI Insights Panel for Reports -->
-        <div class="ai-insights-panel">
-          <div class="ai-insights-header">
-            <div class="ai-insights-title">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5"/>
-                <path d="M2 12l10 5 10-5"/>
-              </svg>
-              <h3>AI Product Intelligence</h3>
-              <span class="ai-badge">Powered by watsonx.ai</span>
-            </div>
-            <button class="ai-insights-toggle" onclick="toggleAIInsights(event)">Hide Insights</button>
-          </div>
-          <div class="ai-insights-content">
-            <div class="ai-insight-card priority-high">
-              <div class="ai-insight-icon">🎯</div>
-              <div class="ai-insight-body">
-                <h4>watsonx.ai Underutilization</h4>
-                <p><strong>Highest win rate (58%) but lowest pipeline coverage</strong> - Only 8 opportunities worth $285K despite being IBM's strategic AI platform. Market demand is high but team awareness is low.</p>
-                <div class="ai-insight-action">
-                  <strong>Strategic Action:</strong>
-                  Launch watsonx.ai enablement program for all reps. Target: 20+ opportunities by end of quarter. Priya Shah to lead peer training sessions.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Revenue Opportunity:</span>
-                  <span class="impact-value">$500K+ potential</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="ai-insight-card priority-positive">
-              <div class="ai-insight-icon">📊</div>
-              <div class="ai-insight-body">
-                <h4>Db2 Warehouse Stability</h4>
-                <p><strong>$320K pipeline with 47% win rate</strong> - Largest pipeline value and consistent performance. Sam Rivera has established strong positioning in data warehouse market.</p>
-                <div class="ai-insight-action">
-                  <strong>Cross-Sell Opportunity:</strong>
-                  Db2 customers are ideal candidates for watsonx.data. Create bundled offering and train Sam on data lakehouse positioning.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Cross-Sell Potential:</span>
-                  <span class="impact-value">$180K additional</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="ai-insight-card priority-medium">
-              <div class="ai-insight-icon">🔄</div>
-              <div class="ai-insight-body">
-                <h4>Product Portfolio Balance</h4>
-                <p>Team is heavily focused on <strong>Db2 (6 opps) and watsonx products (15 opps)</strong>. Instana and Guardium are underrepresented despite strong market fit.</p>
-                <div class="ai-insight-action">
-                  <strong>Portfolio Strategy:</strong>
-                  Assign Elena and Marcus to focus on Instana/Guardium. These products have shorter sales cycles and can accelerate quarterly attainment.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Diversification Benefit:</span>
-                  <span class="impact-value">Reduced risk exposure</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div id="compare-grid" class="compare-grid"></div>
       </section>
 
-
-      <!-- Product Intelligence View -->
-      <section id="product-intelligence" class="view">
-        <div class="page-head">
-          <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Product Intelligence</h1><p class="lede">AI-powered product recommendations, competitive insights, and ROI analysis.</p></div>
-          <div class="head-actions"><button class="button secondary">↗ Export</button><button class="button primary">Generate report</button></div>
-        </div>
-
-        <!-- Product Recommendation Engine -->
-        <div class="section-heading"><div><h2>🎯 Product Recommendation Engine</h2><p>AI-powered propensity scores for each account</p></div></div>
-        <div class="panel">
-          <div class="panel-top">
-            <div class="segmented"><button class="active">All accounts</button><button>High propensity</button><button>Cross-sell ready</button></div>
-            <button class="filter-btn">Filter by product⌄</button>
-          </div>
-          <div class="table-head"><div>ACCOUNT</div><div>RECOMMENDED PRODUCT</div><div>PROPENSITY SCORE</div><div>KEY SIGNALS</div><div>ESTIMATED VALUE</div><div>ASSIGNED REP</div><div>ACTION</div></div>
-          <div class="rep-row">
-            <div class="rep-ident"><span class="avatar" style="background: #d8653b; color: white;">AC</span><div><strong>Acme Corp</strong><small>Enterprise · Manufacturing</small></div></div>
-            <div><strong>watsonx.data</strong><small>Data Lakehouse</small></div>
-            <div><span class="up" style="font-size: 18px; font-weight: 700;">85%</span></div>
-            <div><small>Db2 customer, Cloud migration, Data growth +40%</small></div>
-            <div><strong>$420K</strong></div>
-            <div><small>Jordan Lee</small></div>
-            <div><button class="button primary" style="font-size: 12px; padding: 6px 12px;">Create opportunity</button></div>
-          </div>
-          <div class="rep-row">
-            <div class="rep-ident"><span class="avatar" style="background: #087f75; color: white;">TS</span><div><strong>TechStart Inc.</strong><small>Mid-Market · Technology</small></div></div>
-            <div><strong>watsonx.ai</strong><small>AI Platform</small></div>
-            <div><span class="up" style="font-size: 18px; font-weight: 700;">78%</span></div>
-            <div><small>ML team hired, API usage spike, Innovation budget</small></div>
-            <div><strong>$285K</strong></div>
-            <div><small>Elena Rodriguez</small></div>
-            <div><button class="button primary" style="font-size: 12px; padding: 6px 12px;">Create opportunity</button></div>
-          </div>
-          <div class="rep-row">
-            <div class="rep-ident"><span class="avatar" style="background: #6b5aa6; color: white;">GT</span><div><strong>GlobalTech Corp</strong><small>Enterprise · Financial Services</small></div></div>
-            <div><strong>Instana</strong><small>Observability</small></div>
-            <div><span class="up" style="font-size: 18px; font-weight: 700;">72%</span></div>
-            <div><small>Microservices migration, Performance issues, DevOps expansion</small></div>
-            <div><strong>$195K</strong></div>
-            <div><small>Marcus Johnson</small></div>
-            <div><button class="button primary" style="font-size: 12px; padding: 6px 12px;">Create opportunity</button></div>
-          </div>
-          <div class="rep-row">
-            <div class="rep-ident"><span class="avatar" style="background: #2e67b2; color: white;">DI</span><div><strong>DataFlow Inc.</strong><small>Mid-Market · Healthcare</small></div></div>
-            <div><strong>Guardium</strong><small>Data Security</small></div>
-            <div><span class="up" style="font-size: 18px; font-weight: 700;">68%</span></div>
-            <div><small>HIPAA compliance, Recent breach, Security audit</small></div>
-            <div><strong>$145K</strong></div>
-            <div><small>Priya Shah</small></div>
-            <div><button class="button primary" style="font-size: 12px; padding: 6px 12px;">Create opportunity</button></div>
-          </div>
-          <div class="rep-row">
-            <div class="rep-ident"><span class="avatar" style="background: #10a195; color: white;">RT</span><div><strong>RetailMax</strong><small>Enterprise · Retail</small></div></div>
-            <div><strong>watsonx.data</strong><small>Data Lakehouse</small></div>
-            <div><span style="font-size: 18px; font-weight: 700; color: #a66e00;">62%</span></div>
-            <div><small>E-commerce growth, Customer analytics, Real-time needs</small></div>
-            <div><strong>$380K</strong></div>
-            <div><small>Sam Rivera</small></div>
-            <div><button class="button secondary" style="font-size: 12px; padding: 6px 12px;">Nurture</button></div>
-          </div>
-        </div>
-
-        <!-- Competitive Intelligence & Product Pairing -->
-        <div class="two-col">
-          <div class="panel">
-            <div class="card-head"><div><h2>⚔️ Competitive Intelligence</h2><p>Competitor mentions and win/loss analysis</p></div></div>
-            <div style="padding: 20px;">
-              <div style="margin-bottom: 20px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                  <strong style="font-size: 15px;">Competitor Mentions (Last 30 Days)</strong>
-                  <span style="font-size: 12px; color: #68767d;">42 total mentions</span>
-                </div>
-                <div style="margin-bottom: 16px;">
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                    <span style="font-size: 13px;"><strong>Snowflake</strong> (Data)</span>
-                    <span style="font-size: 13px; font-weight: 600;">18 mentions</span>
-                  </div>
-                  <div style="background: #fff0e8; height: 8px; border-radius: 4px;">
-                    <div style="background: #d8653b; width: 43%; height: 100%; border-radius: 4px;"></div>
-                  </div>
-                  <p style="margin: 4px 0 0; font-size: 11px; color: #68767d;">Key objections: "Easier to use", "Faster deployment"</p>
-                </div>
-                <div style="margin-bottom: 16px;">
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                    <span style="font-size: 13px;"><strong>Datadog</strong> (Observability)</span>
-                    <span style="font-size: 13px; font-weight: 600;">12 mentions</span>
-                  </div>
-                  <div style="background: #fff6d8; height: 8px; border-radius: 4px;">
-                    <div style="background: #a66e00; width: 29%; height: 100%; border-radius: 4px;"></div>
-                  </div>
-                  <p style="margin: 4px 0 0; font-size: 11px; color: #68767d;">Key objections: "Modern UI", "Better dashboards"</p>
-                </div>
-                <div style="margin-bottom: 16px;">
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                    <span style="font-size: 13px;"><strong>OpenAI</strong> (AI/ML)</span>
-                    <span style="font-size: 13px; font-weight: 600;">8 mentions</span>
-                  </div>
-                  <div style="background: #dff3ef; height: 8px; border-radius: 4px;">
-                    <div style="background: #087f75; width: 19%; height: 100%; border-radius: 4px;"></div>
-                  </div>
-                  <p style="margin: 4px 0 0; font-size: 11px; color: #68767d;">Key objections: "API simplicity", "Developer experience"</p>
-                </div>
-                <div style="margin-bottom: 16px;">
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                    <span style="font-size: 13px;"><strong>Others</strong></span>
-                    <span style="font-size: 13px; font-weight: 600;">4 mentions</span>
-                  </div>
-                  <div style="background: #f4f7f7; height: 8px; border-radius: 4px;">
-                    <div style="background: #68767d; width: 10%; height: 100%; border-radius: 4px;"></div>
-                  </div>
-                </div>
-              </div>
-              <div style="padding: 16px; background: #e8f1ff; border-radius: 8px; border-left: 3px solid #2e67b2;">
-                <strong style="display: block; margin-bottom: 8px; color: #2e67b2;">💡 Win Strategy</strong>
-                <p style="margin: 0; font-size: 13px; color: #68767d;">Emphasize enterprise security, hybrid cloud, and AI integration. Use customer success stories to counter "ease of use" objections.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="card-head"><div><h2>📦 Product Pairing Insights</h2><p>"Customers who bought X also bought Y"</p></div></div>
-            <div style="padding: 20px;">
-              <div style="margin-bottom: 20px; padding: 16px; background: linear-gradient(135deg, #dff3ef 0%, #ffffff 100%); border-radius: 8px; border: 1px solid #087f75;">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                  <span style="font-size: 24px;">🔗</span>
-                  <div>
-                    <strong style="display: block; font-size: 14px;">Db2 → watsonx.data</strong>
-                    <span style="font-size: 12px; color: #68767d;">Most common pairing</span>
-                  </div>
-                </div>
-                <div style="margin-bottom: 8px;">
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                    <span style="font-size: 12px; color: #68767d;">Cross-sell rate</span>
-                    <strong style="font-size: 14px; color: #087f75;">78%</strong>
-                  </div>
-                  <div style="background: #dff3ef; height: 6px; border-radius: 3px;">
-                    <div style="background: #087f75; width: 78%; height: 100%; border-radius: 3px;"></div>
-                  </div>
-                </div>
-                <p style="margin: 12px 0 0; font-size: 12px; color: #68767d;"><strong>Avg time to purchase:</strong> 4.2 months | <strong>Avg deal size:</strong> $385K</p>
-              </div>
-
-              <div style="margin-bottom: 16px; padding: 12px; background: #f4f7f7; border-radius: 6px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                  <span style="font-size: 13px;"><strong>watsonx.ai → Instana</strong></span>
-                  <span style="font-size: 13px; font-weight: 600; color: #087f75;">64%</span>
-                </div>
-                <p style="margin: 0; font-size: 11px; color: #68767d;">AI workloads need observability. Avg 3.8 months, $195K deal size.</p>
-              </div>
-
-              <div style="margin-bottom: 16px; padding: 12px; background: #f4f7f7; border-radius: 6px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                  <span style="font-size: 13px;"><strong>watsonx.data → Guardium</strong></span>
-                  <span style="font-size: 13px; font-weight: 600; color: #087f75;">58%</span>
-                </div>
-                <p style="margin: 0; font-size: 11px; color: #68767d;">Data security follows data platform. Avg 5.1 months, $145K deal size.</p>
-              </div>
-
-              <div style="margin-bottom: 16px; padding: 12px; background: #f4f7f7; border-radius: 6px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                  <span style="font-size: 13px;"><strong>Instana → Turbonomic</strong></span>
-                  <span style="font-size: 13px; font-weight: 600; color: #087f75;">52%</span>
-                </div>
-                <p style="margin: 0; font-size: 11px; color: #68767d;">Observability + optimization. Avg 4.5 months, $165K deal size.</p>
-              </div>
-
-              <button style="width: 100%; padding: 10px; background: white; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--ink);">View all pairings →</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ROI Calculator & Product Comparison -->
-        <div class="two-col">
-          <div class="panel">
-            <div class="card-head"><div><h2>💰 ROI Calculator</h2><p>Calculate customer value for each product</p></div></div>
-            <div style="padding: 20px;">
-              <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink);">Select Product</label>
-                <select id="roi-product" style="width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px; font-size: 14px;">
-                  <option>watsonx.ai</option>
-                  <option>watsonx.data</option>
-                  <option>Db2 Warehouse</option>
-                  <option>Instana</option>
-                  <option>Guardium</option>
-                  <option>Turbonomic</option>
-                </select>
-              </div>
-
-              <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink);">Customer Profile</label>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                  <div>
-                    <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Company Size</label>
-                    <select id="roi-size" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
-                      <option>Enterprise (1000+)</option>
-                      <option>Mid-Market (100-999)</option>
-                      <option>SMB (<100)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Industry</label>
-                    <select id="roi-industry" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
-                      <option>Financial Services</option>
-                      <option>Healthcare</option>
-                      <option>Retail</option>
-                      <option>Manufacturing</option>
-                      <option>Technology</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink);">Current State Metrics</label>
-                <div style="margin-bottom: 12px;">
-                  <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Data Volume (TB)</label>
-                  <input type="number" id="roi-data-volume" value="500" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
-                </div>
-                <div style="margin-bottom: 12px;">
-                  <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Annual Data Growth (%)</label>
-                  <input type="number" id="roi-growth-rate" value="40" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
-                </div>
-                <div style="margin-bottom: 12px;">
-                  <label style="display: block; margin-bottom: 4px; font-size: 11px; color: #68767d;">Current Annual Cost ($)</label>
-                  <input type="number" id="roi-current-cost" value="850000" style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
-                </div>
-              </div>
-
-              <button onclick="calculateROI()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #087f75 0%, #10a195 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600;">Calculate ROI →</button>
-
-              <div id="roi-result-panel" style="margin-top: 20px; padding: 16px; background: linear-gradient(135deg, #dff3ef 0%, #ffffff 100%); border-radius: 8px; border: 1px solid #087f75;">
-                <div style="text-align: center; margin-bottom: 12px;">
-                  <span style="display: block; font-size: 12px; color: #68767d; margin-bottom: 4px;">Estimated 3-Year ROI</span>
-                  <strong id="roi-result-value" style="font-size: 32px; color: #087f75;">287%</strong>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
-                  <div style="text-align: center;">
-                    <span style="display: block; font-size: 11px; color: #68767d;">Cost Savings</span>
-                    <strong id="roi-savings-value" style="font-size: 18px; color: var(--ink);">$1.2M</strong>
-                  </div>
-                  <div style="text-align: center;">
-                    <span style="display: block; font-size: 11px; color: #68767d;">Payback Period</span>
-                    <strong id="roi-payback-value" style="font-size: 18px; color: var(--ink);">8 months</strong>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="card-head"><div><h2>⚖️ Product Comparison Matrix</h2><p>Side-by-side product comparisons</p></div></div>
-            <div style="padding: 20px;">
-              <div style="margin-bottom: 16px;">
-                <label style="display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink);">Compare Products</label>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                  <select style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
-                    <option>watsonx.ai</option>
-                    <option>watsonx.data</option>
-                    <option>Db2 Warehouse</option>
-                  </select>
-                  <select style="width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px;">
-                    <option>watsonx.data</option>
-                    <option>watsonx.ai</option>
-                    <option>Instana</option>
-                  </select>
-                </div>
-              </div>
-
-              <div style="border: 1px solid var(--line); border-radius: 8px; overflow: hidden;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; background: #f4f7f7;">
-                  <div style="padding: 10px; font-size: 11px; font-weight: 600; color: #68767d;"></div>
-                  <div style="padding: 10px; font-size: 11px; font-weight: 600; text-align: center; border-left: 1px solid var(--line);">watsonx.ai</div>
-                  <div style="padding: 10px; font-size: 11px; font-weight: 600; text-align: center; border-left: 1px solid var(--line);">watsonx.data</div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line);">
-                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Avg Deal Size</div>
-                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);"><strong>$35.6K</strong></div>
-                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);"><strong>$35.0K</strong></div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line); background: #fafbfb;">
-                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Win Rate</div>
-                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);"><strong style="color: #087f75;">58%</strong></div>
-                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);"><strong style="color: #087f75;">51%</strong></div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line);">
-                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Sales Cycle</div>
-                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);">89 days</div>
-                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);">76 days</div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line); background: #fafbfb;">
-                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Deployment</div>
-                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);">Cloud/On-prem</div>
-                  <div style="padding: 10px; font-size: 12px; text-align: center; border-left: 1px solid var(--line);">Cloud/On-prem</div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line);">
-                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Primary Use Case</div>
-                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">AI/ML Models</div>
-                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">Data Lakehouse</div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line); background: #fafbfb;">
-                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Target Buyer</div>
-                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">CDO, CTO</div>
-                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">CDO, CIO</div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line);">
-                  <div style="padding: 10px; font-size: 12px; font-weight: 500;">Top Competitor</div>
-                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">OpenAI</div>
-                  <div style="padding: 10px; font-size: 11px; text-align: center; border-left: 1px solid var(--line);">Snowflake</div>
-                </div>
-              </div>
-
-              <div style="margin-top: 16px; padding: 12px; background: #e8f1ff; border-radius: 6px;">
-                <strong style="display: block; margin-bottom: 6px; font-size: 12px; color: #2e67b2;">💡 Positioning Tip</strong>
-                <p style="margin: 0; font-size: 11px; color: #68767d;">watsonx.ai has higher win rate but longer sales cycle. Position together for comprehensive AI + Data solution.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- AI Insights Panel for Product Intelligence -->
-        <div class="ai-insights-panel">
-          <div class="ai-insights-header">
-            <div class="ai-insights-title">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5"/>
-                <path d="M2 12l10 5 10-5"/>
-              </svg>
-              <h3>AI Product Recommendations</h3>
-              <span class="ai-badge">Powered by watsonx.ai</span>
-            </div>
-            <button class="ai-insights-toggle" onclick="toggleAIInsights(event)">Hide Insights</button>
-          </div>
-          <div class="ai-insights-content">
-            <div class="ai-insight-card priority-high">
-              <div class="ai-insight-icon">🎯</div>
-              <div class="ai-insight-body">
-                <h4>High-Propensity Account Identified</h4>
-                <p><strong>Acme Corp is 85% likely to buy watsonx.data</strong> based on current Db2 usage, data volume growth (+40% YoY), and recent cloud migration initiative.</p>
-                <div class="ai-insight-action">
-                  <strong>Recommended Action:</strong>
-                  Schedule lakehouse architecture review with CTO. Emphasize 60% cost reduction vs traditional data warehouse expansion.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Estimated Deal Size:</span>
-                  <span class="impact-value">$420K ARR</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="ai-insight-card priority-positive">
-              <div class="ai-insight-icon">📦</div>
-              <div class="ai-insight-body">
-                <h4>Product Pairing Opportunity</h4>
-                <p><strong>TechStart Inc.</strong> purchased Db2 Warehouse last quarter. Analysis shows 78% of similar customers also bought watsonx.data within 6 months.</p>
-                <div class="ai-insight-action">
-                  <strong>Cross-Sell Strategy:</strong>
-                  Position watsonx.data as natural extension for AI/ML workloads. Reference 3 similar customer success stories.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Cross-Sell Probability:</span>
-                  <span class="impact-value">78% (Very High)</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="ai-insight-card priority-medium">
-              <div class="ai-insight-icon">⚔️</div>
-              <div class="ai-insight-body">
-                <h4>Competitive Threat Detected</h4>
-                <p>Snowflake mentioned in <strong>3 recent calls</strong> with GlobalTech Corp. Competitor positioning around "ease of use" and "faster time to value".</p>
-                <div class="ai-insight-action">
-                  <strong>Counter Strategy:</strong>
-                  Emphasize IBM's enterprise security, hybrid cloud flexibility, and AI integration. Schedule competitive battle card review.
-                </div>
-                <div class="ai-insight-impact">
-                  <span class="impact-label">Deal at Risk:</span>
-                  <span class="impact-value">$650K opportunity</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      </section>
+      <!-- placeholder stubs — original reports + product-intelligence sections removed -->
+      <div id="reports" class="view" style="display:none"></div>
+      <div id="product-intelligence" class="view" style="display:none"></div>
     </main>
   </div>
   
+  <!-- Coaching Notes Modal -->
+  <div id="notes-modal" class="notes-modal" role="dialog" aria-modal="true" aria-label="Coaching notes">
+    <div class="notes-container">
+      <div class="notes-header">
+        <div>
+          <p class="eyebrow">COACHING NOTES</p>
+          <h3 id="notes-modal-title">Notes for Jordan Lee</h3>
+        </div>
+        <button class="notes-close" id="notes-close" aria-label="Close notes">✕</button>
+      </div>
+      <div class="notes-body">
+        <div id="notes-list"></div>
+        <div class="notes-add">
+          <textarea id="notes-input" class="notes-textarea" placeholder="Add a coaching note... (e.g., discussed pipeline gap, committed to 15 new accounts this week)" rows="3"></textarea>
+          <button class="button primary" id="notes-save">Save note</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Search Modal -->
   <div id="search-modal" class="search-modal">
     <div class="search-container">

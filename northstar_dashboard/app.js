@@ -119,9 +119,16 @@ function calculateROI() {
   const currentCost = parseFloat(document.getElementById('roi-current-cost').value) || 0;
   
   if (dataVolume === 0 || currentCost === 0) {
-    alert('Please enter data volume and current cost');
+    const roiErr = document.getElementById('roi-error');
+    if (roiErr) {
+      roiErr.textContent = 'Please enter data volume and current cost.';
+      roiErr.style.display = 'block';
+      setTimeout(() => { roiErr.style.display = 'none'; }, 4000);
+    }
     return;
   }
+  const roiErr = document.getElementById('roi-error');
+  if (roiErr) roiErr.style.display = 'none';
   
   const result = roiCalculator.calculate(product, companySize, industry, dataVolume, growthRate, currentCost);
   
@@ -221,6 +228,9 @@ const reps = [
     accountsTouched: 67,
     teamAvg: 7,
     conversion: 38,
+    prevPipeline: 295000,
+    prevOpportunities: 8,
+    prevMeetings: 21,
     zoomOut: {
       quantity: { score: 85, status: 'ok', label: 'Strong' },
       dealSize: { score: 88, status: 'ok', label: 'Excellent' },
@@ -250,6 +260,9 @@ const reps = [
     accountsTouched: 58,
     teamAvg: 7,
     conversion: 21,
+    prevPipeline: 310000,
+    prevOpportunities: 7,
+    prevMeetings: 19,
     zoomOut: {
       quantity: { score: 42, status: 'exposed', label: 'Critical' },
       dealSize: { score: 85, status: 'ok', label: 'Strong' },
@@ -279,6 +292,9 @@ const reps = [
     accountsTouched: 52,
     teamAvg: 7,
     conversion: 33,
+    prevPipeline: 208000,
+    prevOpportunities: 6,
+    prevMeetings: 18,
     zoomOut: {
       quantity: { score: 68, status: 'ok', label: 'Adequate' },
       dealSize: { score: 58, status: 'exposed', label: 'Below avg' },
@@ -308,6 +324,9 @@ const reps = [
     accountsTouched: 19,
     teamAvg: 7,
     conversion: 28,
+    prevPipeline: 195000,
+    prevOpportunities: 5,
+    prevMeetings: 18,
     zoomOut: {
       quantity: { score: 38, status: 'exposed', label: 'Critical' },
       dealSize: { score: 72, status: 'ok', label: 'Adequate' },
@@ -337,6 +356,9 @@ const reps = [
     accountsTouched: 18,
     teamAvg: 7,
     conversion: 27,
+    prevPipeline: 180000,
+    prevOpportunities: 4,
+    prevMeetings: 14,
     zoomOut: {
       quantity: { score: 32, status: 'exposed', label: 'Critical' },
       dealSize: { score: 65, status: 'ok', label: 'Adequate' },
@@ -366,6 +388,9 @@ const reps = [
     accountsTouched: 54,
     teamAvg: 7,
     conversion: 35,
+    prevPipeline: 188000,
+    prevOpportunities: 7,
+    prevMeetings: 20,
     zoomOut: {
       quantity: { score: 72, status: 'ok', label: 'Good' },
       dealSize: { score: 68, status: 'ok', label: 'Adequate' },
@@ -655,6 +680,12 @@ function renderKPIs() {
   }
 }
 
+function getStatusBadge(rep) {
+  if (rep.risk < 40) return '<span class="status-badge on-track">On track</span>';
+  if (rep.risk < 70) return '<span class="status-badge watch">Watch</span>';
+  return '<span class="status-badge intervene">Intervene</span>';
+}
+
 function renderPipelineTable() {
   const tableHead = `
     <div class="table-head">
@@ -663,6 +694,7 @@ function renderPipelineTable() {
       <div>PIPELINE GAP</div>
       <div>COVERAGE</div>
       <div>QUOTA RISK</div>
+      <div>STATUS</div>
     </div>
   `;
 
@@ -700,6 +732,7 @@ function renderPipelineTable() {
         <div>
           <span class="risk ${getRiskClass(rep.risk)}">${rep.risk}%</span>
         </div>
+        <div>${getStatusBadge(rep)}</div>
       </div>
     `;
   }).join('');
@@ -786,17 +819,27 @@ function renderCoaching() {
   if (aiSummary) aiSummary.textContent = rep.aiSummary;
   if (riskScore) riskScore.textContent = `${rep.risk}%`;
   
-  // Update KPIs
+  // Update KPIs with WoW deltas
   const untouched = rep.accountsAssigned - rep.accountsTouched;
+  
+  function wowDelta(current, prev, isCurrency) {
+    if (prev === undefined) return '';
+    const diff = current - prev;
+    if (diff === 0) return '<span class="wow-delta neutral">→ 0</span>';
+    const sign = diff > 0 ? '+' : '';
+    const label = isCurrency ? sign + formatCurrency(diff) : sign + diff;
+    return `<span class="wow-delta ${diff > 0 ? 'up' : 'down'}">${diff > 0 ? '↑' : '↓'} ${label} WoW</span>`;
+  }
+
   const repKpis = document.getElementById('rep-kpis');
   if (repKpis) {
     repKpis.innerHTML = `
-    <div class="rep-kpi"><small>CURRENT PIPELINE</small><strong>${formatCurrency(rep.pipeline)}</strong></div>
+    <div class="rep-kpi"><small>CURRENT PIPELINE</small><strong>${formatCurrency(rep.pipeline)}</strong>${wowDelta(rep.pipeline, rep.prevPipeline, true)}</div>
     <div class="rep-kpi"><small>GOAL</small><strong>${formatCurrency(rep.goal)}</strong></div>
     <div class="rep-kpi"><small>GAP TO QUOTA</small><strong class="${gap > 0 ? 'danger' : ''}">${formatCurrency(-gap)}</strong></div>
     <div class="rep-kpi"><small>COVERAGE</small><strong>${rep.coverage.toFixed(1)}×</strong></div>
-    <div class="rep-kpi"><small>OPPORTUNITIES</small><strong>${rep.opportunities}</strong></div>
-    <div class="rep-kpi"><small>MEETINGS</small><strong>${rep.meetings}</strong></div>
+    <div class="rep-kpi"><small>OPPORTUNITIES</small><strong>${rep.opportunities}</strong>${wowDelta(rep.opportunities, rep.prevOpportunities, false)}</div>
+    <div class="rep-kpi"><small>MEETINGS</small><strong>${rep.meetings}</strong>${wowDelta(rep.meetings, rep.prevMeetings, false)}</div>
     <div class="rep-kpi"><small>ACCOUNTS ASSIGNED</small><strong>${rep.accountsAssigned}</strong></div>
     <div class="rep-kpi"><small>ACCOUNTS TOUCHED</small><strong>${rep.accountsTouched}</strong></div>
     <div class="rep-kpi"><small>UNTOUCHED ACCOUNTS</small><strong class="${untouched > 20 ? 'danger' : ''}">${untouched}</strong></div>
@@ -1107,6 +1150,25 @@ function setupEventListeners() {
       openSearch();
     }
   });
+  
+  // Coaching notes modal
+  const addNoteBtn = document.getElementById('add-coaching-note');
+  if (addNoteBtn) {
+    addNoteBtn.addEventListener('click', openNotesModal);
+  }
+  const notesClose = document.getElementById('notes-close');
+  if (notesClose) notesClose.addEventListener('click', closeNotesModal);
+  const notesSave = document.getElementById('notes-save');
+  if (notesSave) notesSave.addEventListener('click', saveCoachingNote);
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'notes-modal') closeNotesModal();
+  });
+  
+  // Compare selects
+  ['compare-rep-a', 'compare-rep-b', 'compare-rep-c'].forEach(id => {
+    const sel = document.getElementById(id);
+    if (sel) sel.addEventListener('change', renderCompareView);
+  });
 }
 
 function switchView(view) {
@@ -1118,8 +1180,7 @@ function switchView(view) {
     'coaching': { id: 'coaching', label: 'Rep coaching' },
     'opportunities': { id: 'opportunities', label: 'Opportunities' },
     'activity': { id: 'activity', label: 'Activity intelligence' },
-    'product-intelligence': { id: 'product-intelligence', label: 'Product intelligence' },
-    'reports': { id: 'reports', label: 'Reports' }
+    'compare': { id: 'compare', label: 'Rep comparison' }
   };
   
   if (viewConfig[view]) {
@@ -1130,6 +1191,8 @@ function switchView(view) {
     if (viewElement) viewElement.classList.add('active');
     if (navElement) navElement.classList.add('active');
     document.getElementById('crumb-label').textContent = config.label;
+    
+    if (view === 'compare') renderCompareView();
   }
   
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1531,6 +1594,9 @@ function initEnhancements() {
         renderRepPerformanceChart();
       }
     }, 100);
+    
+    // Initialize compare view selects
+    initCompareSelects();
   } catch (error) {
     console.error('Error initializing enhancements:', error);
   }
@@ -2213,3 +2279,185 @@ Would you like specific coaching recommendations?`;
 document.addEventListener('DOMContentLoaded', () => {
   copilot.init();
 });
+
+// ============================================
+// COACHING NOTES (localStorage per rep)
+// ============================================
+
+function getNotesKey(repId) {
+  return `northstar_notes_${repId}`;
+}
+
+function loadNotes(repId) {
+  try {
+    return JSON.parse(localStorage.getItem(getNotesKey(repId))) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveNotes(repId, notes) {
+  localStorage.setItem(getNotesKey(repId), JSON.stringify(notes));
+}
+
+function openNotesModal() {
+  const rep = currentRep;
+  const modal = document.getElementById('notes-modal');
+  const title = document.getElementById('notes-modal-title');
+  if (title) title.textContent = `Notes for ${rep.name}`;
+  renderNotesList(rep.id);
+  if (modal) modal.classList.add('active');
+}
+
+function closeNotesModal() {
+  const modal = document.getElementById('notes-modal');
+  if (modal) modal.classList.remove('active');
+  const input = document.getElementById('notes-input');
+  if (input) input.value = '';
+}
+
+function renderNotesList(repId) {
+  const notes = loadNotes(repId);
+  const list = document.getElementById('notes-list');
+  if (!list) return;
+  if (notes.length === 0) {
+    list.innerHTML = '<p class="notes-empty">No notes yet. Add the first note below.</p>';
+    return;
+  }
+  list.innerHTML = notes.map((note, i) => `
+    <div class="note-item">
+      <div class="note-meta">
+        <span class="note-date">${new Date(note.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+        <button class="note-delete" data-index="${i}" aria-label="Delete note">✕</button>
+      </div>
+      <p class="note-text">${note.text}</p>
+    </div>
+  `).join('');
+  
+  list.querySelectorAll('.note-delete').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.index);
+      const updated = loadNotes(repId);
+      updated.splice(idx, 1);
+      saveNotes(repId, updated);
+      renderNotesList(repId);
+    });
+  });
+}
+
+function saveCoachingNote() {
+  const input = document.getElementById('notes-input');
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text) return;
+  const notes = loadNotes(currentRep.id);
+  notes.unshift({ date: new Date().toISOString(), text });
+  saveNotes(currentRep.id, notes);
+  input.value = '';
+  renderNotesList(currentRep.id);
+}
+
+// ============================================
+// REP COMPARISON VIEW
+// ============================================
+
+function initCompareSelects() {
+  ['compare-rep-a', 'compare-rep-b', 'compare-rep-c'].forEach((id, idx) => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    // For c, keep the empty option at top
+    if (id === 'compare-rep-c') {
+      reps.forEach(rep => {
+        const opt = document.createElement('option');
+        opt.value = rep.id;
+        opt.textContent = rep.name;
+        sel.appendChild(opt);
+      });
+    } else {
+      sel.innerHTML = '';
+      reps.forEach((rep, i) => {
+        const opt = document.createElement('option');
+        opt.value = rep.id;
+        opt.textContent = rep.name;
+        if (i === idx) opt.selected = true;
+        sel.appendChild(opt);
+      });
+    }
+  });
+}
+
+function renderCompareView() {
+  const selA = document.getElementById('compare-rep-a');
+  const selB = document.getElementById('compare-rep-b');
+  const selC = document.getElementById('compare-rep-c');
+  const grid = document.getElementById('compare-grid');
+  if (!grid) return;
+  
+  const selectedReps = [selA, selB, selC]
+    .map(s => s ? reps.find(r => r.id === s.value) : null)
+    .filter(Boolean);
+  
+  if (selectedReps.length < 2) {
+    grid.innerHTML = '<p style="color:#68767d;padding:24px;">Select at least two reps to compare.</p>';
+    return;
+  }
+  
+  const metrics = [
+    { label: 'Pipeline', fn: r => formatCurrency(r.pipeline), highlight: (vals) => Math.max(...vals.map(v => parseFloat(v.replace(/[^0-9.]/g, '')) || 0)) },
+    { label: 'Goal', fn: r => formatCurrency(r.goal) },
+    { label: 'Pipeline vs Goal', fn: r => Math.round((r.pipeline / r.goal) * 100) + '%' },
+    { label: 'Coverage', fn: r => r.coverage.toFixed(1) + '×' },
+    { label: 'Quota Risk', fn: r => r.risk + '%', lowerIsBetter: true },
+    { label: 'Opportunities', fn: r => r.opportunities },
+    { label: 'Meetings', fn: r => r.meetings },
+    { label: 'Conversion %', fn: r => r.conversion + '%' },
+    { label: 'Accounts Assigned', fn: r => r.accountsAssigned },
+    { label: 'Accounts Touched', fn: r => r.accountsTouched },
+    { label: 'Territory Coverage', fn: r => Math.round((r.accountsTouched / r.accountsAssigned) * 100) + '%' },
+    { label: 'Status', fn: r => {
+      if (r.risk < 40) return '<span class="status-badge on-track">On track</span>';
+      if (r.risk < 70) return '<span class="status-badge watch">Watch</span>';
+      return '<span class="status-badge intervene">Intervene</span>';
+    }}
+  ];
+  
+  const colWidth = `${Math.floor(100 / (selectedReps.length + 1))}%`;
+  
+  let html = `<div class="compare-table">`;
+  
+  // Header row
+  html += `<div class="compare-row compare-head">
+    <div class="compare-cell compare-label-cell"></div>
+    ${selectedReps.map((rep, i) => `
+      <div class="compare-cell compare-rep-cell">
+        <span class="avatar ${getAvatarClass(reps.indexOf(rep))}">${rep.initials}</span>
+        <div>
+          <strong>${rep.name}</strong>
+          <small>${rep.role} · ${rep.region}</small>
+        </div>
+        <button class="button primary" style="margin-top:8px;font-size:12px;padding:5px 10px;" onclick="openCoaching('${rep.id}')">Open coaching</button>
+      </div>
+    `).join('')}
+  </div>`;
+  
+  // Metric rows
+  metrics.forEach((metric, rowIdx) => {
+    const values = selectedReps.map(r => metric.fn(r));
+    const numericVals = selectedReps.map(r => {
+      const str = String(metric.fn(r)).replace(/[^0-9.]/g, '');
+      return parseFloat(str) || 0;
+    });
+    const bestVal = metric.lowerIsBetter ? Math.min(...numericVals) : Math.max(...numericVals);
+    
+    html += `<div class="compare-row ${rowIdx % 2 === 0 ? '' : 'compare-row-alt'}">
+      <div class="compare-cell compare-label-cell"><strong>${metric.label}</strong></div>
+      ${selectedReps.map((rep, i) => {
+        const isBest = numericVals[i] === bestVal;
+        return `<div class="compare-cell ${isBest ? 'compare-best' : ''}">${values[i]}</div>`;
+      }).join('')}
+    </div>`;
+  });
+  
+  html += `</div>`;
+  grid.innerHTML = html;
+}
