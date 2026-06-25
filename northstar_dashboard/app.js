@@ -566,6 +566,12 @@ function openSearch() {
   searchModal.classList.add('active');
   searchInput.focus();
   selectedSearchIndex = -1;
+  // Mirror topbar input value into modal
+  const topbar = document.getElementById('topbar-search-input');
+  if (topbar && topbar.value) {
+    searchInput.value = topbar.value;
+    handleSearchInput({ target: searchInput });
+  }
 }
 
 function closeSearch() {
@@ -576,6 +582,9 @@ function closeSearch() {
   document.getElementById('search-results').innerHTML = '';
   searchResults = [];
   selectedSearchIndex = -1;
+  // Clear topbar input too
+  const topbar = document.getElementById('topbar-search-input');
+  if (topbar) topbar.value = '';
 }
 
 function handleSearchInput(e) {
@@ -1109,12 +1118,38 @@ function setupEventListeners() {
     }
   });
   
-  // Search functionality
-  const searchBtn = document.querySelector('.icon-btn[aria-label="Search"]');
-  if (searchBtn) {
-    searchBtn.addEventListener('click', openSearch);
+  // Topbar inline search input — focus opens modal, typing searches live
+  const topbarInput = document.getElementById('topbar-search-input');
+  if (topbarInput) {
+    topbarInput.addEventListener('focus', () => {
+      openSearch();
+      // Mirror any pre-typed text into the modal input
+      const modalInput = document.getElementById('search-input');
+      if (modalInput && topbarInput.value) {
+        modalInput.value = topbarInput.value;
+        handleSearchInput({ target: modalInput });
+      }
+    });
+    topbarInput.addEventListener('input', () => {
+      const modalInput = document.getElementById('search-input');
+      if (modalInput) {
+        modalInput.value = topbarInput.value;
+        handleSearchInput({ target: modalInput });
+      }
+      if (!document.getElementById('search-modal').classList.contains('active')) {
+        openSearch();
+      }
+    });
+    topbarInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        topbarInput.value = '';
+        topbarInput.blur();
+        closeSearch();
+      }
+    });
   }
-  
+
+  // Global ⌘K — focus the topbar input directly
   const searchInput = document.getElementById('search-input');
   if (searchInput) {
     searchInput.addEventListener('input', handleSearchInput);
@@ -1143,11 +1178,13 @@ function setupEventListeners() {
     searchClose.addEventListener('click', closeSearch);
   }
   
-  // Global keyboard shortcut for search (Cmd/Ctrl + K)
+  // Global keyboard shortcut for search (Cmd/Ctrl + K) — focus topbar input
   document.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
-      openSearch();
+      const topbar = document.getElementById('topbar-search-input');
+      if (topbar) { topbar.focus(); topbar.select(); }
+      else openSearch();
     }
   });
   

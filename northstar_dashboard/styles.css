@@ -3702,23 +3702,56 @@ h1, h2, h3, h4, h5, h6,
 }
 .quarter-pct { font-weight: 600; white-space: nowrap; }
 
-/* ── Search button ⌘K indicator ──────────── */
-.search-btn {
+/* ── Topbar inline search bar ─────────────── */
+.topbar-search-wrap {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 5px 10px;
+  width: 280px;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
+.topbar-search-wrap:focus-within {
+  border-color: var(--ibm-blue);
+  box-shadow: 0 0 0 2px rgba(15,98,254,0.15);
+  background: var(--paper);
+}
+.topbar-search-icon {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.topbar-search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--ink);
+  min-width: 0;
+}
+.topbar-search-input::placeholder { color: var(--muted); }
 .topbar-kbd {
   font-family: inherit;
   font-size: 10px;
   font-weight: 600;
   color: var(--muted);
-  background: var(--soft);
+  background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 1px 5px;
   letter-spacing: 0;
   pointer-events: none;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.topbar-search-wrap:focus-within .topbar-kbd { display: none; }
+@media (max-width: 640px) {
+  .topbar-search-wrap { width: 160px; }
+  .topbar-kbd { display: none; }
 }
 
 /* ── Rep status badges on pipeline table ──── */
