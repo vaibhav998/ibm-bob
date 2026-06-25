@@ -3329,3 +3329,343 @@ body {
   content: ' ▲';
   margin-left: 4px;
 }
+
+/* ═══════════════════════════════════════════════════════
+   IBM DESIGN LANGUAGE STYLE OVERRIDE
+   Source: ibm.com/design/language — UI Icons Library page
+   Principles: sharp corners · flat surfaces · IBM Blue only
+   · IBM Plex Sans · #e0e0e0 borders · zero shadows/gradients
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Token overrides ─────────────────────────────────── */
+:root {
+  --teal: #0f62fe;           /* swap teal → IBM Blue everywhere */
+  --teal-2: #0043ce;
+  --teal-gradient: #0f62fe;  /* kill gradient → solid */
+  --mint: #edf5ff;
+  --mint-soft: #f4f4f4;
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-hover: none;
+  --transition-fast: 100ms ease;
+  --transition-base: 100ms ease;
+  --transition-slow: 100ms ease;
+}
+
+/* ── Typography — IBM Plex Sans only, lose Manrope ─────── */
+h1, h2, h3, h4, h5, h6,
+.page-head h1,
+.rep-select,
+.kpi strong,
+.opp-summary strong,
+.gap-display strong,
+.need-block strong,
+.formula-metrics strong,
+.rep-kpi strong,
+.risk-score b {
+  font-family: 'IBM Plex Sans', sans-serif !important;
+  letter-spacing: -.01em;
+}
+
+.page-head h1 { font-size: 28px; font-weight: 600; }
+.rep-select   { font-size: 22px; font-weight: 600; }
+
+/* ── All cards / panels — sharp, flat, single border ───── */
+.kpi,
+.panel,
+.pipeline-panel,
+.sync-card,
+.question-box,
+.question-item,
+.exposure,
+.rec,
+.recovery-card,
+.coaching-questions-panel,
+.recommendations,
+.growth-strategy,
+.growth-item,
+.need-block,
+.rep-kpis,
+.alert-banner,
+.coach-alert,
+.rep-menu,
+.search-container,
+.copilot-chat,
+.ai-insights-panel,
+.ai-insight-card {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* ── Buttons — Carbon-style sharp ─────────────────────── */
+.button,
+.icon-btn,
+.mobile-menu,
+.segmented,
+.segmented button,
+.filter-btn,
+.copilot-toggle {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.button.primary:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  background: #0043ce !important;
+}
+
+.button.secondary:hover {
+  box-shadow: none !important;
+  background: #e5f6fd !important;
+  border-color: #0f62fe !important;
+}
+
+/* ── KPI cards — flat IBM tile style ──────────────────── */
+.kpi {
+  border-radius: 0 !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+.kpi:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  border-color: #0f62fe !important;   /* IBM blue border on hover */
+}
+
+/* kill the animated gradient top bar on kpi */
+.kpi::before { display: none !important; }
+
+/* ── Panels — flat, sharp ──────────────────────────────── */
+.panel {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: 1px solid var(--line) !important;
+}
+
+.panel:hover { box-shadow: none !important; }
+
+/* ── Alert banner — IBM notification style ─────────────── */
+.alert-banner {
+  border-radius: 0 !important;
+  border-left: 4px solid var(--ibm-blue) !important;
+  border-color: var(--line) !important;
+  border-left-color: var(--ibm-blue) !important;
+  background: #edf5ff !important;
+}
+
+.alert-banner strong { color: #161616; }
+.alert-banner p { color: #525252; }
+.alert-banner button { color: var(--ibm-blue) !important; font-size: 12px; }
+.alert-icon { color: var(--ibm-blue) !important; }
+
+/* ── Coach alert — IBM notification dark ──────────────── */
+.coach-alert {
+  border-radius: 0 !important;
+  background: #161616 !important;
+}
+
+/* ── Nav item — Carbon side-nav style ─────────────────── */
+.nav-item {
+  border-radius: 0 !important;
+  transition: background 100ms, color 100ms !important;
+}
+
+.nav-item:hover {
+  transform: none !important;
+  background: rgba(255,255,255,0.1) !important;
+}
+
+/* active state: IBM Blue left border (Carbon pattern) */
+.nav-item.active {
+  background: rgba(15,98,254,0.2) !important;
+  border-left: 3px solid var(--ibm-blue) !important;
+}
+
+/* ── Brand mark — flat IBM square ─────────────────────── */
+.brand-mark {
+  border-radius: 0 !important;
+  background: var(--ibm-blue) !important;
+  color: #fff !important;
+}
+
+.brand-mark svg { color: #fff !important; }
+
+/* ── Topbar header — IBM 48px header ──────────────────── */
+.topbar {
+  height: 48px !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  box-shadow: none !important;
+}
+
+/* ── Segmented control — flat tabs ────────────────────── */
+.segmented {
+  border-radius: 0 !important;
+  background: #e0e0e0 !important;
+  border: 1px solid #c6c6c6 !important;
+}
+
+.segmented button { border-radius: 0 !important; }
+.segmented button.active {
+  background: #fff !important;
+  color: #161616 !important;
+  box-shadow: none !important;
+  border-right: 1px solid #c6c6c6;
+}
+
+/* ── Rep row hover — IBM row highlight ────────────────── */
+.rep-row {
+  border-radius: 0 !important;
+}
+
+.rep-row:hover {
+  background: #edf5ff !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* ── Risk tags — flat IBM tags ────────────────────────── */
+.risk-tag,
+.status-pill,
+.nav-badge {
+  border-radius: 0 !important;
+}
+
+/* ── Matrix quads — flat IBM surface colors ───────────── */
+.q1 { background: #edf5ff !important; }
+.q2 { background: #defbe6 !important; }
+.q3 { background: #fff1f1 !important; }
+.q4 { background: #fef5c3 !important; }
+
+/* ── Avatar — IBM square avatar ───────────────────────── */
+.avatar { border-radius: 0 !important; }
+
+/* ── Progress track — flat bar ────────────────────────── */
+.progress-track { border-radius: 0 !important; }
+.progress-track span { border-radius: 0 !important; background: var(--ibm-blue) !important; }
+
+.bar, .bar > span { border-radius: 0 !important; }
+.bar > span { background: var(--ibm-blue) !important; }
+
+.mini-track, .mini-track span { border-radius: 0 !important; }
+.mini-track span { background: var(--ibm-blue) !important; }
+.exposed .mini-track span { background: #da1e28 !important; }
+
+/* ── Eyebrow — IBM label style ────────────────────────── */
+.eyebrow { color: #525252 !important; letter-spacing: .08em; }
+
+/* ── Lede strong — IBM blue accent ───────────────────── */
+.lede strong { color: var(--ibm-blue) !important; }
+
+/* ── Gap box — IBM red notification ──────────────────── */
+.gap-box { border-radius: 0 !important; background: #fff1f1 !important; }
+.gap-box strong { color: #da1e28 !important; }
+
+/* ── Formula callout — IBM green notification ─────────── */
+.formula-callout {
+  border-radius: 0 !important;
+  border-left: 4px solid #24a148 !important;
+  background: #defbe6 !important;
+}
+.formula-callout strong { color: #24a148 !important; }
+
+/* ── Recs — IBM left-accent tiles ─────────────────────── */
+.rec { border-radius: 0 !important; border-left: 4px solid var(--ibm-blue) !important; }
+.rec-action { border-radius: 0 !important; background: #edf5ff !important; color: #0043ce !important; }
+.rec-head span { color: var(--ibm-blue) !important; }
+
+/* ── Coaching question items ───────────────────────────── */
+.question-item { border-radius: 0 !important; }
+.question-item .q-number { border-radius: 0 !important; background: var(--ibm-blue) !important; color: #fff !important; }
+.question-title span { border-radius: 0 !important; background: #d0e2ff !important; color: var(--ibm-blue) !important; }
+
+/* ── Coaching questions list bullets ──────────────────── */
+.coaching-questions-list li { border-radius: 0 !important; }
+.coaching-questions-list li::before { background: var(--ibm-blue) !important; border-radius: 0 !important; }
+
+/* ── Need block — IBM dark tile ────────────────────────── */
+.need-block { border-radius: 0 !important; }
+.need-block strong { color: #42be65 !important; }
+
+/* ── Recovery options ──────────────────────────────────── */
+.recovery-options div { border-radius: 0 !important; }
+
+/* ── Growth strategy ───────────────────────────────────── */
+.growth-strategy { border-radius: 0 !important; border-left: 4px solid var(--ibm-blue) !important; }
+.growth-item { border-radius: 0 !important; border-left: 2px solid var(--ibm-blue) !important; }
+
+/* ── Exposure card ─────────────────────────────────────── */
+.exposure { border-radius: 0 !important; }
+
+/* ── Search modal ──────────────────────────────────────── */
+.search-modal { backdrop-filter: none; }
+.search-container { border-radius: 0 !important; box-shadow: 0 4px 8px rgba(0,0,0,.12) !important; }
+.search-result-item:hover, .search-result-item.selected { background: #edf5ff !important; }
+.search-result-icon { border-radius: 0 !important; background: var(--ibm-blue) !important; }
+.search-result-type { border-radius: 0 !important; }
+.search-kbd, .search-hints kbd, .search-shortcut kbd { border-radius: 0 !important; }
+
+/* ── Copilot ────────────────────────────────────────────── */
+.copilot-toggle { border-radius: 0 !important; background: var(--ibm-blue) !important; box-shadow: none !important; }
+.copilot-chat { border-radius: 0 !important; }
+.copilot-avatar { border-radius: 0 !important; background: var(--ibm-blue) !important; }
+.message-content { border-radius: 0 !important; }
+.copilot-message.user .message-content { background: var(--ibm-blue) !important; }
+.copilot-suggestion {
+  border-radius: 0 !important;
+  border: 1px solid #c6c6c6 !important;
+  background: #fff !important;
+  color: #161616 !important;
+}
+.copilot-suggestion:hover { background: #edf5ff !important; border-color: var(--ibm-blue) !important; }
+.copilot-send { border-radius: 0 !important; }
+
+/* ── AI insight cards ───────────────────────────────────── */
+.ai-insight-card { border-radius: 0 !important; }
+.ai-insight-card.priority-high   { border-left: 4px solid #da1e28 !important; }
+.ai-insight-card.priority-medium { border-left: 4px solid #f1c21b !important; }
+.ai-insight-card.priority-positive { border-left: 4px solid #24a148 !important; }
+.ai-insight-action { border-radius: 0 !important; background: #f4f4f4 !important; }
+.ai-badge { border-radius: 0 !important; background: var(--ibm-blue) !important; color: #fff !important; }
+
+/* ── Panel footer ───────────────────────────────────────── */
+.panel-footer { border-radius: 0 !important; }
+.panel-footer button { color: var(--ibm-blue) !important; }
+
+/* ── OPP summary ────────────────────────────────────────── */
+.opp-summary { border-radius: 0 !important; }
+
+/* ── Insight rows ───────────────────────────────────────── */
+.insight-row:hover { background: #edf5ff !important; }
+
+/* ── Risk tag colours ───────────────────────────────────── */
+.risk-tag.watch   { background: #fef5c3 !important; color: #8e5917 !important; }
+.risk-tag.coach   { background: #fff0e8 !important; color: #a2191f !important; }
+.risk-tag.healthy { background: #defbe6 !important; color: #0e6027 !important; }
+
+/* ── Status pill ────────────────────────────────────────── */
+.status-pill.danger  { background: #fff1f1 !important; color: #a2191f !important; border-radius: 0 !important; }
+.status-pill.warning { background: #fef5c3 !important; color: #8e5917 !important; border-radius: 0 !important; }
+
+/* ── Dark mode ──────────────────────────────────────────── */
+[data-theme="dark"] .kpi,
+[data-theme="dark"] .panel,
+[data-theme="dark"] .ai-insight-card,
+[data-theme="dark"] .question-item,
+[data-theme="dark"] .copilot-chat,
+[data-theme="dark"] .search-container {
+  box-shadow: none !important;
+}
+
+[data-theme="dark"] .rep-row:hover { background: #1c2b3a !important; }
+[data-theme="dark"] .insight-row:hover { background: #1c2b3a !important; }
+[data-theme="dark"] .kpi:hover { border-color: var(--ibm-blue) !important; }
+[data-theme="dark"] .ai-insight-action { background: #393939 !important; }
+[data-theme="dark"] .formula-callout { background: #0d2a1a !important; }
+[data-theme="dark"] .gap-box { background: #3d0d0d !important; }
+
+/* ─────────────────────────────────────────────────────── */
