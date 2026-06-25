@@ -2461,3 +2461,597 @@ function renderCompareView() {
   html += `</div>`;
   grid.innerHTML = html;
 }
+
+// ============================================
+// MOCK DATA — IBM button interactions
+// ============================================
+
+const mockNotifications = [
+  {
+    id: 1, unread: true, type: 'risk',
+    title: 'Noah Williams — urgent intervention needed',
+    body: 'Risk score reached 81%. Pipeline coverage at 2.3× with only 18 accounts touched. Immediate coaching recommended.',
+    time: '12 min ago'
+  },
+  {
+    id: 2, unread: true, type: 'deal',
+    title: 'DataFlow Corp deal stalled 35 days',
+    body: '$135K watsonx.data opportunity has had no activity since May 20. Assigned to Priya Shah — follow-up overdue.',
+    time: '1 hr ago'
+  },
+  {
+    id: 3, unread: true, type: 'ai',
+    title: 'watsonx.ai — team enablement gap detected',
+    body: 'Only 3 of 6 reps mentioned watsonx.ai in calls this week despite 58% win rate. Consider scheduling product training.',
+    time: '3 hr ago'
+  },
+  {
+    id: 4, unread: false, type: 'success',
+    title: 'Elena Garcia closed Healthcare Partners',
+    body: '$78K DataStage deal marked Closed-Won. Elena\'s Q3 attainment now at 107%. Great result!',
+    time: 'Yesterday'
+  },
+  {
+    id: 5, unread: false, type: 'deal',
+    title: 'Q3 forecast updated in Salesforce',
+    body: 'Team commit adjusted to $1.22M based on latest opportunity stage changes. Best case remains $1.48M.',
+    time: 'Yesterday'
+  }
+];
+
+const mockActivityWeeks = [
+  { week: 'Week 5', calls: 298, connects: 112, meetings: 104, emails: 1089, replies: 251, demos: 26 },
+  { week: 'Week 6', calls: 315, connects: 124, meetings: 118, emails: 1142, replies: 268, demos: 29 },
+  { week: 'Week 7', calls: 332, connects: 131, meetings: 124, emails: 1198, replies: 281, demos: 32 },
+  { week: 'Week 8', calls: 342, connects: 130, meetings: 128, emails: 1247, replies: 299, demos: 34 }
+];
+
+const mockTrainingModules = [
+  {
+    product: 'watsonx.ai',
+    level: 'URGENT',
+    levelClass: 'danger',
+    duration: '45 min',
+    type: 'Self-paced · IBM Learning',
+    description: 'Core positioning, demo flow, and competitive differentiation for watsonx.ai. Covers AI governance, foundation models, and Studio IDE.',
+    assignTo: ['Jordan Lee', 'Maya Chen', 'Noah Williams'],
+    url: '#'
+  },
+  {
+    product: 'watsonx.data',
+    level: 'HIGH',
+    levelClass: 'warning',
+    duration: '30 min',
+    type: 'Webinar recording',
+    description: 'Lakehouse architecture, Presto/Spark integration, and cost-reduction messaging. Ideal for reps with Db2 customers.',
+    assignTo: ['Sam Rivera', 'Jordan Lee'],
+    url: '#'
+  },
+  {
+    product: 'Instana',
+    level: 'MEDIUM',
+    levelClass: 'info',
+    duration: '20 min',
+    type: 'Battle card + talk track',
+    description: 'Observability positioning against Datadog. Focus on full-stack coverage, no sampling, and IBM hybrid cloud advantage.',
+    assignTo: ['Maya Chen', 'Noah Williams'],
+    url: '#'
+  },
+  {
+    product: 'Guardium',
+    level: 'SHARE',
+    levelClass: 'success',
+    duration: '15 min',
+    type: 'Customer story deck',
+    description: 'Healthcare and financial services success stories. Jordan has strong Guardium expertise — share his pitch recordings with the team.',
+    assignTo: [],
+    url: '#'
+  }
+];
+
+const mockSegments = ['All segments', 'Enterprise (1000+)', 'Mid-Market (100–999)', 'SMB (<100)', 'Financial Services', 'Healthcare', 'Technology', 'Manufacturing', 'Retail'];
+const mockProducts  = ['All products', 'watsonx.ai', 'watsonx.data', 'Db2 Warehouse', 'Instana', 'Guardium', 'Turbonomic', 'DataStage'];
+
+// ── Utility ──────────────────────────────────────
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.className = `toast toast-${type} toast-show`;
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('toast-show'), 3200);
+}
+
+function openModal(id)  { const el = document.getElementById(id); if (el) el.classList.add('active'); }
+function closeModal(id) { const el = document.getElementById(id); if (el) el.classList.remove('active'); }
+function openDrawer(id)  { closeAllDrawers(); const el = document.getElementById(id); if (el) el.classList.add('open'); }
+function closeDrawer(id) { const el = document.getElementById(id); if (el) el.classList.remove('open'); }
+function closeAllDrawers() {
+  document.querySelectorAll('.side-drawer').forEach(d => d.classList.remove('open'));
+}
+function positionDropdown(panelId, anchorEl) {
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+  const rect = anchorEl.getBoundingClientRect();
+  panel.style.top  = (rect.bottom + 6 + window.scrollY) + 'px';
+  panel.style.left = rect.left + 'px';
+  const wasOpen = panel.classList.contains('active');
+  document.querySelectorAll('.dropdown-panel').forEach(p => p.classList.remove('active'));
+  if (!wasOpen) panel.classList.add('active');
+}
+
+// ── Profile drawer ────────────────────────────────
+function initProfileDrawer() {
+  const profileBtn = document.querySelector('.profile');
+  if (profileBtn) profileBtn.addEventListener('click', () => openDrawer('profile-drawer'));
+  const closeBtn = document.getElementById('profile-drawer-close');
+  if (closeBtn) closeBtn.addEventListener('click', () => closeDrawer('profile-drawer'));
+}
+
+// ── Notifications ─────────────────────────────────
+function renderNotifications() {
+  const list = document.getElementById('notif-list');
+  if (!list) return;
+  const typeIcon = { risk: '⚠', deal: '◆', ai: '✦', success: '✓' };
+  const typeClass = { risk: 'notif-risk', deal: 'notif-deal', ai: 'notif-ai', success: 'notif-success' };
+  list.innerHTML = mockNotifications.map(n => `
+    <div class="notif-item ${n.unread ? 'notif-unread' : ''}" data-id="${n.id}">
+      <span class="notif-icon ${typeClass[n.type]}">${typeIcon[n.type]}</span>
+      <div class="notif-content">
+        <strong>${n.title}</strong>
+        <p>${n.body}</p>
+        <small>${n.time}</small>
+      </div>
+    </div>
+  `).join('');
+}
+
+function initNotifications() {
+  const bell = document.querySelector('.icon-btn.notification');
+  if (bell) bell.addEventListener('click', () => {
+    renderNotifications();
+    openDrawer('notif-panel');
+  });
+  const closeBtn = document.getElementById('notif-panel-close');
+  if (closeBtn) closeBtn.addEventListener('click', () => closeDrawer('notif-panel'));
+  const markAll = document.getElementById('mark-all-read-btn');
+  if (markAll) markAll.addEventListener('click', () => {
+    mockNotifications.forEach(n => n.unread = false);
+    renderNotifications();
+    const badge = document.querySelector('.notif-count-badge');
+    if (badge) badge.textContent = '0';
+    const dot = document.querySelector('.icon-btn.notification i');
+    if (dot) dot.style.display = 'none';
+  });
+}
+
+// ── Pipeline segment filter ───────────────────────
+function initSegmentFilter() {
+  const btn = document.querySelector('.segmented button:not(.active)'); // "Coverage ratio"
+  const allSegsBtn = document.querySelector('.pipeline-panel .filter-btn');
+  
+  // Coverage ratio tab
+  const segmented = document.querySelector('.pipeline-panel .segmented');
+  if (segmented) {
+    segmented.querySelectorAll('button').forEach(b => {
+      b.addEventListener('click', () => {
+        segmented.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        if (b.textContent.trim() === 'Coverage ratio') {
+          renderCoverageTable();
+        } else {
+          renderPipelineTable();
+        }
+      });
+    });
+  }
+
+  // Segment filter dropdown
+  if (allSegsBtn) {
+    allSegsBtn.addEventListener('click', (e) => {
+      const opts = document.getElementById('segment-options');
+      if (opts) {
+        opts.innerHTML = mockSegments.map((s, i) => `
+          <label class="filter-option">
+            <input type="radio" name="seg-filter" value="${s}" ${i === 0 ? 'checked' : ''}> ${s}
+          </label>
+        `).join('');
+      }
+      positionDropdown('segment-panel', allSegsBtn);
+      e.stopPropagation();
+    });
+  }
+
+  const applyBtn = document.getElementById('segment-apply-btn');
+  if (applyBtn) applyBtn.addEventListener('click', () => {
+    const sel = document.querySelector('input[name="seg-filter"]:checked');
+    const label = sel ? sel.value : 'All segments';
+    const filterBtn = document.querySelector('.pipeline-panel .filter-btn');
+    if (filterBtn) filterBtn.textContent = label + '⌄';
+    closeModal('segment-panel');
+    document.getElementById('segment-panel').classList.remove('active');
+    showToast(`Pipeline filtered: ${label}`);
+  });
+  const clearBtn = document.getElementById('segment-clear-btn');
+  if (clearBtn) clearBtn.addEventListener('click', () => {
+    const filterBtn = document.querySelector('.pipeline-panel .filter-btn');
+    if (filterBtn) filterBtn.textContent = 'All segments⌄';
+    document.getElementById('segment-panel').classList.remove('active');
+  });
+}
+
+function renderCoverageTable() {
+  const table = document.getElementById('pipeline-table');
+  if (!table) return;
+  const head = `<div class="table-head"><div>REP</div><div>COVERAGE RATIO</div><div>PIPELINE</div><div>QUOTA</div><div>STATUS</div></div>`;
+  const rows = reps.map((rep, i) => {
+    const coverageColor = rep.coverage >= 3.5 ? '#24a148' : rep.coverage >= 3.0 ? '#a66e00' : '#da1e28';
+    return `
+      <div class="rep-row" data-rep="${rep.id}">
+        <div class="rep-ident">
+          <span class="avatar ${getAvatarClass(i)}">${rep.initials}</span>
+          <div><strong>${rep.name}</strong><small>${rep.role}</small></div>
+        </div>
+        <div>
+          <strong style="font-size:22px;color:${coverageColor}">${rep.coverage.toFixed(1)}×</strong>
+          <small style="display:block;color:var(--muted)">Target: 3.5×</small>
+          <div style="background:var(--line);height:6px;border-radius:3px;margin-top:4px;width:120px">
+            <div style="background:${coverageColor};width:${Math.min((rep.coverage/3.5)*100,100)}%;height:100%;border-radius:3px"></div>
+          </div>
+        </div>
+        <div><strong>${formatCurrency(rep.pipeline)}</strong></div>
+        <div><strong>${formatCurrency(rep.goal)}</strong></div>
+        <div>${getStatusBadge(rep)}</div>
+      </div>`;
+  }).join('');
+  table.innerHTML = head + rows;
+}
+
+// ── Product filter (Opportunities) ───────────────
+function initProductFilter() {
+  const filterBtn = document.getElementById('filter-products-btn');
+  if (filterBtn) {
+    filterBtn.addEventListener('click', (e) => {
+      const opts = document.getElementById('product-filter-options');
+      if (opts) {
+        opts.innerHTML = mockProducts.map((p, i) => `
+          <label class="filter-option">
+            <input type="radio" name="prod-filter" value="${p}" ${i === 0 ? 'checked' : ''}> ${p}
+          </label>
+        `).join('');
+      }
+      positionDropdown('product-filter-panel', filterBtn);
+      e.stopPropagation();
+    });
+  }
+  const applyBtn = document.getElementById('product-filter-apply-btn');
+  if (applyBtn) applyBtn.addEventListener('click', () => {
+    const sel = document.querySelector('input[name="prod-filter"]:checked');
+    const label = sel ? sel.value : 'All products';
+    if (filterBtn) filterBtn.textContent = label + '⌄';
+    document.getElementById('product-filter-panel').classList.remove('active');
+    showToast(`Opportunities filtered: ${label}`);
+  });
+  const clearBtn = document.getElementById('product-filter-clear-btn');
+  if (clearBtn) clearBtn.addEventListener('click', () => {
+    if (filterBtn) filterBtn.textContent = 'All products⌄';
+    document.getElementById('product-filter-panel').classList.remove('active');
+  });
+}
+
+// ── Rep filter (Activity) ─────────────────────────
+function initRepFilter() {
+  const filterBtn = document.querySelector('#activity .filter-btn');
+  if (filterBtn) {
+    filterBtn.addEventListener('click', (e) => {
+      const opts = document.getElementById('rep-filter-options');
+      if (opts) {
+        const repOptions = ['All reps', ...reps.map(r => r.name)];
+        opts.innerHTML = repOptions.map((r, i) => `
+          <label class="filter-option">
+            <input type="radio" name="rep-filter" value="${r}" ${i === 0 ? 'checked' : ''}> ${r}
+          </label>
+        `).join('');
+      }
+      positionDropdown('rep-filter-panel', filterBtn);
+      e.stopPropagation();
+    });
+  }
+  const applyBtn = document.getElementById('rep-filter-apply-btn');
+  if (applyBtn) applyBtn.addEventListener('click', () => {
+    const sel = document.querySelector('input[name="rep-filter"]:checked');
+    const label = sel ? sel.value : 'All reps';
+    if (filterBtn) filterBtn.textContent = label + '⌄';
+    document.getElementById('rep-filter-panel').classList.remove('active');
+    showToast(`Activity filtered: ${label}`);
+  });
+  const clearBtn = document.getElementById('rep-filter-clear-btn');
+  if (clearBtn) clearBtn.addEventListener('click', () => {
+    if (filterBtn) filterBtn.textContent = 'All reps⌄';
+    document.getElementById('rep-filter-panel').classList.remove('active');
+  });
+}
+
+// ── Activity time tabs ────────────────────────────
+function initActivityTabs() {
+  const section = document.getElementById('activity');
+  if (!section) return;
+  const tabs = section.querySelectorAll('.segmented button');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const period = tab.textContent.trim();
+      showToast(`Showing activity: ${period}`);
+    });
+  });
+}
+
+// ── 1:1 Session modal ─────────────────────────────
+function initSessionModal() {
+  const btn = document.getElementById('start-1on1-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const title = document.getElementById('session-modal-title');
+    if (title) title.textContent = `Session with ${currentRep.name}`;
+    // Default to tomorrow 10am
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(10, 0, 0, 0);
+    const dtInput = document.getElementById('session-datetime');
+    if (dtInput) dtInput.value = tomorrow.toISOString().slice(0, 16);
+    // Build dynamic agenda from rep performance
+    const agendaList = document.getElementById('session-agenda-list');
+    if (agendaList) {
+      const gap = currentRep.goal - currentRep.pipeline;
+      const items = [
+        `Pipeline review — current at ${formatCurrency(currentRep.pipeline)} vs ${formatCurrency(currentRep.goal)} goal`,
+        gap > 0 ? `Gap closure strategy — ${formatCurrency(gap)} shortfall this quarter` : 'Pipeline above goal — discuss Q4 planning',
+        `Opportunity creation — ${currentRep.opportunities} created vs ${currentRep.teamAvg} team average`,
+        `Account coverage — ${currentRep.accountsTouched} of ${currentRep.accountsAssigned} accounts touched`,
+        'Blockers, support needed, and commitments for next week'
+      ];
+      agendaList.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+    }
+    openModal('session-modal');
+  });
+  document.getElementById('session-modal-close').addEventListener('click', () => closeModal('session-modal'));
+  document.getElementById('session-modal-cancel').addEventListener('click', () => closeModal('session-modal'));
+  document.getElementById('session-modal-confirm').addEventListener('click', () => {
+    const dt = document.getElementById('session-datetime').value;
+    const fmt = document.getElementById('session-format').value;
+    if (!dt) { showToast('Please select a date and time', 'error'); return; }
+    const date = new Date(dt).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    closeModal('session-modal');
+    showToast(`1:1 with ${currentRep.name} scheduled for ${date} via ${fmt}`);
+  });
+  // Close on backdrop
+  document.getElementById('session-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'session-modal') closeModal('session-modal');
+  });
+}
+
+// ── Save recovery plan ────────────────────────────
+function initRecoveryPlan() {
+  const btn = document.getElementById('save-recovery-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const checks = document.querySelectorAll('#action-plan input[type="checkbox"]');
+    const completed = Array.from(checks).filter(c => c.checked).length;
+    const total = checks.length;
+    const key = `northstar_recovery_${currentRep.id}`;
+    const state = Array.from(checks).map(c => c.checked);
+    localStorage.setItem(key, JSON.stringify(state));
+    showToast(`Recovery plan saved (${completed}/${total} actions committed)`, completed > 0 ? 'success' : 'info');
+  });
+  // Restore saved checkboxes when rep changes
+  function restoreRecoveryPlan(repId) {
+    const key = `northstar_recovery_${repId}`;
+    try {
+      const state = JSON.parse(localStorage.getItem(key));
+      if (!Array.isArray(state)) return;
+      const checks = document.querySelectorAll('#action-plan input[type="checkbox"]');
+      checks.forEach((c, i) => {
+        c.checked = !!state[i];
+        c.closest('label').classList.toggle('completed', !!state[i]);
+      });
+    } catch(e) {}
+  }
+  // Patch selectRep to also restore plan
+  const _origSelectRep = window.selectRep || selectRep;
+  window._restoreRecoveryOnSwitch = restoreRecoveryPlan;
+}
+
+// ── Export buttons → print ────────────────────────
+function initExportButtons() {
+  ['export-brief-btn', 'export-opps-btn', 'export-activity-btn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', () => window.print());
+  });
+}
+
+// ── New opportunity modal ─────────────────────────
+function initNewOppModal() {
+  const openBtn = document.getElementById('new-opp-btn');
+  if (openBtn) openBtn.addEventListener('click', () => {
+    // Populate account select
+    const acctSel = document.getElementById('opp-account');
+    if (acctSel && acctSel.options.length <= 1) {
+      acctSel.innerHTML = accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+    }
+    // Populate owner select
+    const ownerSel = document.getElementById('opp-owner');
+    if (ownerSel && ownerSel.options.length <= 1) {
+      ownerSel.innerHTML = reps.map(r => `<option value="${r.id}">${r.name}</option>`).join('');
+    }
+    // Default close date ~60 days out
+    const closeInput = document.getElementById('opp-close');
+    if (closeInput && !closeInput.value) {
+      const d = new Date(); d.setDate(d.getDate() + 60);
+      closeInput.value = d.toISOString().split('T')[0];
+    }
+    openModal('new-opp-modal');
+  });
+
+  const closeModal_ = () => closeModal('new-opp-modal');
+  document.getElementById('new-opp-modal-close').addEventListener('click', closeModal_);
+  document.getElementById('new-opp-modal-cancel').addEventListener('click', closeModal_);
+  document.getElementById('new-opp-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'new-opp-modal') closeModal('new-opp-modal');
+  });
+
+  document.getElementById('new-opp-modal-confirm').addEventListener('click', () => {
+    const name    = document.getElementById('opp-name').value.trim();
+    const value   = parseFloat(document.getElementById('opp-value').value) || 0;
+    const product = document.getElementById('opp-product').value;
+    const stage   = document.getElementById('opp-stage').value;
+    const ownerEl = document.getElementById('opp-owner');
+    const owner   = ownerEl.options[ownerEl.selectedIndex]?.text || '';
+    const errEl   = document.getElementById('opp-error');
+
+    if (!name) {
+      errEl.textContent = 'Opportunity name is required.';
+      errEl.style.display = 'block'; return;
+    }
+    if (value <= 0) {
+      errEl.textContent = 'Please enter a valid estimated value.';
+      errEl.style.display = 'block'; return;
+    }
+    errEl.style.display = 'none';
+
+    // Add to mock data array so the filter/table will pick it up
+    const newOpp = {
+      id: 'opp' + (opportunities.length + 1),
+      name, account: document.getElementById('opp-account').options[document.getElementById('opp-account').selectedIndex]?.text || '',
+      value, stage, owner, product,
+      closeDate: document.getElementById('opp-close').value,
+      probability: stage === 'Discovery' ? 30 : stage === 'Qualification' ? 45 : stage === 'Proposal' ? 65 : 75,
+      lastActivity: new Date().toISOString().split('T')[0],
+      daysStalled: 0
+    };
+    opportunities.push(newOpp);
+    closeModal('new-opp-modal');
+    showToast(`Opportunity "${name}" created — ${product} · ${formatCurrency(value)}`);
+    // Clear form
+    document.getElementById('opp-name').value = '';
+    document.getElementById('opp-value').value = '';
+  });
+}
+
+// ── Activity trends modal ─────────────────────────
+function initTrendsModal() {
+  const btn = document.getElementById('view-trends-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const body = document.getElementById('trends-modal-body');
+    if (body) {
+      const metrics = ['calls', 'connects', 'meetings', 'emails', 'replies', 'demos'];
+      const labels  = ['Calls', 'Connects', 'Meetings', 'Emails', 'Replies', 'Demos'];
+      const iconMap  = { calls: '📞', connects: '✅', meetings: '📅', emails: '✉', replies: '↩', demos: '🖥' };
+      body.innerHTML = `
+        <div class="trends-grid">
+          ${metrics.map((m, mi) => {
+            const vals = mockActivityWeeks.map(w => w[m]);
+            const last = vals[vals.length - 1];
+            const prev = vals[vals.length - 2];
+            const delta = last - prev;
+            const color = delta >= 0 ? '#24a148' : '#da1e28';
+            const maxVal = Math.max(...vals);
+            const bars = vals.map((v, i) => {
+              const h = Math.round((v / maxVal) * 48);
+              const isLast = i === vals.length - 1;
+              return `<div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+                <span style="font-size:10px;color:var(--muted)">${v}</span>
+                <div style="width:24px;height:${h}px;background:${isLast ? '#0f62fe' : '#d0e2ff'};border-radius:3px 3px 0 0"></div>
+                <span style="font-size:10px;color:var(--muted)">${mockActivityWeeks[i].week.replace('Week ','W')}</span>
+              </div>`;
+            }).join('');
+            return `
+              <div class="trend-card">
+                <div class="trend-card-head">
+                  <span class="trend-icon">${iconMap[m]}</span>
+                  <div>
+                    <small>${labels[mi].toUpperCase()}</small>
+                    <strong style="font-size:22px;display:block">${last.toLocaleString()}</strong>
+                  </div>
+                  <span style="font-size:12px;font-weight:600;color:${color};margin-left:auto">${delta >= 0 ? '+' : ''}${delta} WoW</span>
+                </div>
+                <div style="display:flex;align-items:flex-end;gap:6px;padding-top:8px">${bars}</div>
+              </div>`;
+          }).join('')}
+        </div>`;
+    }
+    openModal('trends-modal');
+  });
+  document.getElementById('trends-modal-close').addEventListener('click', () => closeModal('trends-modal'));
+  document.getElementById('trends-modal').addEventListener('click', e => {
+    if (e.target.id === 'trends-modal') closeModal('trends-modal');
+  });
+}
+
+// ── Product training modal ────────────────────────
+function initTrainingModal() {
+  const btn = document.getElementById('review-training-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const body = document.getElementById('training-modal-body');
+    if (body) {
+      body.innerHTML = mockTrainingModules.map(m => `
+        <div class="training-card">
+          <div class="training-card-head">
+            <div>
+              <strong class="training-product">${m.product}</strong>
+              <span class="status-badge ${m.levelClass === 'danger' ? 'intervene' : m.levelClass === 'warning' ? 'watch' : m.levelClass === 'success' ? 'on-track' : 'on-track'}" style="margin-left:8px">${m.level}</span>
+            </div>
+            <span class="training-meta">${m.duration} · ${m.type}</span>
+          </div>
+          <p class="training-desc">${m.description}</p>
+          ${m.assignTo.length ? `<p class="training-assign">Assign to: <strong>${m.assignTo.join(', ')}</strong></p>` : ''}
+          <div class="training-actions">
+            <button class="button primary" onclick="showToast('Opening ${m.product} training in IBM Learning Platform')">Start training →</button>
+            ${m.assignTo.length ? `<button class="button secondary" onclick="showToast('Assigned ${m.product} training to ${m.assignTo.join(', ')}')">Assign to team</button>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+    openModal('training-modal');
+  });
+  document.getElementById('training-modal-close').addEventListener('click', () => closeModal('training-modal'));
+  document.getElementById('training-modal').addEventListener('click', e => {
+    if (e.target.id === 'training-modal') closeModal('training-modal');
+  });
+}
+
+// ── Close dropdowns when clicking outside ─────────
+function initDropdownDismiss() {
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.dropdown-panel') && !e.target.closest('.filter-btn')) {
+      document.querySelectorAll('.dropdown-panel').forEach(p => p.classList.remove('active'));
+    }
+    if (!e.target.closest('.side-drawer') && !e.target.closest('.profile') && !e.target.closest('.icon-btn.notification')) {
+      closeAllDrawers();
+    }
+  });
+}
+
+// ── Restore recovery plan on rep switch ───────────
+const _origSelectRep = selectRep;
+function selectRep(repId) {
+  _origSelectRep(repId);
+  if (window._restoreRecoveryOnSwitch) {
+    setTimeout(() => window._restoreRecoveryOnSwitch(repId), 50);
+  }
+}
+
+// ── Master init ───────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initProfileDrawer();
+  initNotifications();
+  initSegmentFilter();
+  initProductFilter();
+  initRepFilter();
+  initActivityTabs();
+  initSessionModal();
+  initRecoveryPlan();
+  initExportButtons();
+  initNewOppModal();
+  initTrendsModal();
+  initTrainingModal();
+  initDropdownDismiss();
+});

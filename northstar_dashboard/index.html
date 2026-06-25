@@ -73,7 +73,7 @@
       <section id="overview" class="view active">
         <div class="page-head">
           <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Good morning, Noelle.</h1><p class="lede">Your team is pacing at <strong>82% of quota.</strong> Three reps need your attention this week.</p></div>
-          <div class="head-actions"><button class="button secondary">↗ Export brief</button><button class="button primary" id="open-coaching">Open coaching queue <span id="queue-count">3</span></button></div>
+          <div class="head-actions"><button class="button secondary" id="export-brief-btn">↗ Export brief</button><button class="button primary" id="open-coaching">Open coaching queue <span id="queue-count">3</span></button></div>
         </div>
 
         <div class="alert-banner">
@@ -178,7 +178,7 @@
       <section id="coaching" class="view">
         <div class="coaching-head">
           <div class="rep-select-wrap"><button class="back-btn" id="back-overview">←</button><span class="avatar large" id="rep-avatar">JL</span><div><p class="eyebrow">COACHING WORKSPACE</p><button class="rep-select" id="rep-select"><span id="rep-name">Jordan Lee</span> <span>⌄</span></button><p class="rep-meta" id="rep-meta">Enterprise AE · Central region</p></div></div>
-          <div class="head-actions"><button class="button secondary" id="add-coaching-note">Add coaching note</button><button class="button primary">Start 1:1 session</button></div>
+          <div class="head-actions"><button class="button secondary" id="add-coaching-note">Add coaching note</button><button class="button primary" id="start-1on1-btn">Start 1:1 session</button></div>
           <div class="rep-menu" id="rep-menu"></div>
         </div>
 
@@ -209,7 +209,7 @@
               <p class="equivalent">Equivalent to</p>
               <div class="recovery-options"><div><strong id="option-a">5 opportunities</strong><small>at $12K average</small></div><span>OR</span><div><strong id="option-b">3 opportunities</strong><small>at $20K average</small></div></div>
               <div class="action-plan" id="action-plan"><strong>Recommended actions</strong><label><input type="checkbox"> <span>Touch <b id="action-accounts">15</b> additional accounts</span></label><label><input type="checkbox"> <span>Generate <b id="action-meetings">6</b> additional meetings</span></label><label><input type="checkbox"> <span>Advance <b id="action-stalled">2</b> stalled opportunities</span></label></div>
-              <button class="button primary full">Save recovery plan</button>
+              <button class="button primary full" id="save-recovery-btn">Save recovery plan</button>
             </div>
 
             <div class="panel coaching-questions-panel">
@@ -228,7 +228,7 @@
       <section id="opportunities" class="view">
         <div class="page-head">
           <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Opportunity Pipeline</h1><p class="lede">Track all active opportunities and identify deals requiring attention.</p></div>
-          <div class="head-actions"><button class="button secondary">↗ Export</button><button class="button primary">+ New opportunity</button></div>
+          <div class="head-actions"><button class="button secondary" id="export-opps-btn">↗ Export</button><button class="button primary" id="new-opp-btn">+ New opportunity</button></div>
         </div>
 
         <div class="kpi-grid">
@@ -242,7 +242,7 @@
 
         <div class="section-heading"><div><h2>Active opportunities</h2><p>All opportunities in progress this quarter</p></div></div>
         <div class="panel">
-          <div class="panel-top"><div class="segmented"><button class="active">All opportunities</button><button>Stalled</button><button>Closing this month</button></div><button class="filter-btn">All products⌄</button></div>
+          <div class="panel-top"><div class="segmented"><button class="active">All opportunities</button><button>Stalled</button><button>Closing this month</button></div><button class="filter-btn" id="filter-products-btn">All products⌄</button></div>
           <div class="table-head"><div>OPPORTUNITY</div><div>ACCOUNT</div><div>PRODUCT</div><div>VALUE</div><div>STAGE</div><div>OWNER</div><div>CLOSE DATE</div></div>
           <div class="rep-row"><div class="rep-ident"><span class="avatar">AC</span><div><strong>Acme Corp - Cloud Migration</strong><small>Enterprise · Technology</small></div></div><div><small>Acme Corporation</small></div><div><span class="badge">watsonx.data</span></div><div><strong>$45K</strong></div><div><span class="stage">Proposal</span></div><div><small>Priya Shah</small></div><div><small>Jul 15</small></div></div>
           <div class="rep-row"><div class="rep-ident"><span class="avatar peach">GI</span><div><strong>Global Industries - ERP Upgrade</strong><small>Enterprise · Manufacturing</small></div></div><div><small>Global Industries Inc</small></div><div><span class="badge">Db2 Warehouse</span></div><div><strong>$120K</strong></div><div><span class="stage">Negotiation</span></div><div><small>Maya Chen</small></div><div><small>Aug 1</small></div></div>
@@ -281,11 +281,11 @@
       <section id="activity" class="view">
         <div class="page-head">
           <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Activity Intelligence</h1><p class="lede">Analyze team activity patterns and identify coaching opportunities.</p></div>
-          <div class="head-actions"><button class="button secondary">↗ Export</button><button class="button primary">View trends</button></div>
+          <div class="head-actions"><button class="button secondary" id="export-activity-btn">↗ Export</button><button class="button primary" id="view-trends-btn">View trends</button></div>
         </div>
 
         <div class="alert-banner">
-          <span class="alert-icon">✦</span><div><strong>Activity insight</strong><p>watsonx.ai mentions in calls are down 32% this week. Only 3 reps actively discussing AI solutions with prospects.</p></div><button>Review product training →</button>
+          <span class="alert-icon">✦</span><div><strong>Activity insight</strong><p>watsonx.ai mentions in calls are down 32% this week. Only 3 reps actively discussing AI solutions with prospects.</p></div><button id="review-training-btn">Review product training →</button>
         </div>
 
         <div class="kpi-grid">
@@ -480,6 +480,238 @@
     </div>
   </div>
   
+  <!-- ── Profile drawer ─────────────────────────── -->
+  <div id="profile-drawer" class="side-drawer" role="dialog" aria-modal="true" aria-label="User profile">
+    <div class="side-drawer-inner">
+      <div class="drawer-header">
+        <h2>My Profile</h2>
+        <button class="drawer-close" id="profile-drawer-close">✕</button>
+      </div>
+      <div class="drawer-body">
+        <div class="profile-hero">
+          <span class="avatar large">NM</span>
+          <div>
+            <h3>Noelle Morgan</h3>
+            <p>VP, Commercial Sales — IBM Technology</p>
+            <p class="drawer-meta">noelle.morgan@ibm.com · New York, NY</p>
+          </div>
+        </div>
+        <div class="drawer-section">
+          <h4>My Team</h4>
+          <p class="drawer-meta">6 direct reports · Commercial &amp; Enterprise AEs</p>
+          <p class="drawer-meta">Territory: Americas</p>
+        </div>
+        <div class="drawer-section">
+          <h4>Q3 Targets</h4>
+          <div class="drawer-kpi-row">
+            <div class="drawer-kpi"><small>MY QUOTA</small><strong>$1.48M</strong></div>
+            <div class="drawer-kpi"><small>CURRENT ATTAINMENT</small><strong>82%</strong></div>
+            <div class="drawer-kpi"><small>TEAM PIPELINE</small><strong>$1.37M</strong></div>
+          </div>
+        </div>
+        <div class="drawer-section">
+          <h4>IBM Tools</h4>
+          <div class="tool-links">
+            <a class="tool-link" href="#">Seismic <span>→</span></a>
+            <a class="tool-link" href="#">Salesforce CRM <span>→</span></a>
+            <a class="tool-link" href="#">IBM Learning Platform <span>→</span></a>
+            <a class="tool-link" href="#">Slack (ibm-sales) <span>→</span></a>
+          </div>
+        </div>
+        <div class="drawer-section">
+          <button class="button secondary full">Edit profile</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Notifications panel ───────────────────── -->
+  <div id="notif-panel" class="side-drawer notif-drawer" role="dialog" aria-modal="true" aria-label="Notifications">
+    <div class="side-drawer-inner">
+      <div class="drawer-header">
+        <h2>Notifications <span class="notif-count-badge">4</span></h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="link-btn" id="mark-all-read-btn">Mark all read</button>
+          <button class="drawer-close" id="notif-panel-close">✕</button>
+        </div>
+      </div>
+      <div class="drawer-body" id="notif-list"></div>
+    </div>
+  </div>
+
+  <!-- ── Pipeline segment filter panel ────────── -->
+  <div id="segment-panel" class="dropdown-panel" role="dialog" aria-label="Filter by segment">
+    <div class="dropdown-panel-inner">
+      <p class="dropdown-panel-title">Filter by segment</p>
+      <div class="filter-option-list" id="segment-options"></div>
+      <div class="dropdown-panel-footer">
+        <button class="button secondary" id="segment-clear-btn">Clear</button>
+        <button class="button primary" id="segment-apply-btn">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Product filter panel ──────────────────── -->
+  <div id="product-filter-panel" class="dropdown-panel" role="dialog" aria-label="Filter by product">
+    <div class="dropdown-panel-inner">
+      <p class="dropdown-panel-title">Filter by product</p>
+      <div class="filter-option-list" id="product-filter-options"></div>
+      <div class="dropdown-panel-footer">
+        <button class="button secondary" id="product-filter-clear-btn">Clear</button>
+        <button class="button primary" id="product-filter-apply-btn">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Rep filter panel (Activity) ───────────── -->
+  <div id="rep-filter-panel" class="dropdown-panel" role="dialog" aria-label="Filter by rep">
+    <div class="dropdown-panel-inner">
+      <p class="dropdown-panel-title">Filter by rep</p>
+      <div class="filter-option-list" id="rep-filter-options"></div>
+      <div class="dropdown-panel-footer">
+        <button class="button secondary" id="rep-filter-clear-btn">Clear</button>
+        <button class="button primary" id="rep-filter-apply-btn">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Start 1:1 session modal ───────────────── -->
+  <div id="session-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Start 1:1 session">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">1:1 SESSION</p>
+          <h3 id="session-modal-title">Session with Jordan Lee</h3>
+        </div>
+        <button class="modal-close" id="session-modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="session-agenda">
+          <p class="session-label">Suggested agenda · 30 min</p>
+          <ol class="session-agenda-list" id="session-agenda-list"></ol>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Meeting date &amp; time</label>
+          <input type="datetime-local" id="session-datetime" class="form-input" />
+        </div>
+        <div class="form-row">
+          <label class="form-label">Meeting format</label>
+          <select id="session-format" class="form-input">
+            <option>Video call (Webex)</option>
+            <option>In person</option>
+            <option>Phone call</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Pre-meeting notes</label>
+          <textarea id="session-notes" class="form-input" rows="3" placeholder="Add any prep notes or talking points..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="button secondary" id="session-modal-cancel">Cancel</button>
+        <button class="button primary" id="session-modal-confirm">Schedule session</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── New opportunity modal ─────────────────── -->
+  <div id="new-opp-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="New opportunity">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">NEW OPPORTUNITY</p>
+          <h3>Create opportunity</h3>
+        </div>
+        <button class="modal-close" id="new-opp-modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <label class="form-label">Opportunity name</label>
+          <input type="text" id="opp-name" class="form-input" placeholder="e.g. Acme Corp — watsonx.ai Platform" />
+        </div>
+        <div class="form-row-2col">
+          <div class="form-row">
+            <label class="form-label">Account</label>
+            <select id="opp-account" class="form-input"></select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">IBM Product</label>
+            <select id="opp-product" class="form-input">
+              <option>watsonx.ai</option>
+              <option>watsonx.data</option>
+              <option>Db2 Warehouse</option>
+              <option>Instana</option>
+              <option>Guardium</option>
+              <option>Turbonomic</option>
+              <option>DataStage</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-2col">
+          <div class="form-row">
+            <label class="form-label">Estimated value ($)</label>
+            <input type="number" id="opp-value" class="form-input" placeholder="50000" />
+          </div>
+          <div class="form-row">
+            <label class="form-label">Sales stage</label>
+            <select id="opp-stage" class="form-input">
+              <option>Discovery</option>
+              <option>Qualification</option>
+              <option>Proposal</option>
+              <option>Negotiation</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-2col">
+          <div class="form-row">
+            <label class="form-label">Owner</label>
+            <select id="opp-owner" class="form-input"></select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Expected close date</label>
+            <input type="date" id="opp-close" class="form-input" />
+          </div>
+        </div>
+        <div id="opp-error" class="form-error" style="display:none"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="button secondary" id="new-opp-modal-cancel">Cancel</button>
+        <button class="button primary" id="new-opp-modal-confirm">Create opportunity</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Activity trends modal ─────────────────── -->
+  <div id="trends-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Activity trends">
+    <div class="modal-box modal-box-wide">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">ACTIVITY TRENDS · Q3 2026</p>
+          <h3>4-week team activity trend</h3>
+        </div>
+        <button class="modal-close" id="trends-modal-close">✕</button>
+      </div>
+      <div class="modal-body" id="trends-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ── Product training modal ────────────────── -->
+  <div id="training-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Product training">
+    <div class="modal-box modal-box-wide">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">IBM ENABLEMENT</p>
+          <h3>watsonx product training</h3>
+        </div>
+        <button class="modal-close" id="training-modal-close">✕</button>
+      </div>
+      <div class="modal-body" id="training-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ── Toast notification ─────────────────────── -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="app.js"></script>
 </body>
