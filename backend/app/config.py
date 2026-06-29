@@ -11,7 +11,8 @@ class Settings(BaseSettings):
     """Application settings loaded from environment variables"""
     
     # Database
-    DATABASE_URL: str = "postgresql://sales_user:sales_password@localhost:5432/sales_coaching_db"
+    # SQLite by default (zero-config local dev); override via DATABASE_URL env var for Postgres
+    DATABASE_URL: str = "sqlite:///./northstar.db"
     
     # API
     API_V1_PREFIX: str = "/api/v1"
@@ -22,8 +23,11 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
+        "http://localhost:8080",
         "http://localhost:8000",
-        "http://127.0.0.1:8000"
+        "http://127.0.0.1:8000",
+        "http://127.0.0.1:8080",
+        "null"  # file:// origins
     ]
     
     @validator("BACKEND_CORS_ORIGINS", pre=True)
