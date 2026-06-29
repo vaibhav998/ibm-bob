@@ -44,6 +44,22 @@ class Settings(BaseSettings):
     # Reports
     REPORTS_DIR: str = "./reports"
     REPORTS_EXPIRY_DAYS: int = 7
+
+    # -----------------------------------------------------------------------
+    # Salesforce CRM Integration (optional — leave blank to disable)
+    # -----------------------------------------------------------------------
+    # Your Salesforce login e-mail
+    SF_USERNAME: str = ""
+    # Your Salesforce password
+    SF_PASSWORD: str = ""
+    # Security token (from Setup → My Personal Information → Reset Security Token)
+    # Leave blank if your org's Trusted IP Ranges include your server IP
+    SF_SECURITY_TOKEN: str = ""
+    # Connected App credentials (see SALESFORCE_SETUP.md)
+    SF_CONSUMER_KEY: str = ""
+    SF_CONSUMER_SECRET: str = ""
+    # 'test' for sandbox orgs, 'login' for production
+    SF_DOMAIN: str = "login"
     
     class Config:
         env_file = ".env"

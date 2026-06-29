@@ -75,8 +75,10 @@ async def health_check():
 # Import and include routers
 from app.api import reps
 from app.api import opportunities
+from app.api import sync
 app.include_router(reps.router,          prefix=f"{settings.API_V1_PREFIX}/reps",          tags=["reps"])
 app.include_router(opportunities.router, prefix=f"{settings.API_V1_PREFIX}/opportunities", tags=["opportunities"])
+app.include_router(sync.router,          prefix=f"{settings.API_V1_PREFIX}/sync",          tags=["sync"])
 
 # Serve the dashboard frontend as static files so one server handles everything
 _frontend_dir = os.path.join(os.path.dirname(__file__), "..", "..", "northstar_dashboard")
