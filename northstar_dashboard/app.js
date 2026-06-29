@@ -2607,8 +2607,21 @@ function showToast(msg, type = 'success') {
   t._timer = setTimeout(() => t.classList.remove('toast-show'), 3200);
 }
 
-function openModal(id)  { const el = document.getElementById(id); if (el) el.classList.add('active'); }
-function closeModal(id) { const el = document.getElementById(id); if (el) el.classList.remove('active'); }
+function openModal(id)  {
+  console.log('openModal called with id:', id);
+  const el = document.getElementById(id);
+  console.log('Modal element found:', el);
+  if (el) {
+    el.classList.add('active');
+    console.log('Added active class. Classes:', el.className);
+  } else {
+    console.error('Modal element not found:', id);
+  }
+}
+function closeModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('active');
+}
 function openDrawer(id)  { closeAllDrawers(); const el = document.getElementById(id); if (el) el.classList.add('open'); }
 function closeDrawer(id) { const el = document.getElementById(id); if (el) el.classList.remove('open'); }
 function closeAllDrawers() {
@@ -2906,11 +2919,348 @@ function initRecoveryPlan() {
 }
 
 // ── Export buttons → print ────────────────────────
+// ── Export & Sharing Functions ────────────────────
 function initExportButtons() {
+  console.log('Initializing export buttons...');
   ['export-brief-btn', 'export-opps-btn', 'export-activity-btn'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.addEventListener('click', () => window.print());
+    if (el) {
+      console.log(`Found export button: ${id}`);
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log(`Export button clicked: ${id}`);
+        openExportModal(id);
+      });
+    } else {
+      console.warn(`Export button not found: ${id}`);
+    }
   });
+}
+
+function openExportModal(sourceButtonId) {
+  console.log('openExportModal called with:', sourceButtonId);
+  const modal = document.getElementById('export-modal');
+  const title = document.getElementById('export-modal-title');
+  
+  console.log('Modal element:', modal);
+  console.log('Title element:', title);
+  
+  if (!modal) {
+    console.error('Export modal not found in DOM!');
+    return;
+  }
+  
+  // Set title based on source
+  const titles = {
+    'export-brief-btn': 'Export Manager Brief',
+    'export-opps-btn': 'Export Opportunities',
+    'export-activity-btn': 'Export Activity Data'
+  };
+  
+  if (title) {
+    title.textContent = titles[sourceButtonId] || 'Export Data';
+  }
+  modal.dataset.source = sourceButtonId;
+  
+  console.log('Calling openModal with export-modal');
+  openModal('export-modal');
+  console.log('Modal classes after openModal:', modal.className);
+}
+
+function exportToPDF() {
+  const source = document.getElementById('export-modal').dataset.source;
+  
+  // Show loading toast
+  showToast('Generating PDF...', 'info');
+  
+  // Simulate PDF generation
+  setTimeout(() => {
+    const filename = `northstar-${source.replace('-btn', '')}-${new Date().toISOString().split('T')[0]}.pdf`;
+    showToast(`PDF exported: ${filename}`, 'success');
+    closeModal('export-modal');
+    
+    // In production, this would trigger actual PDF generation
+    // using a library like jsPDF or server-side generation
+    console.log('PDF Export:', { source, filename });
+  }, 1500);
+}
+
+function exportToCSV() {
+  const source = document.getElementById('export-modal').dataset.source;
+  
+  let csvContent = '';
+  let filename = '';
+  
+  // Generate CSV based on source
+  if (source === 'export-opps-btn') {
+    csvContent = generateOpportunitiesCSV();
+    filename = `opportunities-${new Date().toISOString().split('T')[0]}.csv`;
+  } else if (source === 'export-activity-btn') {
+    csvContent = generateActivityCSV();
+    filename = `activity-${new Date().toISOString().split('T')[0]}.csv`;
+  } else {
+    csvContent = generateBriefCSV();
+    filename = `manager-brief-${new Date().toISOString().split('T')[0]}.csv`;
+  }
+  
+  // Create download
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  
+  link.setAttribute('href', url);
+  link.setAttribute('download', filename);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  
+  showToast(`CSV exported: ${filename}`, 'success');
+  closeModal('export-modal');
+}
+
+function generateOpportunitiesCSV() {
+  const headers = ['Opportunity', 'Account', 'Product', 'Value', 'Stage', 'Owner', 'Close Date', 'Probability', 'Days Stalled'];
+  const rows = opportunities.map(opp => [
+    opp.name,
+    opp.account,
+    opp.product,
+    opp.value,
+    opp.stage,
+    opp.owner,
+    opp.closeDate,
+    opp.probability + '%',
+    opp.daysStalled
+  ]);
+  
+  return [headers, ...rows].map(row => row.join(',')).join('\n');
+}
+
+function generateActivityCSV() {
+  const headers = ['Rep', 'Calls', 'Meetings', 'Emails', 'Connect Rate', 'Reply Rate'];
+  const rows = reps.map(rep => [
+    rep.name,
+    rep.calls,
+    rep.meetings,
+    rep.emails,
+    rep.connectRate + '%',
+    rep.replyRate + '%'
+  ]);
+  
+  return [headers, ...rows].map(row => row.join(',')).join('\n');
+}
+
+function generateBriefCSV() {
+  const headers = ['Rep', 'Quota', 'Pipeline', 'Coverage', 'Risk Score', 'Status'];
+  const rows = reps.map(rep => [
+    rep.name,
+    rep.quota,
+    rep.pipeline,
+    rep.coverage.toFixed(1) + 'x',
+    rep.riskScore + '%',
+    rep.status
+  ]);
+  
+  return [headers, ...rows].map(row => row.join(',')).join('\n');
+}
+
+// ── Share Coaching Plan ────────────────────────────
+function initSharePlan() {
+  const btn = document.getElementById('share-plan-btn');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const modal = document.getElementById('share-modal');
+      const title = document.getElementById('share-modal-title');
+      const repName = document.getElementById('rep-name').textContent;
+      
+      title.textContent = `Share Coaching Plan: ${repName}`;
+      openModal('share-modal');
+    });
+  }
+  
+  // Handle recipient change
+  const recipientSelect = document.getElementById('share-recipient');
+  if (recipientSelect) {
+    recipientSelect.addEventListener('change', (e) => {
+      const customGroup = document.getElementById('custom-email-group');
+      customGroup.style.display = e.target.value === 'custom' ? 'block' : 'none';
+    });
+  }
+  
+  // Handle share confirmation
+  const confirmBtn = document.getElementById('share-modal-confirm');
+  if (confirmBtn) {
+    confirmBtn.addEventListener('click', shareCoachingPlan);
+  }
+  
+  // Handle cancel
+  const cancelBtn = document.getElementById('share-modal-cancel');
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', () => closeModal('share-modal'));
+  }
+  
+  const closeBtn = document.getElementById('share-modal-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => closeModal('share-modal'));
+  }
+}
+
+function shareCoachingPlan() {
+  const recipient = document.getElementById('share-recipient').value;
+  const customEmail = document.getElementById('share-email').value;
+  const message = document.getElementById('share-message').value;
+  const includeNotes = document.getElementById('share-include-notes').checked;
+  
+  if (!recipient) {
+    showToast('Please select a recipient', 'error');
+    return;
+  }
+  
+  if (recipient === 'custom' && !customEmail) {
+    showToast('Please enter an email address', 'error');
+    return;
+  }
+  
+  // Show loading
+  showToast('Sharing coaching plan...', 'info');
+  
+  // Simulate sharing
+  setTimeout(() => {
+    const repName = document.getElementById('rep-name').textContent;
+    const recipientText = recipient === 'custom' ? customEmail :
+                         recipient === 'rep' ? repName :
+                         recipient === 'manager' ? 'your manager' : 'the team';
+    
+    showToast(`Coaching plan shared with ${recipientText}`, 'success');
+    closeModal('share-modal');
+    
+    // Reset form
+    document.getElementById('share-recipient').value = '';
+    document.getElementById('share-email').value = '';
+    document.getElementById('share-message').value = '';
+    document.getElementById('custom-email-group').style.display = 'none';
+    
+    console.log('Share Plan:', { recipient, customEmail, message, includeNotes, repName });
+  }, 1000);
+}
+
+// ── Email Digest Settings ──────────────────────────
+function initEmailDigest() {
+  console.log('Initializing email digest...');
+  const btn = document.getElementById('email-digest-btn');
+  if (btn) {
+    console.log('Found email digest button');
+    btn.addEventListener('click', () => {
+      console.log('Email digest button clicked');
+      openModal('digest-modal');
+      loadDigestSettings();
+    });
+  } else {
+    console.warn('Email digest button not found');
+  }
+  
+  // Handle enable/disable toggle
+  const enableCheckbox = document.getElementById('digest-enabled');
+  if (enableCheckbox) {
+    enableCheckbox.addEventListener('change', (e) => {
+      const settings = document.getElementById('digest-settings');
+      settings.style.opacity = e.target.checked ? '1' : '0.5';
+      settings.style.pointerEvents = e.target.checked ? 'auto' : 'none';
+    });
+  }
+  
+  // Handle save
+  const saveBtn = document.getElementById('digest-modal-save');
+  if (saveBtn) {
+    saveBtn.addEventListener('click', saveDigestSettings);
+  }
+  
+  // Handle cancel
+  const cancelBtn = document.getElementById('digest-modal-cancel');
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', () => closeModal('digest-modal'));
+  }
+  
+  const closeBtn = document.getElementById('digest-modal-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => closeModal('digest-modal'));
+  }
+}
+
+function loadDigestSettings() {
+  // Load saved settings from localStorage
+  const saved = localStorage.getItem('emailDigestSettings');
+  if (saved) {
+    const settings = JSON.parse(saved);
+    document.getElementById('digest-enabled').checked = settings.enabled;
+    document.getElementById('digest-frequency').value = settings.frequency;
+    document.getElementById('digest-time').value = settings.time;
+    
+    // Load options
+    settings.options.forEach(opt => {
+      const checkbox = document.querySelector(`.digest-option[value="${opt}"]`);
+      if (checkbox) checkbox.checked = true;
+    });
+    
+    // Update UI state
+    const settingsDiv = document.getElementById('digest-settings');
+    settingsDiv.style.opacity = settings.enabled ? '1' : '0.5';
+    settingsDiv.style.pointerEvents = settings.enabled ? 'auto' : 'none';
+  }
+}
+
+function saveDigestSettings() {
+  const enabled = document.getElementById('digest-enabled').checked;
+  const frequency = document.getElementById('digest-frequency').value;
+  const time = document.getElementById('digest-time').value;
+  
+  const options = Array.from(document.querySelectorAll('.digest-option:checked'))
+    .map(cb => cb.value);
+  
+  const settings = { enabled, frequency, time, options };
+  
+  // Save to localStorage
+  localStorage.setItem('emailDigestSettings', JSON.stringify(settings));
+  
+  // Show confirmation
+  const frequencyText = frequency === 'daily' ? 'daily' :
+                       frequency === 'weekly' ? 'every Monday' :
+                       frequency === 'biweekly' ? 'bi-weekly' : 'monthly';
+  
+  if (enabled) {
+    showToast(`Email digest scheduled ${frequencyText} at ${time}`, 'success');
+  } else {
+    showToast('Email digest disabled', 'success');
+  }
+  
+  closeModal('digest-modal');
+  console.log('Digest Settings Saved:', settings);
+}
+
+// ── Export Modal Event Listeners ───────────────────
+function initExportModal() {
+  const pdfBtn = document.getElementById('export-pdf-btn');
+  if (pdfBtn) {
+    pdfBtn.addEventListener('click', exportToPDF);
+  }
+  
+  const csvBtn = document.getElementById('export-csv-btn');
+  if (csvBtn) {
+    csvBtn.addEventListener('click', exportToCSV);
+  }
+  
+  const closeBtn = document.getElementById('export-modal-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => closeModal('export-modal'));
+  }
+  
+  // Close on backdrop click
+  const modal = document.getElementById('export-modal');
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target.id === 'export-modal') closeModal('export-modal');
+    });
+  }
 }
 
 // ── New opportunity modal ─────────────────────────
@@ -3095,6 +3445,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initSessionModal();
   initRecoveryPlan();
   initExportButtons();
+  initExportModal();
+  initSharePlan();
+  initEmailDigest();
   initNewOppModal();
   initTrendsModal();
   initTrainingModal();

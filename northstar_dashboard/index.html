@@ -178,7 +178,7 @@
       <section id="coaching" class="view">
         <div class="coaching-head">
           <div class="rep-select-wrap"><button class="back-btn" id="back-overview">←</button><span class="avatar large" id="rep-avatar">JL</span><div><p class="eyebrow">COACHING WORKSPACE</p><button class="rep-select" id="rep-select"><span id="rep-name">Jordan Lee</span> <span>⌄</span></button><p class="rep-meta" id="rep-meta">Enterprise AE · Central region</p></div></div>
-          <div class="head-actions"><button class="button secondary" id="add-coaching-note">Add coaching note</button><button class="button primary" id="start-1on1-btn">Start 1:1 session</button></div>
+          <div class="head-actions"><button class="button secondary" id="share-plan-btn">↗ Share plan</button><button class="button secondary" id="add-coaching-note">Add coaching note</button><button class="button primary" id="start-1on1-btn">Start 1:1 session</button></div>
           <div class="rep-menu" id="rep-menu"></div>
         </div>
 
@@ -519,6 +519,14 @@
           </div>
         </div>
         <div class="drawer-section">
+          <h4>Preferences</h4>
+          <button class="button secondary full" id="email-digest-btn" style="margin-bottom: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            Email Digest Settings
+          </button>
           <button class="button secondary full">Edit profile</button>
         </div>
       </div>
@@ -706,6 +714,168 @@
         <button class="modal-close" id="training-modal-close">✕</button>
       </div>
       <div class="modal-body" id="training-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ── Export Options Modal ─────────────────────── -->
+  <div id="export-modal" class="modal" role="dialog" aria-modal="true" aria-label="Export options">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">EXPORT OPTIONS</p>
+          <h3 id="export-modal-title">Export Data</h3>
+        </div>
+        <button class="modal-close" id="export-modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 20px; color: #68767d;">Choose your preferred export format:</p>
+        <div style="display: grid; gap: 12px;">
+          <button class="button secondary full" id="export-pdf-btn" style="justify-content: flex-start; gap: 12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <div style="text-align: left;">
+              <strong>Export as PDF</strong>
+              <small style="display: block; color: #68767d;">Formatted document for printing or sharing</small>
+            </div>
+          </button>
+          <button class="button secondary full" id="export-csv-btn" style="justify-content: flex-start; gap: 12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <path d="M8 13h8M8 17h8"></path>
+            </svg>
+            <div style="text-align: left;">
+              <strong>Export as CSV</strong>
+              <small style="display: block; color: #68767d;">Spreadsheet format for data analysis</small>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Share Coaching Plan Modal ─────────────────── -->
+  <div id="share-modal" class="modal" role="dialog" aria-modal="true" aria-label="Share coaching plan">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">SHARE COACHING PLAN</p>
+          <h3 id="share-modal-title">Share with Team</h3>
+        </div>
+        <button class="modal-close" id="share-modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Share with</label>
+          <select id="share-recipient" class="form-input">
+            <option value="">Select recipient...</option>
+            <option value="rep">Rep (Jordan Lee)</option>
+            <option value="manager">My Manager</option>
+            <option value="team">Entire Team</option>
+            <option value="custom">Custom Email...</option>
+          </select>
+        </div>
+        <div class="form-group" id="custom-email-group" style="display: none;">
+          <label class="form-label">Email address</label>
+          <input type="email" id="share-email" class="form-input" placeholder="name@ibm.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message (optional)</label>
+          <textarea id="share-message" class="form-input" rows="3" placeholder="Add a personal message..."></textarea>
+        </div>
+        <div class="form-group">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" id="share-include-notes" checked />
+            <span>Include coaching notes</span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="button secondary" id="share-modal-cancel">Cancel</button>
+        <button class="button primary" id="share-modal-confirm">Share Plan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Email Digest Settings Modal ─────────────────── -->
+  <div id="digest-modal" class="modal" role="dialog" aria-modal="true" aria-label="Email digest settings">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">EMAIL DIGEST</p>
+          <h3>Schedule Weekly Summary</h3>
+        </div>
+        <button class="modal-close" id="digest-modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 20px; color: #68767d;">Receive automated performance summaries and coaching insights.</p>
+        
+        <div class="form-group">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin-bottom: 20px;">
+            <input type="checkbox" id="digest-enabled" checked />
+            <span><strong>Enable email digest</strong></span>
+          </label>
+        </div>
+
+        <div id="digest-settings">
+          <div class="form-group">
+            <label class="form-label">Frequency</label>
+            <select id="digest-frequency" class="form-input">
+              <option value="daily">Daily</option>
+              <option value="weekly" selected>Weekly (Monday)</option>
+              <option value="biweekly">Bi-weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Time</label>
+            <select id="digest-time" class="form-input">
+              <option value="06:00">6:00 AM</option>
+              <option value="08:00" selected>8:00 AM</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="14:00">2:00 PM</option>
+              <option value="16:00">4:00 PM</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Include in digest</label>
+            <div style="display: grid; gap: 8px;">
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" class="digest-option" value="team-performance" checked />
+                <span>Team performance summary</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" class="digest-option" value="at-risk-reps" checked />
+                <span>At-risk reps alerts</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" class="digest-option" value="pipeline-changes" checked />
+                <span>Pipeline changes</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" class="digest-option" value="ai-insights" checked />
+                <span>AI insights & recommendations</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" class="digest-option" value="coaching-reminders" />
+                <span>Coaching session reminders</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="button secondary" id="digest-modal-cancel">Cancel</button>
+        <button class="button primary" id="digest-modal-save">Save Settings</button>
+      </div>
     </div>
   </div>
 
