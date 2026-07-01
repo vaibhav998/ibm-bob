@@ -3642,30 +3642,124 @@ function initTrendsModal() {
 }
 
 // ── Product training modal ────────────────────────
+
+// Base URL for the backend API — empty string means same origin (local server).
+// When running from GitHub Pages (no backend), API calls gracefully fall back
+// to mock data.
+const BACKEND_API = (() => {
+  // If served from GitHub Pages, point at the local backend if running
+  if (window.location.hostname.includes('github.io')) return '';
+  return window.location.origin;
+})();
+
+function renderTrainingMockCards(body) {
+  body.innerHTML = mockTrainingModules.map(m => `
+    <div class="training-card">
+      <div class="training-card-head">
+        <div>
+          <strong class="training-product">${m.product}</strong>
+          <span class="status-badge ${m.levelClass === 'danger' ? 'intervene' : m.levelClass === 'warning' ? 'watch' : 'on-track'}" style="margin-left:8px">${m.level}</span>
+        </div>
+        <span class="training-meta">${m.duration} · ${m.type}</span>
+      </div>
+      <p class="training-desc">${m.description}</p>
+      ${m.assignTo.length ? `<p class="training-assign">Assign to: <strong>${m.assignTo.join(', ')}</strong></p>` : ''}
+      <div class="training-actions">
+        <button class="button primary" onclick="window.open('https://yourlearning.ibm.com','_blank')">Open in YourLearning →</button>
+        ${m.assignTo.length ? `<button class="button secondary" onclick="assignTraining('${m.url || '#'}', '${m.assignTo.join(',')}')">Assign to team</button>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderTrainingLiveCards(body, teamData) {
+  // Group completions and pending into a clean card per rep
+  const cards = teamData.map(rep => {
+    const name = rep.email.split('@')[0].replace('.', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    const recent = rep.recent_completions.map(c =>
+      `<li>✓ <strong>${c.title}</strong> <span style="color:var(--muted);font-size:11px">(${c.completed_at}${c.score ? ` · ${c.score}%` : ''})</span></li>`
+    ).join('');
+    const pending = rep.pending.map(a =>
+      `<li>
+        <strong>${a.title}</strong>
+        <span style="color:var(--muted);font-size:11px"> · Due ${a.due_date}</span>
+        <button class="button secondary" style="margin-left:8px;font-size:11px;padding:2px 8px"
+          onclick="assignCourse('${rep.email}','${a.course_id}')">Assign</button>
+      </li>`
+    ).join('');
+
+    return `
+      <div class="training-card">
+        <div class="training-card-head">
+          <strong class="training-product">${name}</strong>
+          <span class="training-meta">${rep.completions} completed · ${rep.hours_learned}h · ${rep.pending_assignments} pending</span>
+        </div>
+        ${recent ? `<div style="margin:8px 0"><small style="color:var(--muted);text-transform:uppercase;font-size:10px;font-weight:700">Recent completions</small><ul style="margin:4px 0 0;padding-left:16px;font-size:12px">${recent}</ul></div>` : ''}
+        ${pending ? `<div style="margin:8px 0"><small style="color:var(--muted);text-transform:uppercase;font-size:10px;font-weight:700">Pending assignments</small><ul style="margin:4px 0 0;padding-left:16px;font-size:12px">${pending}</ul></div>` : ''}
+        <div class="training-actions">
+          <button class="button primary" onclick="window.open('https://yourlearning.ibm.com','_blank')">Open YourLearning →</button>
+        </div>
+      </div>`;
+  }).join('');
+  body.innerHTML = cards;
+}
+
+async function assignCourse(email, courseId) {
+  try {
+    const res = await fetch(`${BACKEND_API}/api/v1/learning/rep/${encodeURIComponent(email)}/assign`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ course_id: courseId, priority: 'HIGH' })
+    });
+    if (res.ok) showToast(`Course assigned to ${email}`, 'success');
+    else showToast('Assignment failed — check backend logs', 'error');
+  } catch {
+    showToast('Could not reach backend', 'error');
+  }
+}
+
+function assignTraining(url, names) {
+  showToast(`Assigned training to ${names}`, 'success');
+}
+
 function initTrainingModal() {
   const btn = document.getElementById('review-training-btn');
-  if (btn) btn.addEventListener('click', () => {
+  if (btn) btn.addEventListener('click', async () => {
     const body = document.getElementById('training-modal-body');
-    if (body) {
-      body.innerHTML = mockTrainingModules.map(m => `
-        <div class="training-card">
-          <div class="training-card-head">
-            <div>
-              <strong class="training-product">${m.product}</strong>
-              <span class="status-badge ${m.levelClass === 'danger' ? 'intervene' : m.levelClass === 'warning' ? 'watch' : m.levelClass === 'success' ? 'on-track' : 'on-track'}" style="margin-left:8px">${m.level}</span>
-            </div>
-            <span class="training-meta">${m.duration} · ${m.type}</span>
-          </div>
-          <p class="training-desc">${m.description}</p>
-          ${m.assignTo.length ? `<p class="training-assign">Assign to: <strong>${m.assignTo.join(', ')}</strong></p>` : ''}
-          <div class="training-actions">
-            <button class="button primary" onclick="showToast('Opening ${m.product} training in IBM Learning Platform')">Start training →</button>
-            ${m.assignTo.length ? `<button class="button secondary" onclick="showToast('Assigned ${m.product} training to ${m.assignTo.join(', ')}')">Assign to team</button>` : ''}
-          </div>
-        </div>
-      `).join('');
-    }
+    if (!body) { openModal('training-modal'); return; }
+
+    // Show loading state immediately
+    body.innerHTML = '<div style="padding:24px;text-align:center;color:var(--muted)">Loading YourLearning data…</div>';
     openModal('training-modal');
+
+    // Build email list from reps (first.last@ibm.com convention)
+    const emails = reps.map(r => {
+      const parts = r.name.toLowerCase().split(' ');
+      return `${parts[0]}.${parts[parts.length - 1]}@ibm.com`;
+    }).join(',');
+
+    try {
+      const res = await fetch(
+        `${BACKEND_API}/api/v1/learning/team/summary?emails=${encodeURIComponent(emails)}`,
+        { signal: AbortSignal.timeout(4000) }
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      // Check if backend is in mock mode — if so blend with our richer mock cards
+      const statusRes = await fetch(`${BACKEND_API}/api/v1/learning/status`, { signal: AbortSignal.timeout(2000) }).catch(() => null);
+      const status = statusRes ? await statusRes.json().catch(() => null) : null;
+
+      if (status?.mode === 'live') {
+        renderTrainingLiveCards(body, data.team);
+      } else {
+        // Backend running but in mock mode — use our richer product-focused mock cards
+        renderTrainingMockCards(body);
+      }
+    } catch {
+      // Backend not reachable (GitHub Pages, backend off) — silent fallback
+      renderTrainingMockCards(body);
+    }
   });
   document.getElementById('training-modal-close').addEventListener('click', () => closeModal('training-modal'));
   document.getElementById('training-modal').addEventListener('click', e => {

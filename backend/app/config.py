@@ -60,7 +60,18 @@ class Settings(BaseSettings):
     SF_CONSUMER_SECRET: str = ""
     # 'test' for sandbox orgs, 'login' for production
     SF_DOMAIN: str = "login"
-    
+
+    # -----------------------------------------------------------------------
+    # IBM YourLearning Integration (optional — leave blank to use mock data)
+    # -----------------------------------------------------------------------
+    # OAuth2 client credentials from YourLearning Admin → API Access
+    YL_CLIENT_ID: str = ""
+    YL_CLIENT_SECRET: str = ""
+    # Base URL for the YourLearning REST API
+    YL_BASE_URL: str = "https://yourlearning.ibm.com"
+    # IBM IAM token endpoint (standard for all IBM Cloud services)
+    YL_TOKEN_URL: str = "https://iam.ibm.com/identity/token"
+
     class Config:
         env_file = ".env"
         case_sensitive = True
