@@ -3191,7 +3191,8 @@ function openExportModal(sourceButtonId) {
   const titles = {
     'export-brief-btn': 'Export Manager Brief',
     'export-opps-btn': 'Export Opportunities',
-    'export-activity-btn': 'Export Activity Data'
+    'export-activity-btn': 'Export Activity Data',
+    'export-compare-btn': 'Export Rep Comparison'
   };
   
   if (title) {
@@ -3235,6 +3236,9 @@ function exportToCSV() {
   } else if (source === 'export-activity-btn') {
     csvContent = generateActivityCSV();
     filename = `activity-${new Date().toISOString().split('T')[0]}.csv`;
+  } else if (source === 'export-compare-btn') {
+    csvContent = generateCompareCSV();
+    filename = `rep-comparison-${new Date().toISOString().split('T')[0]}.csv`;
   } else {
     csvContent = generateBriefCSV();
     filename = `manager-brief-${new Date().toISOString().split('T')[0]}.csv`;
@@ -3254,6 +3258,25 @@ function exportToCSV() {
   
   showToast(`CSV exported: ${filename}`, 'success');
   closeModal('export-modal');
+}
+
+function generateCompareCSV() {
+  const headers = ['Metric', ...reps.map(r => r.name)];
+  const rows = [
+    ['Pipeline',           ...reps.map(r => r.pipeline)],
+    ['Quota',              ...reps.map(r => r.goal)],
+    ['Pipeline vs Quota',  ...reps.map(r => Math.round((r.pipeline / r.goal) * 100) + '%')],
+    ['Pipeline Gap',       ...reps.map(r => r.pipeline - r.goal)],
+    ['Coverage',           ...reps.map(r => r.coverage.toFixed(1) + 'x')],
+    ['Quota Risk',         ...reps.map(r => r.risk + '%')],
+    ['Territory Coverage', ...reps.map(r => Math.round((r.accountsTouched / r.accountsAssigned) * 100) + '%')],
+    ['Accounts Touched',   ...reps.map(r => `${r.accountsTouched} / ${r.accountsAssigned}`)],
+    ['Opportunities',      ...reps.map(r => r.opportunities)],
+    ['Meetings',           ...reps.map(r => r.meetings)],
+    ['Conversion %',       ...reps.map(r => r.conversion + '%')],
+    ['Status',             ...reps.map(r => r.risk < 40 ? 'On track' : r.risk < 70 ? 'Watch' : 'Intervene')],
+  ];
+  return [headers, ...rows].map(row => row.map(v => `"${v}"`).join(',')).join('\n');
 }
 
 function generateOpportunitiesCSV() {
