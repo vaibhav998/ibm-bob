@@ -21,7 +21,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.rep import Rep
 from app.models.opportunity import Opportunity
-from app.models.account import Account
+from app.models.account import AccountProduct as Account  # model is AccountProduct
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
