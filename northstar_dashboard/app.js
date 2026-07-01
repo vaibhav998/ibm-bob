@@ -3159,7 +3159,7 @@ function initRecoveryPlan() {
 // ── Export & Sharing Functions ────────────────────
 function initExportButtons() {
   console.log('Initializing export buttons...');
-  ['export-brief-btn', 'export-opps-btn', 'export-activity-btn'].forEach(id => {
+  ['export-brief-btn', 'export-opps-btn', 'export-activity-btn', 'export-compare-btn'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       console.log(`Found export button: ${id}`);
