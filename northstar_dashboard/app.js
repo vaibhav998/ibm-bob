@@ -3068,16 +3068,70 @@ function initRepFilter() {
 }
 
 // ── Activity time tabs ────────────────────────────
+
+// Avatar class helper (matches getAvatarClass index order)
+const _activityAvatarMap = { 'PS': '', 'MC': 'peach', 'SR': 'blue', 'JL': 'purple', 'NW': 'peach', 'EG': 'blue' };
+
+function renderActivityTable(data) {
+  const body = document.getElementById('activity-table-body');
+  if (!body) return;
+
+  const teamAvgCalls = data.length ? Math.round(data.reduce((s, r) => s + r.calls, 0) / data.length) : 0;
+
+  body.innerHTML = data.map(rep => {
+    const avatarClass = _activityAvatarMap[rep.rep_initials] || '';
+    const connectClass = rep.connect_rate >= 40 ? 'up' : rep.connect_rate >= 30 ? '' : 'down';
+    const replyClass   = rep.reply_rate   >= 25 ? 'up' : rep.reply_rate   >= 18 ? '' : 'down';
+    const daysInPeriod = Math.max(1, Math.round(
+      (new Date(rep.period_end) - new Date(rep.period_start)) / 86400000
+    ));
+    const callsPerDay = (rep.calls / daysInPeriod).toFixed(1);
+
+    return `<div class="rep-row">
+      <div class="rep-ident">
+        <span class="avatar ${avatarClass}">${rep.rep_initials}</span>
+        <div><strong>${rep.rep_name}</strong><small>${rep.role} · ${rep.region}</small></div>
+      </div>
+      <div><strong>${rep.calls}</strong><small>${callsPerDay}/day</small></div>
+      <div><span class="${connectClass}">${rep.connect_rate}%</span></div>
+      <div><strong>${rep.meetings}</strong></div>
+      <div><strong>${rep.emails}</strong></div>
+      <div><span class="${replyClass}">${rep.reply_rate}%</span></div>
+      <div><strong>${rep.meetings}</strong></div>
+    </div>`;
+  }).join('');
+}
+
+async function loadActivityMetrics(period) {
+  const body = document.getElementById('activity-table-body');
+  if (!body) return;
+
+  try {
+    const res = await fetch(
+      `${BACKEND_API}/api/v1/activities/metrics?period=${period}`,
+      { signal: AbortSignal.timeout(4000) }
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (data && data.length) {
+      renderActivityTable(data);
+    }
+    // If empty array (no DB data yet) keep the static HTML as-is
+  } catch {
+    // Backend unreachable — keep static HTML, just update the toast
+  }
+  showToast(`Activity: ${period === 'week' ? 'This week' : period === '30d' ? 'Last 30 days' : 'This quarter'}`);
+}
+
 function initActivityTabs() {
-  const section = document.getElementById('activity');
-  if (!section) return;
-  const tabs = section.querySelectorAll('.segmented button');
+  const toggle = document.getElementById('activity-period-toggle');
+  if (!toggle) return;
+  const tabs = toggle.querySelectorAll('button[data-period]');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      const period = tab.textContent.trim();
-      showToast(`Showing activity: ${period}`);
+      loadActivityMetrics(tab.dataset.period);
     });
   });
 }
