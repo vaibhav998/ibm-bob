@@ -3102,10 +3102,46 @@ function renderActivityTable(data) {
   }).join('');
 }
 
+// Mock activity data keyed to each rep — "This week" baseline
+const _activityBaseline = [
+  { rep_name: 'Priya Shah',   rep_initials: 'PS', role: 'Enterprise AE',  region: 'East',    calls: 68,  meetings: 24, emails: 245, connect_rate: 42, reply_rate: 28 },
+  { rep_name: 'Maya Chen',    rep_initials: 'MC', role: 'Enterprise AE',  region: 'West',    calls: 52,  meetings: 14, emails: 198, connect_rate: 38, reply_rate: 18 },
+  { rep_name: 'Sam Rivera',   rep_initials: 'SR', role: 'Commercial AE',  region: 'South',   calls: 61,  meetings: 21, emails: 223, connect_rate: 41, reply_rate: 26 },
+  { rep_name: 'Jordan Lee',   rep_initials: 'JL', role: 'Enterprise AE',  region: 'Central', calls: 48,  meetings: 16, emails: 187, connect_rate: 32, reply_rate: 21 },
+  { rep_name: 'Noah Williams',rep_initials: 'NW', role: 'Commercial AE',  region: 'East',    calls: 38,  meetings: 11, emails: 142, connect_rate: 28, reply_rate: 19 },
+  { rep_name: 'Elena Garcia', rep_initials: 'EG', role: 'Commercial AE',  region: 'West',    calls: 75,  meetings: 23, emails: 252, connect_rate: 44, reply_rate: 29 },
+];
+
+// Scale factor and slight rate drift per period
+const _periodScale = {
+  week:    { factor: 1,    connectDrift:  0, replyDrift:  0 },
+  '30d':   { factor: 4.3,  connectDrift: -1, replyDrift: -1 },
+  quarter: { factor: 13,   connectDrift: -2, replyDrift: -2 },
+};
+
+function _mockActivityData(period) {
+  const { factor, connectDrift, replyDrift } = _periodScale[period] || _periodScale.week;
+  const today = new Date().toISOString().split('T')[0];
+  const daysBack = period === '30d' ? 30 : period === 'quarter' ? 91 : 7;
+  const startDate = new Date(Date.now() - daysBack * 86400000).toISOString().split('T')[0];
+
+  return _activityBaseline.map(r => ({
+    ...r,
+    calls:        Math.round(r.calls    * factor),
+    meetings:     Math.round(r.meetings * factor),
+    emails:       Math.round(r.emails   * factor),
+    connect_rate: Math.max(0, r.connect_rate + connectDrift),
+    reply_rate:   Math.max(0, r.reply_rate   + replyDrift),
+    period_start: startDate,
+    period_end:   today,
+  }));
+}
+
 async function loadActivityMetrics(period) {
   const body = document.getElementById('activity-table-body');
   if (!body) return;
 
+  let usedLive = false;
   try {
     const res = await fetch(
       `${BACKEND_API}/api/v1/activities/metrics?period=${period}`,
@@ -3115,12 +3151,16 @@ async function loadActivityMetrics(period) {
     const data = await res.json();
     if (data && data.length) {
       renderActivityTable(data);
+      usedLive = true;
     }
-    // If empty array (no DB data yet) keep the static HTML as-is
-  } catch {
-    // Backend unreachable — keep static HTML, just update the toast
+  } catch { /* backend unreachable */ }
+
+  if (!usedLive) {
+    renderActivityTable(_mockActivityData(period));
   }
-  showToast(`Activity: ${period === 'week' ? 'This week' : period === '30d' ? 'Last 30 days' : 'This quarter'}`);
+
+  const label = period === 'week' ? 'This week' : period === '30d' ? 'Last 30 days' : 'This quarter';
+  showToast(`Activity: ${label}`);
 }
 
 function initActivityTabs() {
