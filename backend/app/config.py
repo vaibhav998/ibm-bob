@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     
     # API
     API_V1_PREFIX: str = "/api/v1"
-    PROJECT_NAME: str = "IBM Sales Coaching API"
+    PROJECT_NAME: str = "IBM Momentum API"
     VERSION: str = "1.0.0"
     DESCRIPTION: str = "Backend API for Sales Intelligence Dashboard with IBM Data & AI products"
     

@@ -19,7 +19,7 @@ async def lifespan(app: FastAPI):
     Lifespan context manager for startup and shutdown events
     """
     # Startup
-    print("Starting up IBM Sales Coaching API...")
+    print("Starting up IBM Momentum API...")
     init_db()
     print("Database initialized")
     # Auto-seed if DB is empty
@@ -56,7 +56,7 @@ app.add_middleware(
 async def root():
     """Root endpoint - API health check"""
     return {
-        "message": "IBM Sales Coaching API",
+        "message": "IBM Momentum API",
         "version": settings.VERSION,
         "status": "healthy",
         "docs": "/docs"

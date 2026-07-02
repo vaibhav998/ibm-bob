@@ -1152,7 +1152,7 @@ function setupEventListeners() {
     document.getElementById('sidebar').classList.toggle('open');
   });
   
-  // Brand toggle (Northstar logo)
+  // Brand toggle (IBM Momentum logo)
   const brandToggle = document.getElementById('brand-toggle');
   if (brandToggle) {
     brandToggle.addEventListener('click', () => {
@@ -2620,7 +2620,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 
 function getNotesKey(repId) {
-  return `northstar_notes_${repId}`;
+  return `momentum_notes_${repId}`;
 }
 
 function loadNotes(repId) {
@@ -3292,14 +3292,14 @@ function initRecoveryPlan() {
     const checks = document.querySelectorAll('#action-plan input[type="checkbox"]');
     const completed = Array.from(checks).filter(c => c.checked).length;
     const total = checks.length;
-    const key = `northstar_recovery_${currentRep.id}`;
+    const key = `momentum_recovery_${currentRep.id}`;
     const state = Array.from(checks).map(c => c.checked);
     localStorage.setItem(key, JSON.stringify(state));
     showToast(`Recovery plan saved (${completed}/${total} actions committed)`, completed > 0 ? 'success' : 'info');
   });
   // Restore saved checkboxes when rep changes
   function restoreRecoveryPlan(repId) {
-    const key = `northstar_recovery_${repId}`;
+    const key = `momentum_recovery_${repId}`;
     try {
       const state = JSON.parse(localStorage.getItem(key));
       if (!Array.isArray(state)) return;
@@ -3348,7 +3348,7 @@ function exportToPDF() {
   
   // Simulate PDF generation
   setTimeout(() => {
-    const filename = `northstar-${source.replace('-btn', '')}-${new Date().toISOString().split('T')[0]}.pdf`;
+    const filename = `ibm-momentum-${source.replace('-btn', '')}-${new Date().toISOString().split('T')[0]}.pdf`;
     showToast(`PDF exported: ${filename}`, 'success');
     closeModal('export-modal');
     

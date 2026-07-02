@@ -1,6 +1,6 @@
 # IBM Sales Coaching Dashboard
 
-A comprehensive sales intelligence and coaching platform built with the Northstar design system, integrating IBM's proven sales coaching methodologies.
+A comprehensive sales intelligence and coaching platform built with the IBM Momentum design system, integrating IBM's proven sales coaching methodologies.
 
 ## 🎯 Overview
 
@@ -71,14 +71,14 @@ Or simply double-click `index.html` to open in your default browser.
 ```
 northstar_dashboard/
 ├── index.html      # Main HTML structure
-├── styles.css      # Northstar design system (1,574 lines)
+├── styles.css      # IBM Momentum design system (1,574 lines)
 ├── app.js          # Interactive functionality (638 lines)
 └── README.md       # This file
 ```
 
 ## 🎨 Design System
 
-Built with the **Northstar Design System**:
+Built with the **IBM Momentum Design System**:
 - **Colors**: Dark teal sidebar (#10292b), warm workspace tones
 - **Typography**: DM Sans (body), Manrope (headings)
 - **Layout**: Fixed sidebar, responsive main content
@@ -182,4 +182,4 @@ For questions or issues, contact the development team.
 
 ---
 
-**Built with ❤️ using IBM Sales Coaching Methodologies and Northstar Design System**
+**Built with ❤️ using IBM Sales Coaching Methodologies and IBM Momentum Design System**
