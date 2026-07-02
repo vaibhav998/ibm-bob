@@ -691,10 +691,51 @@ function getAvatarClass(index) {
 }
 
 // Initialize dashboard
+// ── Dynamic greeting + quarter bar ───────────────
+function initDynamicHeader() {
+  // Time-aware greeting
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  const el = document.getElementById('overview-greeting');
+  if (el) el.textContent = `${greeting}, Noelle.`;
+
+  // Quarter progress — IBM FY2026 Q3: May 1 – Jul 31 (91 days)
+  const qStart = new Date('2026-05-01');
+  const qEnd   = new Date('2026-07-31');
+  const today  = new Date();
+  const totalDays   = Math.round((qEnd - qStart) / 86400000);
+  const elapsed     = Math.max(0, Math.min(Math.round((today - qStart) / 86400000), totalDays));
+  const weekNum     = Math.ceil(elapsed / 7);
+  const totalWeeks  = Math.ceil(totalDays / 7);
+  const pct         = Math.round((elapsed / totalDays) * 100);
+
+  const labelEl  = document.getElementById('quarter-label');
+  const fillEl   = document.getElementById('quarter-fill');
+  const pctEl    = document.getElementById('quarter-pct');
+  const eyebrow  = document.getElementById('overview-eyebrow');
+
+  if (labelEl) labelEl.textContent = `Q3 · Week ${weekNum} of ${totalWeeks}`;
+  if (fillEl)  fillEl.style.width  = `${pct}%`;
+  if (pctEl)   pctEl.textContent   = `${pct}%`;
+  if (eyebrow) eyebrow.textContent = `Q3 · WEEK ${weekNum} OF ${totalWeeks}`;
+
+  // Notification badge — count unread
+  _updateNotifBadge();
+}
+
+function _updateNotifBadge() {
+  const unreadCount = mockNotifications.filter(n => n.unread).length;
+  const badge = document.querySelector('.notif-count-badge');
+  const dot   = document.getElementById('notif-dot');
+  if (badge) badge.textContent = unreadCount;
+  if (dot)   dot.style.display = unreadCount > 0 ? 'block' : 'none';
+}
+
 function init() {
   renderOverview();
   renderCoaching();
   setupEventListeners();
+  initDynamicHeader();
 }
 
 // Render Manager Overview
@@ -2845,15 +2886,8 @@ function showToast(msg, type = 'success') {
 }
 
 function openModal(id)  {
-  console.log('openModal called with id:', id);
   const el = document.getElementById(id);
-  console.log('Modal element found:', el);
-  if (el) {
-    el.classList.add('active');
-    console.log('Added active class. Classes:', el.className);
-  } else {
-    console.error('Modal element not found:', id);
-  }
+  if (el) el.classList.add('active');
 }
 function closeModal(id) {
   const el = document.getElementById(id);
@@ -2902,7 +2936,7 @@ function renderNotifications() {
 }
 
 function initNotifications() {
-  const bell = document.querySelector('.icon-btn.notification');
+  const bell = document.getElementById('notif-btn');
   if (bell) bell.addEventListener('click', () => {
     renderNotifications();
     openDrawer('notif-panel');
@@ -2913,10 +2947,7 @@ function initNotifications() {
   if (markAll) markAll.addEventListener('click', () => {
     mockNotifications.forEach(n => n.unread = false);
     renderNotifications();
-    const badge = document.querySelector('.notif-count-badge');
-    if (badge) badge.textContent = '0';
-    const dot = document.querySelector('.icon-btn.notification i');
-    if (dot) dot.style.display = 'none';
+    _updateNotifBadge();
   });
 }
 
@@ -2963,8 +2994,32 @@ function initSegmentFilter() {
     const label = sel ? sel.value : 'All segments';
     const filterBtn = document.querySelector('.pipeline-panel .filter-btn');
     if (filterBtn) filterBtn.textContent = label + '⌄';
-    closeModal('segment-panel');
     document.getElementById('segment-panel').classList.remove('active');
+    // Actually filter — segments map to rep regions/roles
+    const segmentMap = {
+      'All segments': null,
+      'Enterprise (1000+)': r => r.role.includes('Enterprise'),
+      'Mid-Market (100–999)': r => r.role.includes('Commercial'),
+      'SMB (<100)': r => false,
+      'Financial Services': r => r.region === 'East',
+      'Healthcare': r => r.region === 'West',
+      'Technology': r => r.region === 'Central',
+      'Manufacturing': r => r.region === 'South',
+      'Retail': r => false,
+    };
+    const filterFn = segmentMap[label];
+    if (!filterFn) {
+      renderPipelineTable(); // All segments
+    } else {
+      const table = document.getElementById('pipeline-table');
+      if (table) {
+        const rows = table.querySelectorAll('.rep-row');
+        rows.forEach(row => {
+          const rep = reps.find(r => r.id === row.dataset.rep);
+          row.style.display = rep && filterFn(rep) ? '' : 'none';
+        });
+      }
+    }
     showToast(`Pipeline filtered: ${label}`);
   });
   const clearBtn = document.getElementById('segment-clear-btn');
@@ -2972,6 +3027,7 @@ function initSegmentFilter() {
     const filterBtn = document.querySelector('.pipeline-panel .filter-btn');
     if (filterBtn) filterBtn.textContent = 'All segments⌄';
     document.getElementById('segment-panel').classList.remove('active');
+    renderPipelineTable(); // restore all rows
   });
 }
 
@@ -3058,12 +3114,22 @@ function initRepFilter() {
     const label = sel ? sel.value : 'All reps';
     if (filterBtn) filterBtn.textContent = label + '⌄';
     document.getElementById('rep-filter-panel').classList.remove('active');
+    // Filter activity table rows
+    const body = document.getElementById('activity-table-body');
+    if (body) {
+      body.querySelectorAll('.rep-row').forEach(row => {
+        const name = row.querySelector('strong')?.textContent || '';
+        row.style.display = (label === 'All reps' || name === label) ? '' : 'none';
+      });
+    }
     showToast(`Activity filtered: ${label}`);
   });
   const clearBtn = document.getElementById('rep-filter-clear-btn');
   if (clearBtn) clearBtn.addEventListener('click', () => {
     if (filterBtn) filterBtn.textContent = 'All reps⌄';
     document.getElementById('rep-filter-panel').classList.remove('active');
+    const body = document.getElementById('activity-table-body');
+    if (body) body.querySelectorAll('.rep-row').forEach(row => row.style.display = '');
   });
 }
 
@@ -3252,51 +3318,26 @@ function initRecoveryPlan() {
 // ── Export buttons → print ────────────────────────
 // ── Export & Sharing Functions ────────────────────
 function initExportButtons() {
-  console.log('Initializing export buttons...');
   ['export-brief-btn', 'export-opps-btn', 'export-activity-btn', 'export-compare-btn'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) {
-      console.log(`Found export button: ${id}`);
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log(`Export button clicked: ${id}`);
-        openExportModal(id);
-      });
-    } else {
-      console.warn(`Export button not found: ${id}`);
-    }
+    if (el) el.addEventListener('click', (e) => { e.preventDefault(); openExportModal(id); });
   });
 }
 
 function openExportModal(sourceButtonId) {
-  console.log('openExportModal called with:', sourceButtonId);
   const modal = document.getElementById('export-modal');
   const title = document.getElementById('export-modal-title');
-  
-  console.log('Modal element:', modal);
-  console.log('Title element:', title);
-  
-  if (!modal) {
-    console.error('Export modal not found in DOM!');
-    return;
-  }
-  
-  // Set title based on source
+  if (!modal) return;
+
   const titles = {
-    'export-brief-btn': 'Export Manager Brief',
-    'export-opps-btn': 'Export Opportunities',
+    'export-brief-btn':    'Export Manager Brief',
+    'export-opps-btn':     'Export Opportunities',
     'export-activity-btn': 'Export Activity Data',
-    'export-compare-btn': 'Export Rep Comparison'
+    'export-compare-btn':  'Export Rep Comparison'
   };
-  
-  if (title) {
-    title.textContent = titles[sourceButtonId] || 'Export Data';
-  }
+  if (title) title.textContent = titles[sourceButtonId] || 'Export Data';
   modal.dataset.source = sourceButtonId;
-  
-  console.log('Calling openModal with export-modal');
   openModal('export-modal');
-  console.log('Modal classes after openModal:', modal.className);
 }
 
 function exportToPDF() {
@@ -3313,7 +3354,6 @@ function exportToPDF() {
     
     // In production, this would trigger actual PDF generation
     // using a library like jsPDF or server-side generation
-    console.log('PDF Export:', { source, filename });
   }, 1500);
 }
 
@@ -3494,24 +3534,13 @@ function shareCoachingPlan() {
     document.getElementById('share-message').value = '';
     document.getElementById('custom-email-group').style.display = 'none';
     
-    console.log('Share Plan:', { recipient, customEmail, message, includeNotes, repName });
   }, 1000);
 }
 
 // ── Email Digest Settings ──────────────────────────
 function initEmailDigest() {
-  console.log('Initializing email digest...');
   const btn = document.getElementById('email-digest-btn');
-  if (btn) {
-    console.log('Found email digest button');
-    btn.addEventListener('click', () => {
-      console.log('Email digest button clicked');
-      openModal('digest-modal');
-      loadDigestSettings();
-    });
-  } else {
-    console.warn('Email digest button not found');
-  }
+  if (btn) btn.addEventListener('click', () => { openModal('digest-modal'); loadDigestSettings(); });
   
   // Handle enable/disable toggle
   const enableCheckbox = document.getElementById('digest-enabled');
@@ -3588,7 +3617,6 @@ function saveDigestSettings() {
   }
   
   closeModal('digest-modal');
-  console.log('Digest Settings Saved:', settings);
 }
 
 // ── Export Modal Event Listeners ───────────────────

@@ -60,19 +60,23 @@
             <input class="topbar-search-input" id="topbar-search-input" type="text" placeholder="Search reps, accounts, deals…" autocomplete="off" aria-label="Search" />
             <kbd class="topbar-kbd">⌘K</kbd>
           </div>
+          <button class="icon-btn notification" id="notif-btn" aria-label="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <i class="notif-dot" id="notif-dot"></i>
+          </button>
         </div>
       </header>
 
       <!-- Quarter progress bar — shown at top of every view -->
       <div class="quarter-bar" id="quarter-bar">
-        <span class="quarter-label">Q3 · Week 8 of 13</span>
-        <div class="quarter-track"><div class="quarter-fill" style="width:61.5%"></div></div>
-        <span class="quarter-pct">61%</span>
+        <span class="quarter-label" id="quarter-label">Q3 · Week 8 of 13</span>
+        <div class="quarter-track"><div class="quarter-fill" id="quarter-fill" style="width:61.5%"></div></div>
+        <span class="quarter-pct" id="quarter-pct">61%</span>
       </div>
 
       <section id="overview" class="view active">
         <div class="page-head">
-          <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Good morning, Noelle.</h1><p class="lede">Your team is pacing at <strong>82% of quota.</strong> Three reps need your attention this week.</p></div>
+          <div><p class="eyebrow" id="overview-eyebrow">Q3 · WEEK 8 OF 13</p><h1 id="overview-greeting">Good morning, Noelle.</h1><p class="lede">Your team is pacing at <strong>82% of quota.</strong> Three reps need your attention this week.</p></div>
           <div class="head-actions"><button class="button secondary" id="export-brief-btn">↗ Export brief</button><button class="button primary" id="open-coaching">Open coaching queue <span id="queue-count">3</span></button></div>
         </div>
 
@@ -357,9 +361,6 @@
         <div id="compare-grid" class="compare-grid"></div>
       </section>
 
-      <!-- placeholder stubs — original reports + product-intelligence sections removed -->
-      <div id="reports" class="view" style="display:none"></div>
-      <div id="product-intelligence" class="view" style="display:none"></div>
     </main>
   </div>
   
