@@ -1,3 +1,6 @@
+// Northstar Dashboard - Sales Intelligence
+console.log('🚀 Northstar Dashboard JavaScript loaded successfully');
+
 // AI Insights Panel Toggle
 function toggleAIInsights(event) {
   // Find the closest parent panel from the clicked button
@@ -1102,6 +1105,7 @@ function setupEventListeners() {
   document.addEventListener('click', (e) => {
     const row = e.target.closest('.rep-row');
     if (row) {
+      console.log('📊 Pipeline row clicked:', row.dataset.rep);
       openCoaching(row.dataset.rep);
     }
   });
@@ -1169,7 +1173,9 @@ function setupEventListeners() {
     const resultItem = e.target.closest('.search-result-item');
     if (resultItem) {
       const index = parseInt(resultItem.dataset.index);
+      console.log('🔍 Search result clicked, index:', index);
       if (searchResults[index]) {
+        console.log('🔍 Executing action for:', searchResults[index].title);
         searchResults[index].action();
       }
     }
@@ -1244,15 +1250,20 @@ function switchView(view) {
 }
 
 function openCoaching(repId) {
+  console.log('🎯 openCoaching called with repId:', repId);
   selectRep(repId);
   switchView('coaching');
 }
 
 function selectRep(repId) {
+  console.log('👤 selectRep called with repId:', repId);
   const rep = reps.find(r => r.id === repId);
   if (rep) {
+    console.log('✅ Rep found:', rep.name);
     currentRep = rep;
     renderCoaching();
+  } else {
+    console.error('❌ Rep not found for id:', repId);
   }
 }
 
@@ -2837,11 +2848,138 @@ function initActivityTabs() {
   const tabs = section.querySelectorAll('.segmented button');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
+      // Only render if not already active (prevents re-rendering current view)
+      if (tab.classList.contains('active')) return;
+      
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       const period = tab.textContent.trim();
-      showToast(`Showing activity: ${period}`);
+      renderActivityBreakdown(period);
     });
+  });
+}
+
+function renderActivityBreakdown(period) {
+  const activitySection = document.getElementById('activity');
+  if (!activitySection) return;
+  
+  // Generate activity data based on period
+  const activityData = generateActivityData(period);
+  
+  // Find the table body (rows after table-head)
+  const tableHead = activitySection.querySelector('.table-head');
+  if (!tableHead) return;
+  
+  // Remove existing rows
+  let nextSibling = tableHead.nextElementSibling;
+  while (nextSibling && nextSibling.classList.contains('rep-row')) {
+    const toRemove = nextSibling;
+    nextSibling = nextSibling.nextElementSibling;
+    toRemove.remove();
+  }
+  
+  // Add new rows
+  activityData.forEach(rep => {
+    const row = document.createElement('div');
+    row.className = 'rep-row';
+    row.innerHTML = `
+      <div class="rep-ident">
+        <span class="avatar ${rep.avatarClass}">${rep.initials}</span>
+        <div><strong>${rep.name}</strong><small>${rep.role}</small></div>
+      </div>
+      <div><strong>${rep.calls}</strong></div>
+      <div><span class="metric ${rep.connectRate >= 35 ? 'good' : 'warning'}">${rep.connectRate}%</span></div>
+      <div><strong>${rep.meetings}</strong></div>
+      <div><strong>${rep.emails}</strong></div>
+      <div><span class="metric ${rep.replyRate >= 20 ? 'good' : 'warning'}">${rep.replyRate}%</span></div>
+      <div><strong>${rep.demos}</strong></div>
+    `;
+    tableHead.parentNode.insertBefore(row, tableHead.nextSibling);
+  });
+  
+  showToast(`Showing activity: ${period}`);
+}
+
+function generateActivityData(period) {
+  // Base activity data for each rep (This week baseline)
+  const baseActivityData = [
+    { name: 'Priya Shah', role: 'Enterprise AE', region: 'East', calls: 68, connectRate: 42, meetings: 24, emails: 245, replyRate: 28, demos: 8, avatarClass: '' },
+    { name: 'Maya Chen', role: 'Enterprise AE', region: 'West', calls: 52, connectRate: 38, meetings: 14, emails: 198, replyRate: 18, demos: 5, avatarClass: 'peach' },
+    { name: 'Sam Rivera', role: 'Commercial AE', region: 'South', calls: 61, connectRate: 41, meetings: 21, emails: 223, replyRate: 26, demos: 7, avatarClass: 'blue' },
+    { name: 'Jordan Lee', role: 'Enterprise AE', region: 'Central', calls: 48, connectRate: 32, meetings: 16, emails: 187, replyRate: 21, demos: 4, avatarClass: 'purple' },
+    { name: 'Noah Williams', role: 'Commercial AE', region: 'East', calls: 38, connectRate: 28, meetings: 11, emails: 142, replyRate: 19, demos: 3, avatarClass: 'peach' },
+    { name: 'Elena Garcia', role: 'Commercial AE', region: 'West', calls: 75, connectRate: 44, meetings: 23, emails: 252, replyRate: 29, demos: 7, avatarClass: 'blue' }
+  ];
+  
+  // Base multipliers for different time periods
+  const multipliers = {
+    'This week': 1,
+    'Last 30 days': 4.3,  // ~4.3 weeks in 30 days
+    'This quarter': 13    // ~13 weeks in a quarter
+  };
+  
+  const multiplier = multipliers[period] || 1;
+  
+  // Generate data for each rep with period-appropriate values
+  return baseActivityData.map(rep => {
+    const baseVariance = 0.85 + (Math.random() * 0.3); // 85-115% variance
+    return {
+      name: rep.name,
+      initials: rep.name.split(' ').map(n => n[0]).join(''),
+      role: rep.role,
+      region: rep.region,
+      avatarClass: rep.avatarClass,
+      calls: Math.round(rep.calls * multiplier * baseVariance),
+      connectRate: Math.min(100, Math.round(rep.connectRate * (0.9 + Math.random() * 0.2))),
+      meetings: Math.round(rep.meetings * multiplier * baseVariance),
+      emails: Math.round(rep.emails * multiplier * baseVariance),
+      replyRate: Math.min(100, Math.round(rep.replyRate * (0.9 + Math.random() * 0.2))),
+      demos: Math.round(rep.demos * multiplier * baseVariance)
+    };
+  });
+}
+
+// ── Collapsible coaching questions ────────────────
+function initCoachingQuestionsCollapse() {
+  console.log('Initializing coaching questions collapse...');
+  const header = document.getElementById('coaching-questions-header');
+  console.log('Header found:', header);
+  
+  if (!header) {
+    console.warn('Coaching questions header not found');
+    return;
+  }
+  
+  const panel = header.closest('.coaching-questions-panel');
+  const collapseBtn = header.querySelector('.collapse-btn');
+  
+  console.log('Panel:', panel);
+  console.log('Collapse button:', collapseBtn);
+  
+  if (collapseBtn) {
+    collapseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      panel.classList.toggle('collapsed');
+      
+      const isCollapsed = panel.classList.contains('collapsed');
+      collapseBtn.setAttribute('aria-expanded', !isCollapsed);
+      
+      console.log('Coaching questions', isCollapsed ? 'collapsed' : 'expanded');
+      console.log('Panel classes:', panel.className);
+    });
+    console.log('Collapse button listener attached');
+  } else {
+    console.warn('Collapse button not found');
+  }
+  
+  // Also make the whole header clickable
+  header.addEventListener('click', (e) => {
+    // Don't trigger if clicking the button directly
+    if (e.target.closest('.collapse-btn')) return;
+    if (collapseBtn) {
+      collapseBtn.click();
+    }
   });
 }
 
@@ -3426,13 +3564,17 @@ function initDropdownDismiss() {
 }
 
 // ── Restore recovery plan on rep switch ───────────
-const _origSelectRep = selectRep;
-function selectRep(repId) {
-  _origSelectRep(repId);
+// Store the original selectRep function before wrapping it
+const _origSelectRepFunc = selectRep;
+// Override selectRep with a wrapper that calls the original and then restores recovery plan
+window.selectRep = function(repId) {
+  _origSelectRepFunc(repId);
   if (window._restoreRecoveryOnSwitch) {
     setTimeout(() => window._restoreRecoveryOnSwitch(repId), 50);
   }
-}
+};
+// Make the wrapped function available globally
+selectRep = window.selectRep;
 
 // ── Master init ───────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -3442,6 +3584,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProductFilter();
   initRepFilter();
   initActivityTabs();
+  initCoachingQuestionsCollapse();
   initSessionModal();
   initRecoveryPlan();
   initExportButtons();
