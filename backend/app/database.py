@@ -42,11 +42,13 @@ class UUID(TypeDecorator):
             return value
 
 
-# Create database engine
+# Create database engine — SQLite needs check_same_thread=False
+_connect_args = {"check_same_thread": False} if settings.DATABASE_URL.startswith("sqlite") else {}
 engine = create_engine(
     settings.DATABASE_URL,
-    pool_pre_ping=True,  # Verify connections before using
-    echo=False  # Set to True for SQL query logging
+    connect_args=_connect_args,
+    pool_pre_ping=True,
+    echo=False
 )
 
 # Create session factory

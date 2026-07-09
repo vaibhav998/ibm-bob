@@ -223,7 +223,7 @@ const reps = [
     region: 'East',
     pipeline: 318000,
     goal: 300000,
-    coverage: 4.2,
+    coverage: 7.4,
     risk: 18,
     opportunities: 9,
     meetings: 24,
@@ -255,7 +255,7 @@ const reps = [
     region: 'West',
     pipeline: 286000,
     goal: 260000,
-    coverage: 4.0,
+    coverage: 7.7,
     risk: 38,
     opportunities: 3,
     meetings: 14,
@@ -287,7 +287,7 @@ const reps = [
     region: 'South',
     pipeline: 224000,
     goal: 240000,
-    coverage: 3.1,
+    coverage: 6.5,
     risk: 45,
     opportunities: 7,
     meetings: 21,
@@ -319,7 +319,7 @@ const reps = [
     region: 'Central',
     pipeline: 182000,
     goal: 240000,
-    coverage: 2.6,
+    coverage: 5.3,
     risk: 72,
     opportunities: 4,
     meetings: 16,
@@ -351,7 +351,7 @@ const reps = [
     region: 'East',
     pipeline: 164000,
     goal: 220000,
-    coverage: 2.3,
+    coverage: 5.2,
     risk: 81,
     opportunities: 3,
     meetings: 11,
@@ -383,7 +383,7 @@ const reps = [
     region: 'West',
     pipeline: 198000,
     goal: 220000,
-    coverage: 2.9,
+    coverage: 6.3,
     risk: 57,
     opportunities: 8,
     meetings: 23,
@@ -427,21 +427,21 @@ const accounts = [
 
 // Sample opportunities data
 const opportunities = [
-  { id: 'opp1', name: 'Acme - Cloud Migration', account: 'Acme Corporation', value: 45000, stage: 'Proposal', owner: 'Priya Shah', closeDate: '2026-07-15', probability: 70, lastActivity: '2026-06-20', daysStalled: 4, product: 'watsonx.data' },
-  { id: 'opp2', name: 'Global Industries - ERP Upgrade', account: 'Global Industries Inc', value: 120000, stage: 'Negotiation', owner: 'Maya Chen', closeDate: '2026-08-01', probability: 80, lastActivity: '2026-06-23', daysStalled: 1, product: 'Db2 Warehouse' },
-  { id: 'opp3', name: 'TechStart - Security Suite', account: 'TechStart Solutions', value: 28000, stage: 'Discovery', owner: 'Sam Rivera', closeDate: '2026-07-30', probability: 40, lastActivity: '2026-05-28', daysStalled: 27, product: 'Guardium' },
-  { id: 'opp4', name: 'Enterprise Systems - Data Analytics', account: 'Enterprise Systems Ltd', value: 95000, stage: 'Proposal', owner: 'Jordan Lee', closeDate: '2026-08-15', probability: 60, lastActivity: '2026-06-22', daysStalled: 2, product: 'watsonx.ai' },
-  { id: 'opp5', name: 'Retail Dynamics - POS System', account: 'Retail Dynamics Corp', value: 52000, stage: 'Qualification', owner: 'Noah Williams', closeDate: '2026-09-01', probability: 30, lastActivity: '2026-06-01', daysStalled: 23, product: 'Instana' },
-  { id: 'opp6', name: 'Healthcare Partners - Integration Platform', account: 'Healthcare Partners', value: 78000, stage: 'Negotiation', owner: 'Elena Garcia', closeDate: '2026-07-20', probability: 75, lastActivity: '2026-06-23', daysStalled: 1, product: 'DataStage' },
-  { id: 'opp7', name: 'Innovation Labs - AI Platform', account: 'Innovation Labs', value: 35000, stage: 'Discovery', owner: 'Priya Shah', closeDate: '2026-08-10', probability: 50, lastActivity: '2026-06-18', daysStalled: 6, product: 'watsonx.ai' },
-  { id: 'opp8', name: 'Financial Group - Compliance Software', account: 'Financial Group LLC', value: 110000, stage: 'Proposal', owner: 'Maya Chen', closeDate: '2026-07-25', probability: 65, lastActivity: '2026-05-15', daysStalled: 40, product: 'Guardium' },
-  { id: 'opp9', name: 'Manufacturing Plus - IoT Solution', account: 'Manufacturing Plus', value: 42000, stage: 'Negotiation', owner: 'Sam Rivera', closeDate: '2026-08-05', probability: 70, lastActivity: '2026-06-21', daysStalled: 3, product: 'Instana' },
-  { id: 'opp10', name: 'Digital Commerce - E-commerce Platform', account: 'Digital Commerce Co', value: 67000, stage: 'Discovery', owner: 'Jordan Lee', closeDate: '2026-09-15', probability: 45, lastActivity: '2026-06-10', daysStalled: 14, product: 'watsonx.data' },
-  { id: 'opp11', name: 'MedTech - Patient Management System', account: 'MedTech Innovations', value: 88000, stage: 'Qualification', owner: 'Noah Williams', closeDate: '2026-08-20', probability: 55, lastActivity: '2026-06-05', daysStalled: 19, product: 'watsonx.ai' },
-  { id: 'opp12', name: 'Cloud Services - Infrastructure Upgrade', account: 'Cloud Services Inc', value: 72000, stage: 'Proposal', owner: 'Elena Garcia', closeDate: '2026-07-28', probability: 68, lastActivity: '2026-06-19', daysStalled: 5, product: 'Db2 Warehouse' },
-  { id: 'opp13', name: 'DataFlow Corp - Lakehouse Migration', account: 'DataFlow Corp', value: 135000, stage: 'Proposal', owner: 'Priya Shah', closeDate: '2026-07-18', probability: 55, lastActivity: '2026-05-20', daysStalled: 35, product: 'watsonx.data' },
-  { id: 'opp14', name: 'SecureBank - Security Audit Platform', account: 'SecureBank', value: 92000, stage: 'Discovery', owner: 'Jordan Lee', closeDate: '2026-08-25', probability: 35, lastActivity: '2026-06-08', daysStalled: 16, product: 'Guardium' },
-  { id: 'opp15', name: 'AutoMotive Inc - Observability Suite', account: 'AutoMotive Inc', value: 58000, stage: 'Qualification', owner: 'Sam Rivera', closeDate: '2026-09-10', probability: 50, lastActivity: '2026-05-25', daysStalled: 30, product: 'Instana' }
+  { id: 'opp1', name: 'Acme - Cloud Migration', account: 'Acme Corporation', value: 45000, stage: 'Propose', owner: 'Priya Shah', closeDate: '2026-07-15', probability: 70, lastActivity: '2026-06-20', daysStalled: 4, product: 'watsonx.data' },
+  { id: 'opp2', name: 'Global Industries - ERP Upgrade', account: 'Global Industries Inc', value: 120000, stage: 'Negotiate', owner: 'Maya Chen', closeDate: '2026-08-01', probability: 80, lastActivity: '2026-06-23', daysStalled: 1, product: 'Db2 Warehouse' },
+  { id: 'opp3', name: 'TechStart - Security Suite', account: 'TechStart Solutions', value: 28000, stage: 'Prepare', owner: 'Sam Rivera', closeDate: '2026-07-30', probability: 40, lastActivity: '2026-05-28', daysStalled: 27, product: 'Guardium' },
+  { id: 'opp4', name: 'Enterprise Systems - Data Analytics', account: 'Enterprise Systems Ltd', value: 95000, stage: 'Propose', owner: 'Jordan Lee', closeDate: '2026-08-15', probability: 60, lastActivity: '2026-06-22', daysStalled: 2, product: 'watsonx.ai' },
+  { id: 'opp5', name: 'Retail Dynamics - POS System', account: 'Retail Dynamics Corp', value: 52000, stage: 'Qualify', owner: 'Noah Williams', closeDate: '2026-09-01', probability: 30, lastActivity: '2026-06-01', daysStalled: 23, product: 'Instana' },
+  { id: 'opp6', name: 'Healthcare Partners - Integration Platform', account: 'Healthcare Partners', value: 78000, stage: 'Negotiate', owner: 'Elena Garcia', closeDate: '2026-07-20', probability: 75, lastActivity: '2026-06-23', daysStalled: 1, product: 'DataStage' },
+  { id: 'opp7', name: 'Innovation Labs - AI Platform', account: 'Innovation Labs', value: 35000, stage: 'Engage', owner: 'Priya Shah', closeDate: '2026-08-10', probability: 50, lastActivity: '2026-06-18', daysStalled: 6, product: 'watsonx.ai' },
+  { id: 'opp8', name: 'Financial Group - Compliance Software', account: 'Financial Group LLC', value: 110000, stage: 'Propose', owner: 'Maya Chen', closeDate: '2026-07-25', probability: 65, lastActivity: '2026-05-15', daysStalled: 40, product: 'Guardium' },
+  { id: 'opp9', name: 'Manufacturing Plus - IoT Solution', account: 'Manufacturing Plus', value: 42000, stage: 'Negotiate', owner: 'Sam Rivera', closeDate: '2026-08-05', probability: 70, lastActivity: '2026-06-21', daysStalled: 3, product: 'Instana' },
+  { id: 'opp10', name: 'Digital Commerce - E-commerce Platform', account: 'Digital Commerce Co', value: 67000, stage: 'Design', owner: 'Jordan Lee', closeDate: '2026-09-15', probability: 45, lastActivity: '2026-06-10', daysStalled: 14, product: 'watsonx.data' },
+  { id: 'opp11', name: 'MedTech - Patient Management System', account: 'MedTech Innovations', value: 88000, stage: 'Qualify', owner: 'Noah Williams', closeDate: '2026-08-20', probability: 55, lastActivity: '2026-06-05', daysStalled: 19, product: 'watsonx.ai' },
+  { id: 'opp12', name: 'Cloud Services - Infrastructure Upgrade', account: 'Cloud Services Inc', value: 72000, stage: 'Propose', owner: 'Elena Garcia', closeDate: '2026-07-28', probability: 68, lastActivity: '2026-06-19', daysStalled: 5, product: 'Db2 Warehouse' },
+  { id: 'opp13', name: 'DataFlow Corp - Lakehouse Migration', account: 'DataFlow Corp', value: 135000, stage: 'Design', owner: 'Priya Shah', closeDate: '2026-07-18', probability: 55, lastActivity: '2026-05-20', daysStalled: 35, product: 'watsonx.data' },
+  { id: 'opp14', name: 'SecureBank - Security Audit Platform', account: 'SecureBank', value: 92000, stage: 'Engage', owner: 'Jordan Lee', closeDate: '2026-08-25', probability: 35, lastActivity: '2026-06-08', daysStalled: 16, product: 'Guardium' },
+  { id: 'opp15', name: 'AutoMotive Inc - Observability Suite', account: 'AutoMotive Inc', value: 58000, stage: 'Qualify', owner: 'Sam Rivera', closeDate: '2026-09-10', probability: 50, lastActivity: '2026-05-25', daysStalled: 30, product: 'Instana' }
 ];
 
 // Search functionality
@@ -509,21 +509,64 @@ function performSearch(query) {
 }
 
 function showAccountDetails(account) {
-  alert(`Account: ${account.name}\nIndustry: ${account.industry}\nRevenue: ${formatCurrency(account.revenue)}\nOwner: ${account.owner}\nStatus: ${account.status}`);
   closeSearch();
+  // Find the rep that owns this account and open their coaching view
+  const rep = reps.find(r => r.name === account.owner);
+  if (rep) {
+    openCoaching(rep.id);
+  } else {
+    switchView('opportunities');
+  }
 }
 
 function showOpportunityDetails(opp) {
-  alert(`Opportunity: ${opp.name}\nAccount: ${opp.account}\nValue: ${formatCurrency(opp.value)}\nStage: ${opp.stage}\nOwner: ${opp.owner}\nClose Date: ${opp.closeDate}\nProbability: ${opp.probability}%`);
   closeSearch();
+  switchView('opportunities');
+  // Scroll the table and briefly highlight the matching row after render
+  setTimeout(() => {
+    const rows = document.querySelectorAll('#opportunities .rep-row');
+    rows.forEach(row => {
+      if (row.textContent.includes(opp.name) || row.textContent.includes(opp.account)) {
+        row.style.transition = 'background 0.3s';
+        row.style.background = '#eaf7f2';
+        row.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        setTimeout(() => { row.style.background = ''; }, 1800);
+      }
+    });
+  }, 120);
 }
 
 function renderSearchResults(results) {
-  const searchModal = document.getElementById('search-modal');
   const searchResultsContainer = document.getElementById('search-results');
-  
+  if (!searchResultsContainer) return;
+
   if (results.length === 0) {
-    searchResultsContainer.innerHTML = '<div class="search-empty">No results found</div>';
+    const query = document.getElementById('search-input')?.value || '';
+    if (query.length >= 2) {
+      searchResultsContainer.innerHTML = `<div class="search-empty">No results for "<strong>${query}</strong>"</div>`;
+    } else {
+      // Populate searchResults with all reps so the delegate can call .action()
+      searchResults = reps.map(r => ({
+        type: 'rep', category: 'Rep',
+        title: r.name,
+        subtitle: `${r.role} · ${r.region}`,
+        data: r,
+        action: () => openCoaching(r.id)
+      }));
+      searchResultsContainer.innerHTML = `
+        <div class="search-empty-hint">
+          <div class="search-hint-label">Quick access</div>
+          ${searchResults.map((r, i) => `
+            <div class="search-result-item" data-index="${i}">
+              <div class="search-result-icon">👤</div>
+              <div class="search-result-content">
+                <div class="search-result-title">${r.title}</div>
+                <div class="search-result-subtitle">${r.subtitle}</div>
+              </div>
+              <div class="search-result-badge">Rep</div>
+            </div>`).join('')}
+        </div>`;
+    }
     return;
   }
   
@@ -541,11 +584,12 @@ function renderSearchResults(results) {
     html += `<div class="search-category">${category}</div>`;
     grouped[category].forEach((result, index) => {
       const globalIndex = results.indexOf(result);
+      const query = document.getElementById('search-input')?.value || document.getElementById('topbar-search-input')?.value || '';
       html += `
         <div class="search-result-item ${globalIndex === selectedSearchIndex ? 'selected' : ''}" data-index="${globalIndex}">
           <div class="search-result-icon">${result.type === 'rep' ? '👤' : result.type === 'account' ? '🏢' : '💼'}</div>
           <div class="search-result-content">
-            <div class="search-result-title">${highlightMatch(result.title, document.getElementById('search-input').value)}</div>
+            <div class="search-result-title">${highlightMatch(result.title, query)}</div>
             <div class="search-result-subtitle">${result.subtitle}</div>
           </div>
           <div class="search-result-badge">${result.category}</div>
@@ -558,9 +602,11 @@ function renderSearchResults(results) {
 }
 
 function highlightMatch(text, query) {
-  if (!query) return text;
-  const regex = new RegExp(`(${query})`, 'gi');
-  return text.replace(regex, '<mark>$1</mark>');
+  if (!query || query.trim().length < 2) return text;
+  try {
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+  } catch { return text; }
 }
 
 function openSearch() {
@@ -648,10 +694,51 @@ function getAvatarClass(index) {
 }
 
 // Initialize dashboard
+// ── Dynamic greeting + quarter bar ───────────────
+function initDynamicHeader() {
+  // Time-aware greeting
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  const el = document.getElementById('overview-greeting');
+  if (el) el.textContent = `${greeting}, Noelle.`;
+
+  // Quarter progress — IBM FY2026 Q3: May 1 – Jul 31 (91 days)
+  const qStart = new Date('2026-05-01');
+  const qEnd   = new Date('2026-07-31');
+  const today  = new Date();
+  const totalDays   = Math.round((qEnd - qStart) / 86400000);
+  const elapsed     = Math.max(0, Math.min(Math.round((today - qStart) / 86400000), totalDays));
+  const weekNum     = Math.ceil(elapsed / 7);
+  const totalWeeks  = Math.ceil(totalDays / 7);
+  const pct         = Math.round((elapsed / totalDays) * 100);
+
+  const labelEl  = document.getElementById('quarter-label');
+  const fillEl   = document.getElementById('quarter-fill');
+  const pctEl    = document.getElementById('quarter-pct');
+  const eyebrow  = document.getElementById('overview-eyebrow');
+
+  if (labelEl) labelEl.textContent = `Q3 · Week ${weekNum} of ${totalWeeks}`;
+  if (fillEl)  fillEl.style.width  = `${pct}%`;
+  if (pctEl)   pctEl.textContent   = `${pct}%`;
+  if (eyebrow) eyebrow.textContent = `Q3 · WEEK ${weekNum} OF ${totalWeeks}`;
+
+  // Notification badge — count unread
+  _updateNotifBadge();
+}
+
+function _updateNotifBadge() {
+  const unreadCount = mockNotifications.filter(n => n.unread).length;
+  const badge = document.querySelector('.notif-count-badge');
+  const dot   = document.getElementById('notif-dot');
+  if (badge) badge.textContent = unreadCount;
+  if (dot)   dot.style.display = unreadCount > 0 ? 'block' : 'none';
+}
+
 function init() {
   renderOverview();
   renderCoaching();
   setupEventListeners();
+  initDynamicHeader();
 }
 
 // Render Manager Overview
@@ -673,7 +760,7 @@ function renderKPIs() {
   const kpis = [
     { label: 'TEAM PIPELINE', value: formatCurrency(totalPipeline), change: '↗ 8.2%', up: true },
     { label: 'TEAM QUOTA', value: formatCurrency(totalGoal), change: 'Pacing 82%', up: false },
-    { label: 'PIPELINE COVERAGE', value: '3.2×', change: 'Target 3.5×', up: false },
+    { label: 'PIPELINE COVERAGE', value: '6.5×', change: 'Target 7×', up: false },
     { label: 'OPPORTUNITIES CREATED', value: totalOpps, change: '↘ 14%', up: false, attention: true },
     { label: 'AT-RISK REPS', value: atRiskCount, change: 'Need coaching', up: false, attention: true },
     { label: 'UNTOUCHED ACCOUNTS', value: untouchedAccounts, change: '28% of assigned', up: false },
@@ -739,7 +826,7 @@ function renderPipelineTable() {
           <small>${gap >= 0 ? 'Above goal' : 'Below goal'}</small>
         </div>
         <div class="metric-cell">
-          <strong class="${rep.coverage < 3 ? 'coverage low' : ''}">${rep.coverage.toFixed(1)}×</strong>
+          <strong class="${rep.coverage < 7 ? 'coverage low' : ''}">${rep.coverage.toFixed(1)}×</strong>
         </div>
         <div>
           <span class="risk ${getRiskClass(rep.risk)}">${rep.risk}%</span>
@@ -1024,21 +1111,23 @@ function renderRecommendations(rep) {
 
 function renderCoachingQuestions(rep) {
   const questions = getContextualCoachingQuestions(rep);
-  
+
   if (questions.length === 0) {
-    return '<div class="no-questions">No specific coaching questions needed - rep is performing well!</div>';
+    return '<div class="no-questions">No specific coaching questions needed — rep is performing well!</div>';
   }
-  
-  return questions.map(section => `
-    <div class="coaching-question-section">
-      <div class="question-section-head">
-        <span class="question-icon">${section.icon}</span>
-        <strong>${section.category}</strong>
-      </div>
-      <ol class="coaching-questions-list">
+
+  return questions.map((section, i) => `
+    <details class="cq-accordion" ${i === 0 ? 'open' : ''}>
+      <summary class="cq-summary">
+        <span class="cq-icon">${section.icon}</span>
+        <strong class="cq-title">${section.category}</strong>
+        <span class="cq-count">${section.questions.length} question${section.questions.length !== 1 ? 's' : ''}</span>
+        <span class="cq-chevron">▾</span>
+      </summary>
+      <ol class="coaching-questions-list cq-list">
         ${section.questions.map(q => `<li>${q}</li>`).join('')}
       </ol>
-    </div>
+    </details>
   `).join('');
 }
 
@@ -1066,7 +1155,7 @@ function setupEventListeners() {
     document.getElementById('sidebar').classList.toggle('open');
   });
   
-  // Brand toggle (Northstar logo)
+  // Brand toggle (IBM Momentum logo)
   const brandToggle = document.getElementById('brand-toggle');
   if (brandToggle) {
     brandToggle.addEventListener('click', () => {
@@ -1101,19 +1190,21 @@ function setupEventListeners() {
     }
   });
   
-  // Pipeline table rows
+  // Pipeline table rows — only fire when the row has a data-rep and modal is not open
   document.addEventListener('click', (e) => {
-    const row = e.target.closest('.rep-row');
-    if (row) {
+    if (document.getElementById('search-modal')?.classList.contains('active')) return;
+    const row = e.target.closest('.rep-row[data-rep]');
+    if (row && row.dataset.rep) {
       console.log('📊 Pipeline row clicked:', row.dataset.rep);
       openCoaching(row.dataset.rep);
     }
   });
-  
+
   // Insight rows
   document.addEventListener('click', (e) => {
-    const row = e.target.closest('.insight-row');
-    if (row) {
+    if (document.getElementById('search-modal')?.classList.contains('active')) return;
+    const row = e.target.closest('.insight-row[data-rep]');
+    if (row && row.dataset.rep) {
       openCoaching(row.dataset.rep);
     }
   });
@@ -1161,27 +1252,32 @@ function setupEventListeners() {
     });
   }
 
-  // Global ⌘K — focus the topbar input directly
+  // Modal search input
   const searchInput = document.getElementById('search-input');
   if (searchInput) {
     searchInput.addEventListener('input', handleSearchInput);
     searchInput.addEventListener('keydown', handleSearchKeydown);
   }
-  
-  // Search result clicks
-  document.addEventListener('click', (e) => {
-    const resultItem = e.target.closest('.search-result-item');
-    if (resultItem) {
+
+  // Search result clicks — delegated on the results container, not document
+  const searchResultsEl = document.getElementById('search-results');
+  if (searchResultsEl) {
+    searchResultsEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const resultItem = e.target.closest('.search-result-item');
+      if (!resultItem) return;
       const index = parseInt(resultItem.dataset.index);
       console.log('🔍 Search result clicked, index:', index);
-      if (searchResults[index]) {
+      if (!isNaN(index) && searchResults[index]) {
         console.log('🔍 Executing action for:', searchResults[index].title);
         searchResults[index].action();
       }
-    }
-    
-    // Close search when clicking outside
-    if (e.target.closest('#search-modal') && !e.target.closest('.search-container')) {
+    });
+  }
+
+  // Close search when clicking the backdrop
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'search-modal') {
       closeSearch();
     }
   });
@@ -1215,11 +1311,7 @@ function setupEventListeners() {
     if (e.target.id === 'notes-modal') closeNotesModal();
   });
   
-  // Compare selects
-  ['compare-rep-a', 'compare-rep-b', 'compare-rep-c'].forEach(id => {
-    const sel = document.getElementById(id);
-    if (sel) sel.addEventListener('change', renderCompareView);
-  });
+  // Compare view — no selects needed, handled by initCompareSelects
 }
 
 function switchView(view) {
@@ -1251,6 +1343,7 @@ function switchView(view) {
 
 function openCoaching(repId) {
   console.log('🎯 openCoaching called with repId:', repId);
+  closeSearch();
   selectRep(repId);
   switchView('coaching');
 }
@@ -1467,47 +1560,165 @@ function createEmptyState(icon, title, message, actionText, actionCallback) {
 // PIPELINE TREND CHART
 // ============================================
 
-function renderPipelineTrendChart() {
+// Full quarter of daily pipeline data (13 weeks × 5 days = 65 data points)
+const pipelineTrendData = (() => {
+  // Seed a smooth upward curve with realistic week-over-week noise
+  const base = [
+    880000, 892000, 905000, 918000, 930000, // Wk 1
+    942000, 958000, 971000, 985000, 998000, // Wk 2
+    1008000,1020000,1034000,1048000,1060000,// Wk 3
+    1072000,1082000,1094000,1106000,1118000,// Wk 4
+    1128000,1140000,1152000,1164000,1175000,// Wk 5
+    1185000,1196000,1208000,1218000,1228000,// Wk 6
+    1238000,1248000,1258000,1268000,1278000,// Wk 7
+    1288000,1298000,1310000,1322000,1334000,// Wk 8 ← current
+    1342000,1350000,1360000,1370000,1378000,// Wk 9  (projected)
+    1386000,1394000,1402000,1410000,1418000,// Wk 10
+    1426000,1434000,1442000,1450000,1458000,// Wk 11
+    1466000,1474000,1482000,1490000,1498000,// Wk 12
+    1506000,1514000,1522000,1530000,1540000 // Wk 13
+  ];
+  const labels = [];
+  for (let w = 1; w <= 13; w++) {
+    ['Mon','Tue','Wed','Thu','Fri'].forEach(d => labels.push(`W${w} ${d}`));
+  }
+  return { labels, values: base };
+})();
+
+let pipelineTrendChart = null;
+
+function renderPipelineTrendChart(range = '8W') {
   try {
     const canvas = document.getElementById('pipeline-trend-chart');
     if (!canvas) return;
-    
+
+    const rangeConfig = {
+      '2W': { points: 10, label: '2-week pipeline trend',   step: 'day'  },
+      '4W': { points: 20, label: '4-week pipeline trend',   step: 'day'  },
+      '8W': { points: 40, label: '8-week pipeline growth',  step: 'day'  },
+      'Q':  { points: 65, label: 'Full quarter (13 weeks)', step: 'week' },
+    };
+    const cfg = rangeConfig[range] || rangeConfig['8W'];
+
+    // For Full Q, downsample to weekly (last day of each week)
+    let labels, values;
+    if (range === 'Q') {
+      labels = []; values = [];
+      for (let w = 1; w <= 13; w++) {
+        labels.push(`Week ${w}`);
+        values.push(pipelineTrendData.values[(w * 5) - 1]);
+      }
+    } else {
+      const slice = pipelineTrendData.values.slice(0, cfg.points);
+      const labelSlice = pipelineTrendData.labels.slice(0, cfg.points);
+      labels = labelSlice;
+      values = slice;
+    }
+
+    // Week 8 = index 39 in daily data (0-based), index 7 in weekly Q view
+    const cutoff = range === 'Q' ? 8 : Math.min(40, values.length);
+
+    const actualData    = values.map((v, i) => i < cutoff ? v : null);
+    const projectedData = values.map((v, i) => i >= cutoff - 1 ? v : null);
+
+    // Update subtitle
+    const subtitle = document.getElementById('pipeline-trend-subtitle');
+    if (subtitle) subtitle.textContent = cfg.label;
+
+    // Destroy previous chart instance before re-rendering
+    if (pipelineTrendChart) { pipelineTrendChart.destroy(); pipelineTrendChart = null; }
+
     const ctx = canvas.getContext('2d');
-    
-    new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
-      datasets: [{
-        label: 'Pipeline',
-        data: [980000, 1050000, 1120000, 1180000, 1240000, 1290000, 1340000, 1372000],
-        borderColor: chartColors.teal,
-        backgroundColor: 'rgba(8, 127, 117, 0.1)',
-        fill: true,
-        tension: 0.4,
-        borderWidth: 3,
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        pointBackgroundColor: '#ffffff',
-        pointBorderColor: chartColors.teal,
-        pointBorderWidth: 2
-      }]
-    },
-    options: {
-      ...chartDefaults,
-      plugins: {
-        ...chartDefaults.plugins,
-        tooltip: {
-          ...chartDefaults.plugins.tooltip,
-          callbacks: {
-            label: function(context) {
-              return 'Pipeline: ' + formatCurrency(context.parsed.y);
+    pipelineTrendChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Pipeline (actual)',
+            data: actualData,
+            borderColor: chartColors.teal,
+            backgroundColor: 'rgba(8, 127, 117, 0.08)',
+            fill: true,
+            tension: 0.4,
+            borderWidth: 2.5,
+            pointRadius: (context) => context.dataIndex % 5 === 4 || range !== 'Q' ? 3 : 0,
+            pointHoverRadius: 6,
+            pointBackgroundColor: '#ffffff',
+            pointBorderColor: chartColors.teal,
+            pointBorderWidth: 2,
+            spanGaps: true
+          },
+          {
+            label: 'Projected',
+            data: projectedData,
+            borderColor: chartColors.teal,
+            backgroundColor: 'transparent',
+            borderDash: [5, 4],
+            fill: false,
+            tension: 0.4,
+            borderWidth: 2,
+            pointRadius: 0,
+            pointHoverRadius: 5,
+            spanGaps: true
+          }
+        ]
+      },
+      options: {
+        ...chartDefaults,
+        plugins: {
+          ...chartDefaults.plugins,
+          legend: {
+            display: true,
+            position: 'top',
+            align: 'end',
+            labels: {
+              boxWidth: 14,
+              font: { size: 10 },
+              color: chartColors.text,
+              usePointStyle: true,
+              pointStyle: 'line'
+            }
+          },
+          tooltip: {
+            ...chartDefaults.plugins.tooltip,
+            callbacks: {
+              label: function(context) {
+                const val = context.parsed.y;
+                if (val === null) return null;
+                return (context.dataset.label === 'Projected' ? 'Projected: ' : 'Pipeline: ') + formatCurrency(val);
+              },
+              afterBody: function(items) {
+                const idx = items[0]?.dataIndex;
+                if (idx > 0) {
+                  const prev = values[idx - 1];
+                  const curr = values[idx];
+                  if (prev && curr) {
+                    const delta = curr - prev;
+                    const pct = ((delta / prev) * 100).toFixed(1);
+                    return [`Δ ${delta >= 0 ? '+' : ''}${formatCurrency(delta)} (${pct}%)`];
+                  }
+                }
+                return [];
+              }
             }
           }
         }
       }
-    }
     });
+
+    // Wire up toggle buttons
+    const toggle = document.getElementById('trend-range-toggle');
+    if (toggle && !toggle._wired) {
+      toggle._wired = true;
+      toggle.addEventListener('click', e => {
+        const btn = e.target.closest('button[data-range]');
+        if (!btn) return;
+        toggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderPipelineTrendChart(btn.dataset.range);
+      });
+    }
   } catch (error) {
     console.error('Error rendering pipeline trend chart:', error);
   }
@@ -1527,15 +1738,17 @@ function renderOpportunityChart() {
     new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: ['Discovery', 'Qualification', 'Proposal', 'Negotiation', 'Closing'],
+      labels: ['Prepare', 'Engage', 'Qualify', 'Design', 'Propose', 'Negotiate', 'Closing'],
       datasets: [{
-        data: [12, 9, 11, 8, 3],
+        data: [7, 8, 9, 7, 11, 8, 3],
         backgroundColor: [
           chartColors.primary,
           chartColors.teal,
           chartColors.purple,
           chartColors.warning,
-          chartColors.success
+          chartColors.success,
+          '#e67e22',
+          '#8e44ad'
         ],
         borderWidth: 0,
         hoverOffset: 8
@@ -1662,9 +1875,84 @@ function initEnhancements() {
 // OPPORTUNITY FILTERING
 // ============================================
 
+function renderProductMix() {
+  const container = document.getElementById('product-mix-container');
+  if (!container) return;
+
+  // Product win rates and colours (static enrichment data)
+  const productMeta = {
+    'watsonx.ai':   { winRate: 58, color: '#0f62fe' },
+    'watsonx.data': { winRate: 51, color: '#087f75' },
+    'Db2 Warehouse':{ winRate: 44, color: '#8a3ffc' },
+    'Instana':      { winRate: 47, color: '#f1c21b' },
+    'Guardium':     { winRate: 39, color: '#d8653b' },
+    'DataStage':    { winRate: 53, color: '#24a148' },
+    'Turbonomic':   { winRate: 42, color: '#a66e00' },
+  };
+
+  // Aggregate from live opportunities array
+  const byProduct = {};
+  opportunities.forEach(opp => {
+    if (!byProduct[opp.product]) byProduct[opp.product] = { total: 0, count: 0, reps: {} };
+    byProduct[opp.product].total += opp.value;
+    byProduct[opp.product].count += 1;
+    byProduct[opp.product].reps[opp.owner] = (byProduct[opp.product].reps[opp.owner] || 0) + 1;
+  });
+
+  const maxTotal = Math.max(...Object.values(byProduct).map(d => d.total));
+  const rows = Object.entries(byProduct).sort((a, b) => b[1].total - a[1].total);
+
+  container.innerHTML = rows.map(([product, data]) => {
+    const meta = productMeta[product] || { winRate: 45, color: '#697077' };
+    const avgDeal = data.total / data.count;
+    const topRep = Object.entries(data.reps).sort((a, b) => b[1] - a[1])[0][0];
+    const barPct = Math.round((data.total / maxTotal) * 100);
+    const winColor = meta.winRate >= 50 ? '#24a148' : meta.winRate >= 43 ? '#a66e00' : '#da1e28';
+
+    return `
+      <div class="product-mix-row" data-product="${product}">
+        <div class="pmr-top">
+          <div class="pmr-name-wrap">
+            <span class="pmr-dot" style="background:${meta.color}"></span>
+            <strong class="pmr-name">${product}</strong>
+          </div>
+          <div class="pmr-summary">
+            <span class="pmr-total">${formatCurrency(data.total)}</span>
+            <span class="pmr-count">${data.count} opp${data.count !== 1 ? 's' : ''}</span>
+          </div>
+        </div>
+        <div class="pmr-bar-wrap">
+          <div class="pmr-bar-track">
+            <div class="pmr-bar-fill" style="width:${barPct}%;background:${meta.color}"></div>
+          </div>
+        </div>
+        <div class="pmr-detail">
+          <div class="pmr-stat">
+            <span class="pmr-stat-label">Avg deal</span>
+            <strong class="pmr-stat-val">${formatCurrency(avgDeal)}</strong>
+          </div>
+          <div class="pmr-stat">
+            <span class="pmr-stat-label">Win rate</span>
+            <strong class="pmr-stat-val" style="color:${winColor}">${meta.winRate}%</strong>
+          </div>
+          <div class="pmr-stat">
+            <span class="pmr-stat-label">Top rep</span>
+            <strong class="pmr-stat-val">${topRep.split(' ')[0]}</strong>
+          </div>
+          <div class="pmr-stat">
+            <span class="pmr-stat-label">Pipeline share</span>
+            <strong class="pmr-stat-val">${barPct}%</strong>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
 function initOpportunityFilters() {
   const opportunitiesSection = document.getElementById('opportunities');
   if (!opportunitiesSection) return;
+
+  renderProductMix();
   
   const segmentedButtons = opportunitiesSection.querySelectorAll('.segmented button');
   const opportunityTable = opportunitiesSection.querySelector('.panel');
@@ -1725,10 +2013,12 @@ function renderOpportunityTable(opps, tableContainer) {
     
     // Determine avatar color based on stage
     const avatarColors = {
-      'Discovery': '',
-      'Qualification': 'peach',
-      'Proposal': 'blue',
-      'Negotiation': 'purple',
+      'Prepare': '',
+      'Engage': 'peach',
+      'Qualify': 'peach',
+      'Design': 'blue',
+      'Propose': 'blue',
+      'Negotiate': 'purple',
       'Closing': 'blue'
     };
     
@@ -1782,7 +2072,7 @@ const copilot = {
 • Only **26% of territory engaged** (19 of 74 accounts touched)
 • Created **4 opportunities** vs team average of **7**
 • Meeting-to-opportunity conversion at **28%** vs team average **35%**
-• Pipeline gap of **-$58K** with only **2.6× coverage**
+• Pipeline gap of **-$58K** with only **5.3× coverage** (target: 7×)
 
 **Root Causes:**
 1. **Territory Coverage**: Jordan is leaving 74% of assigned accounts untouched, limiting pipeline potential
@@ -2002,7 +2292,7 @@ const copilot = {
 ## ✅ Strengths to Leverage
 
 ### Priya Shah - Top Performer
-• **4.2× coverage**, exceeding quota
+• **7.4× coverage**, exceeding 7× target
 • Strong watsonx.ai expertise
 • **Action:** Share best practices with team
 
@@ -2028,7 +2318,7 @@ const copilot = {
 3. **This Quarter:**
    - [ ] Rebuild opportunity creation to 50+/month
    - [ ] Increase watsonx.ai pipeline by $200K
-   - [ ] Get all reps to 3.5× coverage minimum
+   - [ ] Get all reps to 7× coverage minimum
 
 **Bottom Line:** Focus on Noah (critical) and opportunity creation (systemic). Success here protects Q4.`,
       sources: ['Risk Assessments', 'Team Analytics', 'Product Intelligence']
@@ -2292,7 +2582,7 @@ Which product would you like to focus on?`;
 • Total Pipeline: **${formatCurrency(totalPipeline)}**
 • Team Quota: **${formatCurrency(totalGoal)}**
 • Pacing: **${pacing}% of quota**
-• Coverage: **3.2×** (target: 3.5×)
+• Coverage: **6.5×** (target: 7×)
 
 **Key Issues:**
 • 3 reps below quota (Jordan, Noah, Sam)
@@ -2341,7 +2631,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 
 function getNotesKey(repId) {
-  return `northstar_notes_${repId}`;
+  return `momentum_notes_${repId}`;
 }
 
 function loadNotes(repId) {
@@ -2418,102 +2708,90 @@ function saveCoachingNote() {
 // ============================================
 
 function initCompareSelects() {
-  ['compare-rep-a', 'compare-rep-b', 'compare-rep-c'].forEach((id, idx) => {
-    const sel = document.getElementById(id);
-    if (!sel) return;
-    // For c, keep the empty option at top
-    if (id === 'compare-rep-c') {
-      reps.forEach(rep => {
-        const opt = document.createElement('option');
-        opt.value = rep.id;
-        opt.textContent = rep.name;
-        sel.appendChild(opt);
-      });
-    } else {
-      sel.innerHTML = '';
-      reps.forEach((rep, i) => {
-        const opt = document.createElement('option');
-        opt.value = rep.id;
-        opt.textContent = rep.name;
-        if (i === idx) opt.selected = true;
-        sel.appendChild(opt);
-      });
-    }
-  });
+  // No dropdowns anymore — render all reps immediately
+  renderCompareView('all');
+
+  // Metric group filter toggle
+  const toggle = document.getElementById('compare-metric-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', e => {
+      const btn = e.target.closest('button[data-group]');
+      if (!btn) return;
+      toggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCompareView(btn.dataset.group);
+    });
+  }
+
 }
 
-function renderCompareView() {
-  const selA = document.getElementById('compare-rep-a');
-  const selB = document.getElementById('compare-rep-b');
-  const selC = document.getElementById('compare-rep-c');
+function renderCompareView(group = 'all') {
   const grid = document.getElementById('compare-grid');
   if (!grid) return;
-  
-  const selectedReps = [selA, selB, selC]
-    .map(s => s ? reps.find(r => r.id === s.value) : null)
-    .filter(Boolean);
-  
-  if (selectedReps.length < 2) {
-    grid.innerHTML = '<p style="color:#68767d;padding:24px;">Select at least two reps to compare.</p>';
-    return;
-  }
-  
-  const metrics = [
-    { label: 'Pipeline', fn: r => formatCurrency(r.pipeline), highlight: (vals) => Math.max(...vals.map(v => parseFloat(v.replace(/[^0-9.]/g, '')) || 0)) },
-    { label: 'Goal', fn: r => formatCurrency(r.goal) },
-    { label: 'Pipeline vs Goal', fn: r => Math.round((r.pipeline / r.goal) * 100) + '%' },
-    { label: 'Coverage', fn: r => r.coverage.toFixed(1) + '×' },
-    { label: 'Quota Risk', fn: r => r.risk + '%', lowerIsBetter: true },
-    { label: 'Opportunities', fn: r => r.opportunities },
-    { label: 'Meetings', fn: r => r.meetings },
-    { label: 'Conversion %', fn: r => r.conversion + '%' },
-    { label: 'Accounts Assigned', fn: r => r.accountsAssigned },
-    { label: 'Accounts Touched', fn: r => r.accountsTouched },
-    { label: 'Territory Coverage', fn: r => Math.round((r.accountsTouched / r.accountsAssigned) * 100) + '%' },
-    { label: 'Status', fn: r => {
+
+  const allMetrics = [
+    { label: 'Pipeline',          group: 'pipeline', raw: r => r.pipeline,                             display: r => formatCurrency(r.pipeline) },
+    { label: 'Quota',             group: 'pipeline', raw: r => r.goal,                                 display: r => formatCurrency(r.goal) },
+    { label: 'Pipeline vs Quota', group: 'pipeline', raw: r => Math.round((r.pipeline/r.goal)*100),    display: r => Math.round((r.pipeline/r.goal)*100) + '%' },
+    { label: 'Pipeline Gap',      group: 'pipeline', raw: r => r.pipeline - r.goal,                    display: r => { const g = r.pipeline-r.goal; return `<span style="color:${g>=0?'#19806c':'#bd4d2d'}">${formatCurrency(g)}</span>`; }, noBar: true },
+    { label: 'Coverage',          group: 'coverage', raw: r => r.coverage,                             display: r => r.coverage.toFixed(1) + '×' },
+    { label: 'Quota Risk',        group: 'coverage', raw: r => r.risk,     lowerIsBetter: true,        display: r => r.risk + '%' },
+    { label: 'Territory Coverage',group: 'coverage', raw: r => Math.round((r.accountsTouched/r.accountsAssigned)*100), display: r => Math.round((r.accountsTouched/r.accountsAssigned)*100) + '%' },
+    { label: 'Accounts Touched',  group: 'coverage', raw: r => r.accountsTouched,                      display: r => `${r.accountsTouched} / ${r.accountsAssigned}` },
+    { label: 'Opportunities',     group: 'activity', raw: r => r.opportunities,                        display: r => r.opportunities },
+    { label: 'Meetings',          group: 'activity', raw: r => r.meetings,                             display: r => r.meetings },
+    { label: 'Conversion %',      group: 'activity', raw: r => r.conversion,                           display: r => r.conversion + '%' },
+    { label: 'Status',            group: 'all',      raw: r => 100 - r.risk, noBar: true,              display: r => {
       if (r.risk < 40) return '<span class="status-badge on-track">On track</span>';
       if (r.risk < 70) return '<span class="status-badge watch">Watch</span>';
       return '<span class="status-badge intervene">Intervene</span>';
     }}
   ];
-  
-  const colWidth = `${Math.floor(100 / (selectedReps.length + 1))}%`;
-  
-  let html = `<div class="compare-table">`;
-  
-  // Header row
-  html += `<div class="compare-row compare-head">
-    <div class="compare-cell compare-label-cell"></div>
-    ${selectedReps.map((rep, i) => `
-      <div class="compare-cell compare-rep-cell">
-        <span class="avatar ${getAvatarClass(reps.indexOf(rep))}">${rep.initials}</span>
-        <div>
-          <strong>${rep.name}</strong>
-          <small>${rep.role} · ${rep.region}</small>
-        </div>
-        <button class="button primary" style="margin-top:8px;font-size:12px;padding:5px 10px;" onclick="openCoaching('${rep.id}')">Open coaching</button>
-      </div>
-    `).join('')}
-  </div>`;
-  
-  // Metric rows
-  metrics.forEach((metric, rowIdx) => {
-    const values = selectedReps.map(r => metric.fn(r));
-    const numericVals = selectedReps.map(r => {
-      const str = String(metric.fn(r)).replace(/[^0-9.]/g, '');
-      return parseFloat(str) || 0;
-    });
-    const bestVal = metric.lowerIsBetter ? Math.min(...numericVals) : Math.max(...numericVals);
-    
-    html += `<div class="compare-row ${rowIdx % 2 === 0 ? '' : 'compare-row-alt'}">
-      <div class="compare-cell compare-label-cell"><strong>${metric.label}</strong></div>
-      ${selectedReps.map((rep, i) => {
-        const isBest = numericVals[i] === bestVal;
-        return `<div class="compare-cell ${isBest ? 'compare-best' : ''}">${values[i]}</div>`;
-      }).join('')}
+
+  const metrics = group === 'all' ? allMetrics : allMetrics.filter(m => m.group === group || m.group === 'all');
+  const cols = reps.length + 1; // label col + one per rep
+  const gridCols = `160px repeat(${reps.length}, 1fr)`;
+
+  // Build a single flat CSS grid — all cells are direct children of one container
+  let html = `<div class="compare-table" style="--compare-cols:${cols};grid-template-columns:${gridCols}">`;
+
+  // Header cells
+  html += `<div class="cc cc-label cc-head"></div>`;
+  reps.forEach((rep, i) => {
+    html += `<div class="cc cc-rep cc-head">
+      <span class="avatar ${getAvatarClass(i)}" style="margin-bottom:4px">${rep.initials}</span>
+      <strong>${rep.name}</strong>
+      <small>${rep.role} · ${rep.region}</small>
+      <button class="button primary compare-coach-btn" onclick="openCoaching('${rep.id}')" style="margin-top:6px;font-size:11px;padding:4px 10px;width:100%">Coach</button>
     </div>`;
   });
-  
+
+  // Metric rows
+  metrics.forEach((metric, rowIdx) => {
+    const rawVals = reps.map(r => metric.raw(r));
+    const bestRaw = metric.lowerIsBetter ? Math.min(...rawVals) : Math.max(...rawVals);
+    const maxRaw  = Math.max(...rawVals.map(Math.abs)) || 1;
+    const alt     = rowIdx % 2 === 1 ? ' cc-alt' : '';
+
+    // label cell
+    html += `<div class="cc cc-label${alt}"><span>${metric.label}</span></div>`;
+
+    // value cells
+    reps.forEach((rep, i) => {
+      const raw    = rawVals[i];
+      const isBest = raw === bestRaw;
+      const barPct = metric.noBar ? 0 : Math.round((Math.abs(raw) / maxRaw) * 100);
+      const barColor = metric.lowerIsBetter
+        ? (raw === bestRaw ? '#24a148' : raw === Math.max(...rawVals) ? '#da1e28' : '#f1c21b')
+        : (raw === bestRaw ? '#24a148' : raw === Math.min(...rawVals) ? '#da1e28' : '#f1c21b');
+
+      html += `<div class="cc${alt}${isBest ? ' cc-best' : ''}">
+        <span class="cc-val">${metric.display(rep)}</span>
+        ${!metric.noBar ? `<div class="compare-bar-track"><div class="compare-bar-fill" style="width:${barPct}%;background:${barColor}"></div></div>` : ''}
+      </div>`;
+    });
+  });
+
   html += `</div>`;
   grid.innerHTML = html;
 }
@@ -2619,15 +2897,8 @@ function showToast(msg, type = 'success') {
 }
 
 function openModal(id)  {
-  console.log('openModal called with id:', id);
   const el = document.getElementById(id);
-  console.log('Modal element found:', el);
-  if (el) {
-    el.classList.add('active');
-    console.log('Added active class. Classes:', el.className);
-  } else {
-    console.error('Modal element not found:', id);
-  }
+  if (el) el.classList.add('active');
 }
 function closeModal(id) {
   const el = document.getElementById(id);
@@ -2676,7 +2947,7 @@ function renderNotifications() {
 }
 
 function initNotifications() {
-  const bell = document.querySelector('.icon-btn.notification');
+  const bell = document.getElementById('notif-btn');
   if (bell) bell.addEventListener('click', () => {
     renderNotifications();
     openDrawer('notif-panel');
@@ -2687,10 +2958,7 @@ function initNotifications() {
   if (markAll) markAll.addEventListener('click', () => {
     mockNotifications.forEach(n => n.unread = false);
     renderNotifications();
-    const badge = document.querySelector('.notif-count-badge');
-    if (badge) badge.textContent = '0';
-    const dot = document.querySelector('.icon-btn.notification i');
-    if (dot) dot.style.display = 'none';
+    _updateNotifBadge();
   });
 }
 
@@ -2737,8 +3005,32 @@ function initSegmentFilter() {
     const label = sel ? sel.value : 'All segments';
     const filterBtn = document.querySelector('.pipeline-panel .filter-btn');
     if (filterBtn) filterBtn.textContent = label + '⌄';
-    closeModal('segment-panel');
     document.getElementById('segment-panel').classList.remove('active');
+    // Actually filter — segments map to rep regions/roles
+    const segmentMap = {
+      'All segments': null,
+      'Enterprise (1000+)': r => r.role.includes('Enterprise'),
+      'Mid-Market (100–999)': r => r.role.includes('Commercial'),
+      'SMB (<100)': r => false,
+      'Financial Services': r => r.region === 'East',
+      'Healthcare': r => r.region === 'West',
+      'Technology': r => r.region === 'Central',
+      'Manufacturing': r => r.region === 'South',
+      'Retail': r => false,
+    };
+    const filterFn = segmentMap[label];
+    if (!filterFn) {
+      renderPipelineTable(); // All segments
+    } else {
+      const table = document.getElementById('pipeline-table');
+      if (table) {
+        const rows = table.querySelectorAll('.rep-row');
+        rows.forEach(row => {
+          const rep = reps.find(r => r.id === row.dataset.rep);
+          row.style.display = rep && filterFn(rep) ? '' : 'none';
+        });
+      }
+    }
     showToast(`Pipeline filtered: ${label}`);
   });
   const clearBtn = document.getElementById('segment-clear-btn');
@@ -2746,6 +3038,7 @@ function initSegmentFilter() {
     const filterBtn = document.querySelector('.pipeline-panel .filter-btn');
     if (filterBtn) filterBtn.textContent = 'All segments⌄';
     document.getElementById('segment-panel').classList.remove('active');
+    renderPipelineTable(); // restore all rows
   });
 }
 
@@ -2754,7 +3047,7 @@ function renderCoverageTable() {
   if (!table) return;
   const head = `<div class="table-head"><div>REP</div><div>COVERAGE RATIO</div><div>PIPELINE</div><div>QUOTA</div><div>STATUS</div></div>`;
   const rows = reps.map((rep, i) => {
-    const coverageColor = rep.coverage >= 3.5 ? '#24a148' : rep.coverage >= 3.0 ? '#a66e00' : '#da1e28';
+    const coverageColor = rep.coverage >= 7.0 ? '#24a148' : rep.coverage >= 5.5 ? '#a66e00' : '#da1e28';
     return `
       <div class="rep-row" data-rep="${rep.id}">
         <div class="rep-ident">
@@ -2763,9 +3056,9 @@ function renderCoverageTable() {
         </div>
         <div>
           <strong style="font-size:22px;color:${coverageColor}">${rep.coverage.toFixed(1)}×</strong>
-          <small style="display:block;color:var(--muted)">Target: 3.5×</small>
+          <small style="display:block;color:var(--muted)">Target: 7×</small>
           <div style="background:var(--line);height:6px;border-radius:3px;margin-top:4px;width:120px">
-            <div style="background:${coverageColor};width:${Math.min((rep.coverage/3.5)*100,100)}%;height:100%;border-radius:3px"></div>
+            <div style="background:${coverageColor};width:${Math.min((rep.coverage/7)*100,100)}%;height:100%;border-radius:3px"></div>
           </div>
         </div>
         <div><strong>${formatCurrency(rep.pipeline)}</strong></div>
@@ -2832,20 +3125,125 @@ function initRepFilter() {
     const label = sel ? sel.value : 'All reps';
     if (filterBtn) filterBtn.textContent = label + '⌄';
     document.getElementById('rep-filter-panel').classList.remove('active');
+    // Filter activity table rows
+    const body = document.getElementById('activity-table-body');
+    if (body) {
+      body.querySelectorAll('.rep-row').forEach(row => {
+        const name = row.querySelector('strong')?.textContent || '';
+        row.style.display = (label === 'All reps' || name === label) ? '' : 'none';
+      });
+    }
     showToast(`Activity filtered: ${label}`);
   });
   const clearBtn = document.getElementById('rep-filter-clear-btn');
   if (clearBtn) clearBtn.addEventListener('click', () => {
     if (filterBtn) filterBtn.textContent = 'All reps⌄';
     document.getElementById('rep-filter-panel').classList.remove('active');
+    const body = document.getElementById('activity-table-body');
+    if (body) body.querySelectorAll('.rep-row').forEach(row => row.style.display = '');
   });
 }
 
 // ── Activity time tabs ────────────────────────────
+
+// Avatar class helper (matches getAvatarClass index order)
+const _activityAvatarMap = { 'PS': '', 'MC': 'peach', 'SR': 'blue', 'JL': 'purple', 'NW': 'peach', 'EG': 'blue' };
+
+function renderActivityTable(data) {
+  const body = document.getElementById('activity-table-body');
+  if (!body) return;
+
+  const teamAvgCalls = data.length ? Math.round(data.reduce((s, r) => s + r.calls, 0) / data.length) : 0;
+
+  body.innerHTML = data.map(rep => {
+    const avatarClass = _activityAvatarMap[rep.rep_initials] || '';
+    const connectClass = rep.connect_rate >= 40 ? 'up' : rep.connect_rate >= 30 ? '' : 'down';
+    const replyClass   = rep.reply_rate   >= 25 ? 'up' : rep.reply_rate   >= 18 ? '' : 'down';
+    const daysInPeriod = Math.max(1, Math.round(
+      (new Date(rep.period_end) - new Date(rep.period_start)) / 86400000
+    ));
+    const callsPerDay = (rep.calls / daysInPeriod).toFixed(1);
+
+    return `<div class="rep-row">
+      <div class="rep-ident">
+        <span class="avatar ${avatarClass}">${rep.rep_initials}</span>
+        <div><strong>${rep.rep_name}</strong><small>${rep.role} · ${rep.region}</small></div>
+      </div>
+      <div><strong>${rep.calls}</strong><small>${callsPerDay}/day</small></div>
+      <div><span class="${connectClass}">${rep.connect_rate}%</span></div>
+      <div><strong>${rep.meetings}</strong></div>
+      <div><strong>${rep.emails}</strong></div>
+      <div><span class="${replyClass}">${rep.reply_rate}%</span></div>
+      <div><strong>${rep.meetings}</strong></div>
+    </div>`;
+  }).join('');
+}
+
+// Mock activity data keyed to each rep — "This week" baseline
+const _activityBaseline = [
+  { rep_name: 'Priya Shah',   rep_initials: 'PS', role: 'Enterprise AE',  region: 'East',    calls: 68,  meetings: 24, emails: 245, connect_rate: 42, reply_rate: 28 },
+  { rep_name: 'Maya Chen',    rep_initials: 'MC', role: 'Enterprise AE',  region: 'West',    calls: 52,  meetings: 14, emails: 198, connect_rate: 38, reply_rate: 18 },
+  { rep_name: 'Sam Rivera',   rep_initials: 'SR', role: 'Commercial AE',  region: 'South',   calls: 61,  meetings: 21, emails: 223, connect_rate: 41, reply_rate: 26 },
+  { rep_name: 'Jordan Lee',   rep_initials: 'JL', role: 'Enterprise AE',  region: 'Central', calls: 48,  meetings: 16, emails: 187, connect_rate: 32, reply_rate: 21 },
+  { rep_name: 'Noah Williams',rep_initials: 'NW', role: 'Commercial AE',  region: 'East',    calls: 38,  meetings: 11, emails: 142, connect_rate: 28, reply_rate: 19 },
+  { rep_name: 'Elena Garcia', rep_initials: 'EG', role: 'Commercial AE',  region: 'West',    calls: 75,  meetings: 23, emails: 252, connect_rate: 44, reply_rate: 29 },
+];
+
+// Scale factor and slight rate drift per period
+const _periodScale = {
+  week:    { factor: 1,    connectDrift:  0, replyDrift:  0 },
+  '30d':   { factor: 4.3,  connectDrift: -1, replyDrift: -1 },
+  quarter: { factor: 13,   connectDrift: -2, replyDrift: -2 },
+};
+
+function _mockActivityData(period) {
+  const { factor, connectDrift, replyDrift } = _periodScale[period] || _periodScale.week;
+  const today = new Date().toISOString().split('T')[0];
+  const daysBack = period === '30d' ? 30 : period === 'quarter' ? 91 : 7;
+  const startDate = new Date(Date.now() - daysBack * 86400000).toISOString().split('T')[0];
+
+  return _activityBaseline.map(r => ({
+    ...r,
+    calls:        Math.round(r.calls    * factor),
+    meetings:     Math.round(r.meetings * factor),
+    emails:       Math.round(r.emails   * factor),
+    connect_rate: Math.max(0, r.connect_rate + connectDrift),
+    reply_rate:   Math.max(0, r.reply_rate   + replyDrift),
+    period_start: startDate,
+    period_end:   today,
+  }));
+}
+
+async function loadActivityMetrics(period) {
+  const body = document.getElementById('activity-table-body');
+  if (!body) return;
+
+  let usedLive = false;
+  try {
+    const res = await fetch(
+      `${BACKEND_API}/api/v1/activities/metrics?period=${period}`,
+      { signal: AbortSignal.timeout(4000) }
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (data && data.length) {
+      renderActivityTable(data);
+      usedLive = true;
+    }
+  } catch { /* backend unreachable */ }
+
+  if (!usedLive) {
+    renderActivityTable(_mockActivityData(period));
+  }
+
+  const label = period === 'week' ? 'This week' : period === '30d' ? 'Last 30 days' : 'This quarter';
+  showToast(`Activity: ${label}`);
+}
+
 function initActivityTabs() {
-  const section = document.getElementById('activity');
-  if (!section) return;
-  const tabs = section.querySelectorAll('.segmented button');
+  const toggle = document.getElementById('activity-period-toggle');
+  if (!toggle) return;
+  const tabs = toggle.querySelectorAll('button[data-period]');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       // Only render if not already active (prevents re-rendering current view)
@@ -2853,8 +3251,7 @@ function initActivityTabs() {
       
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      const period = tab.textContent.trim();
-      renderActivityBreakdown(period);
+      loadActivityMetrics(tab.dataset.period);
     });
   });
 }
@@ -3033,14 +3430,14 @@ function initRecoveryPlan() {
     const checks = document.querySelectorAll('#action-plan input[type="checkbox"]');
     const completed = Array.from(checks).filter(c => c.checked).length;
     const total = checks.length;
-    const key = `northstar_recovery_${currentRep.id}`;
+    const key = `momentum_recovery_${currentRep.id}`;
     const state = Array.from(checks).map(c => c.checked);
     localStorage.setItem(key, JSON.stringify(state));
     showToast(`Recovery plan saved (${completed}/${total} actions committed)`, completed > 0 ? 'success' : 'info');
   });
   // Restore saved checkboxes when rep changes
   function restoreRecoveryPlan(repId) {
-    const key = `northstar_recovery_${repId}`;
+    const key = `momentum_recovery_${repId}`;
     try {
       const state = JSON.parse(localStorage.getItem(key));
       if (!Array.isArray(state)) return;
@@ -3059,50 +3456,26 @@ function initRecoveryPlan() {
 // ── Export buttons → print ────────────────────────
 // ── Export & Sharing Functions ────────────────────
 function initExportButtons() {
-  console.log('Initializing export buttons...');
-  ['export-brief-btn', 'export-opps-btn', 'export-activity-btn'].forEach(id => {
+  ['export-brief-btn', 'export-opps-btn', 'export-activity-btn', 'export-compare-btn'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) {
-      console.log(`Found export button: ${id}`);
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log(`Export button clicked: ${id}`);
-        openExportModal(id);
-      });
-    } else {
-      console.warn(`Export button not found: ${id}`);
-    }
+    if (el) el.addEventListener('click', (e) => { e.preventDefault(); openExportModal(id); });
   });
 }
 
 function openExportModal(sourceButtonId) {
-  console.log('openExportModal called with:', sourceButtonId);
   const modal = document.getElementById('export-modal');
   const title = document.getElementById('export-modal-title');
-  
-  console.log('Modal element:', modal);
-  console.log('Title element:', title);
-  
-  if (!modal) {
-    console.error('Export modal not found in DOM!');
-    return;
-  }
-  
-  // Set title based on source
+  if (!modal) return;
+
   const titles = {
-    'export-brief-btn': 'Export Manager Brief',
-    'export-opps-btn': 'Export Opportunities',
-    'export-activity-btn': 'Export Activity Data'
+    'export-brief-btn':    'Export Manager Brief',
+    'export-opps-btn':     'Export Opportunities',
+    'export-activity-btn': 'Export Activity Data',
+    'export-compare-btn':  'Export Rep Comparison'
   };
-  
-  if (title) {
-    title.textContent = titles[sourceButtonId] || 'Export Data';
-  }
+  if (title) title.textContent = titles[sourceButtonId] || 'Export Data';
   modal.dataset.source = sourceButtonId;
-  
-  console.log('Calling openModal with export-modal');
   openModal('export-modal');
-  console.log('Modal classes after openModal:', modal.className);
 }
 
 function exportToPDF() {
@@ -3113,13 +3486,12 @@ function exportToPDF() {
   
   // Simulate PDF generation
   setTimeout(() => {
-    const filename = `northstar-${source.replace('-btn', '')}-${new Date().toISOString().split('T')[0]}.pdf`;
+    const filename = `ibm-momentum-${source.replace('-btn', '')}-${new Date().toISOString().split('T')[0]}.pdf`;
     showToast(`PDF exported: ${filename}`, 'success');
     closeModal('export-modal');
     
     // In production, this would trigger actual PDF generation
     // using a library like jsPDF or server-side generation
-    console.log('PDF Export:', { source, filename });
   }, 1500);
 }
 
@@ -3136,6 +3508,9 @@ function exportToCSV() {
   } else if (source === 'export-activity-btn') {
     csvContent = generateActivityCSV();
     filename = `activity-${new Date().toISOString().split('T')[0]}.csv`;
+  } else if (source === 'export-compare-btn') {
+    csvContent = generateCompareCSV();
+    filename = `rep-comparison-${new Date().toISOString().split('T')[0]}.csv`;
   } else {
     csvContent = generateBriefCSV();
     filename = `manager-brief-${new Date().toISOString().split('T')[0]}.csv`;
@@ -3155,6 +3530,25 @@ function exportToCSV() {
   
   showToast(`CSV exported: ${filename}`, 'success');
   closeModal('export-modal');
+}
+
+function generateCompareCSV() {
+  const headers = ['Metric', ...reps.map(r => r.name)];
+  const rows = [
+    ['Pipeline',           ...reps.map(r => r.pipeline)],
+    ['Quota',              ...reps.map(r => r.goal)],
+    ['Pipeline vs Quota',  ...reps.map(r => Math.round((r.pipeline / r.goal) * 100) + '%')],
+    ['Pipeline Gap',       ...reps.map(r => r.pipeline - r.goal)],
+    ['Coverage',           ...reps.map(r => r.coverage.toFixed(1) + 'x')],
+    ['Quota Risk',         ...reps.map(r => r.risk + '%')],
+    ['Territory Coverage', ...reps.map(r => Math.round((r.accountsTouched / r.accountsAssigned) * 100) + '%')],
+    ['Accounts Touched',   ...reps.map(r => `${r.accountsTouched} / ${r.accountsAssigned}`)],
+    ['Opportunities',      ...reps.map(r => r.opportunities)],
+    ['Meetings',           ...reps.map(r => r.meetings)],
+    ['Conversion %',       ...reps.map(r => r.conversion + '%')],
+    ['Status',             ...reps.map(r => r.risk < 40 ? 'On track' : r.risk < 70 ? 'Watch' : 'Intervene')],
+  ];
+  return [headers, ...rows].map(row => row.map(v => `"${v}"`).join(',')).join('\n');
 }
 
 function generateOpportunitiesCSV() {
@@ -3278,24 +3672,13 @@ function shareCoachingPlan() {
     document.getElementById('share-message').value = '';
     document.getElementById('custom-email-group').style.display = 'none';
     
-    console.log('Share Plan:', { recipient, customEmail, message, includeNotes, repName });
   }, 1000);
 }
 
 // ── Email Digest Settings ──────────────────────────
 function initEmailDigest() {
-  console.log('Initializing email digest...');
   const btn = document.getElementById('email-digest-btn');
-  if (btn) {
-    console.log('Found email digest button');
-    btn.addEventListener('click', () => {
-      console.log('Email digest button clicked');
-      openModal('digest-modal');
-      loadDigestSettings();
-    });
-  } else {
-    console.warn('Email digest button not found');
-  }
+  if (btn) btn.addEventListener('click', () => { openModal('digest-modal'); loadDigestSettings(); });
   
   // Handle enable/disable toggle
   const enableCheckbox = document.getElementById('digest-enabled');
@@ -3372,7 +3755,6 @@ function saveDigestSettings() {
   }
   
   closeModal('digest-modal');
-  console.log('Digest Settings Saved:', settings);
 }
 
 // ── Export Modal Event Listeners ───────────────────
@@ -3456,7 +3838,7 @@ function initNewOppModal() {
       name, account: document.getElementById('opp-account').options[document.getElementById('opp-account').selectedIndex]?.text || '',
       value, stage, owner, product,
       closeDate: document.getElementById('opp-close').value,
-      probability: stage === 'Discovery' ? 30 : stage === 'Qualification' ? 45 : stage === 'Proposal' ? 65 : 75,
+      probability: stage === 'Prepare' ? 10 : stage === 'Engage' ? 20 : stage === 'Qualify' ? 35 : stage === 'Design' ? 50 : stage === 'Propose' ? 65 : stage === 'Negotiate' ? 80 : 90,
       lastActivity: new Date().toISOString().split('T')[0],
       daysStalled: 0
     };
@@ -3520,30 +3902,124 @@ function initTrendsModal() {
 }
 
 // ── Product training modal ────────────────────────
+
+// Base URL for the backend API — empty string means same origin (local server).
+// When running from GitHub Pages (no backend), API calls gracefully fall back
+// to mock data.
+const BACKEND_API = (() => {
+  // If served from GitHub Pages, point at the local backend if running
+  if (window.location.hostname.includes('github.io')) return '';
+  return window.location.origin;
+})();
+
+function renderTrainingMockCards(body) {
+  body.innerHTML = mockTrainingModules.map(m => `
+    <div class="training-card">
+      <div class="training-card-head">
+        <div>
+          <strong class="training-product">${m.product}</strong>
+          <span class="status-badge ${m.levelClass === 'danger' ? 'intervene' : m.levelClass === 'warning' ? 'watch' : 'on-track'}" style="margin-left:8px">${m.level}</span>
+        </div>
+        <span class="training-meta">${m.duration} · ${m.type}</span>
+      </div>
+      <p class="training-desc">${m.description}</p>
+      ${m.assignTo.length ? `<p class="training-assign">Assign to: <strong>${m.assignTo.join(', ')}</strong></p>` : ''}
+      <div class="training-actions">
+        <button class="button primary" onclick="window.open('https://yourlearning.ibm.com','_blank')">Open in YourLearning →</button>
+        ${m.assignTo.length ? `<button class="button secondary" onclick="assignTraining('${m.url || '#'}', '${m.assignTo.join(',')}')">Assign to team</button>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderTrainingLiveCards(body, teamData) {
+  // Group completions and pending into a clean card per rep
+  const cards = teamData.map(rep => {
+    const name = rep.email.split('@')[0].replace('.', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    const recent = rep.recent_completions.map(c =>
+      `<li>✓ <strong>${c.title}</strong> <span style="color:var(--muted);font-size:11px">(${c.completed_at}${c.score ? ` · ${c.score}%` : ''})</span></li>`
+    ).join('');
+    const pending = rep.pending.map(a =>
+      `<li>
+        <strong>${a.title}</strong>
+        <span style="color:var(--muted);font-size:11px"> · Due ${a.due_date}</span>
+        <button class="button secondary" style="margin-left:8px;font-size:11px;padding:2px 8px"
+          onclick="assignCourse('${rep.email}','${a.course_id}')">Assign</button>
+      </li>`
+    ).join('');
+
+    return `
+      <div class="training-card">
+        <div class="training-card-head">
+          <strong class="training-product">${name}</strong>
+          <span class="training-meta">${rep.completions} completed · ${rep.hours_learned}h · ${rep.pending_assignments} pending</span>
+        </div>
+        ${recent ? `<div style="margin:8px 0"><small style="color:var(--muted);text-transform:uppercase;font-size:10px;font-weight:700">Recent completions</small><ul style="margin:4px 0 0;padding-left:16px;font-size:12px">${recent}</ul></div>` : ''}
+        ${pending ? `<div style="margin:8px 0"><small style="color:var(--muted);text-transform:uppercase;font-size:10px;font-weight:700">Pending assignments</small><ul style="margin:4px 0 0;padding-left:16px;font-size:12px">${pending}</ul></div>` : ''}
+        <div class="training-actions">
+          <button class="button primary" onclick="window.open('https://yourlearning.ibm.com','_blank')">Open YourLearning →</button>
+        </div>
+      </div>`;
+  }).join('');
+  body.innerHTML = cards;
+}
+
+async function assignCourse(email, courseId) {
+  try {
+    const res = await fetch(`${BACKEND_API}/api/v1/learning/rep/${encodeURIComponent(email)}/assign`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ course_id: courseId, priority: 'HIGH' })
+    });
+    if (res.ok) showToast(`Course assigned to ${email}`, 'success');
+    else showToast('Assignment failed — check backend logs', 'error');
+  } catch {
+    showToast('Could not reach backend', 'error');
+  }
+}
+
+function assignTraining(url, names) {
+  showToast(`Assigned training to ${names}`, 'success');
+}
+
 function initTrainingModal() {
   const btn = document.getElementById('review-training-btn');
-  if (btn) btn.addEventListener('click', () => {
+  if (btn) btn.addEventListener('click', async () => {
     const body = document.getElementById('training-modal-body');
-    if (body) {
-      body.innerHTML = mockTrainingModules.map(m => `
-        <div class="training-card">
-          <div class="training-card-head">
-            <div>
-              <strong class="training-product">${m.product}</strong>
-              <span class="status-badge ${m.levelClass === 'danger' ? 'intervene' : m.levelClass === 'warning' ? 'watch' : m.levelClass === 'success' ? 'on-track' : 'on-track'}" style="margin-left:8px">${m.level}</span>
-            </div>
-            <span class="training-meta">${m.duration} · ${m.type}</span>
-          </div>
-          <p class="training-desc">${m.description}</p>
-          ${m.assignTo.length ? `<p class="training-assign">Assign to: <strong>${m.assignTo.join(', ')}</strong></p>` : ''}
-          <div class="training-actions">
-            <button class="button primary" onclick="showToast('Opening ${m.product} training in IBM Learning Platform')">Start training →</button>
-            ${m.assignTo.length ? `<button class="button secondary" onclick="showToast('Assigned ${m.product} training to ${m.assignTo.join(', ')}')">Assign to team</button>` : ''}
-          </div>
-        </div>
-      `).join('');
-    }
+    if (!body) { openModal('training-modal'); return; }
+
+    // Show loading state immediately
+    body.innerHTML = '<div style="padding:24px;text-align:center;color:var(--muted)">Loading YourLearning data…</div>';
     openModal('training-modal');
+
+    // Build email list from reps (first.last@ibm.com convention)
+    const emails = reps.map(r => {
+      const parts = r.name.toLowerCase().split(' ');
+      return `${parts[0]}.${parts[parts.length - 1]}@ibm.com`;
+    }).join(',');
+
+    try {
+      const res = await fetch(
+        `${BACKEND_API}/api/v1/learning/team/summary?emails=${encodeURIComponent(emails)}`,
+        { signal: AbortSignal.timeout(4000) }
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      // Check if backend is in mock mode — if so blend with our richer mock cards
+      const statusRes = await fetch(`${BACKEND_API}/api/v1/learning/status`, { signal: AbortSignal.timeout(2000) }).catch(() => null);
+      const status = statusRes ? await statusRes.json().catch(() => null) : null;
+
+      if (status?.mode === 'live') {
+        renderTrainingLiveCards(body, data.team);
+      } else {
+        // Backend running but in mock mode — use our richer product-focused mock cards
+        renderTrainingMockCards(body);
+      }
+    } catch {
+      // Backend not reachable (GitHub Pages, backend off) — silent fallback
+      renderTrainingMockCards(body);
+    }
   });
   document.getElementById('training-modal-close').addEventListener('click', () => closeModal('training-modal'));
   document.getElementById('training-modal').addEventListener('click', e => {

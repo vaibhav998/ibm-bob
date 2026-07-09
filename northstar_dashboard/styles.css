@@ -2192,10 +2192,22 @@ body {
 }
 
 .search-empty {
-  padding: 60px 20px;
+  padding: 40px 20px;
   text-align: center;
   color: var(--muted);
   font-size: 14px;
+}
+
+.search-empty-hint {
+  padding: 8px 0;
+}
+
+.search-hint-label {
+  padding: 8px 12px 4px;
+  font: 600 11px 'DM Sans';
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .search-category {
@@ -4032,41 +4044,6 @@ textarea.form-input {
   min-width: 150px;
 }
 .compare-grid { margin-top: 20px; }
-.compare-table {
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.compare-row {
-  display: grid;
-  grid-template-columns: 200px repeat(auto-fill, minmax(160px, 1fr));
-  border-bottom: 1px solid var(--line);
-}
-.compare-row:last-child { border-bottom: none; }
-.compare-row-alt { background: var(--soft); }
-.compare-head { background: #f4f4f4; }
-.compare-cell {
-  padding: 12px 16px;
-  font-size: 13px;
-  border-right: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.compare-cell:last-child { border-right: none; }
-.compare-label-cell { font-weight: 500; color: var(--ink-secondary); font-size: 12px; }
-.compare-rep-cell {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  padding: 16px;
-}
-.compare-best {
-  background: #e8f8f0;
-  color: #0d6e2f;
-  font-weight: 600;
-}
 
 /* ── Print stylesheet ─────────────────────── */
 @media print {
@@ -4314,3 +4291,295 @@ textarea.form-input {
 
 /* ── button.full ──────────────────────────── */
 .button.full { width: 100%; }
+
+/* ── Product Mix ───────────────────────────── */
+.product-mix-row {
+  margin-bottom: 14px;
+  cursor: default;
+}
+
+.product-mix-row:last-child {
+  margin-bottom: 0;
+}
+
+.pmr-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.pmr-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pmr-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pmr-name {
+  font-size: 13px;
+}
+
+.pmr-summary {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.pmr-total {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pmr-count {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.pmr-bar-track {
+  height: 7px;
+  background: var(--soft);
+  border-radius: 4px;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.pmr-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+/* detail row — hidden by default, shown on hover */
+.pmr-detail {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease, margin-top 0.25s ease;
+  margin-top: 0;
+}
+
+.product-mix-row:hover .pmr-detail {
+  max-height: 60px;
+  margin-top: 8px;
+}
+
+.pmr-stat {
+  background: var(--soft);
+  border-radius: 6px;
+  padding: 6px 8px;
+  text-align: center;
+}
+
+.pmr-stat-label {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  margin-bottom: 2px;
+}
+
+.pmr-stat-val {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ── Rep Comparison ────────────────────────── */
+.compare-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.compare-filter-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Single flat grid — all cells are direct children */
+.compare-table {
+  display: grid;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: auto;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+/* Every cell */
+.cc {
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  min-width: 0;
+}
+
+/* Last cell in each row has no right border — nth-child trick */
+.compare-table .cc:nth-child(var(--compare-cols, 7)n) {
+  border-right: none;
+}
+
+/* Alternating row shade */
+.cc-alt {
+  background: var(--soft);
+}
+
+/* Header row cells */
+.cc-head {
+  background: var(--paper);
+  border-bottom: 2px solid var(--line);
+  text-align: center;
+  align-items: center;
+}
+
+/* Label column */
+.cc-label {
+  background: #f7f8fa;
+  border-right: 2px solid var(--line);
+  justify-content: center;
+}
+
+.cc-label span {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .cc-label {
+  background: var(--soft);
+}
+
+/* Rep header cell */
+.cc-rep {
+  padding: 14px 10px;
+}
+
+.cc-rep strong {
+  font-size: 12px;
+}
+
+.cc-rep small {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* Best value highlight */
+.cc-best {
+  background: #f0fff8;
+}
+
+[data-theme="dark"] .cc-best {
+  background: #0a2e20;
+}
+
+.cc-val {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.compare-bar-track {
+  height: 4px;
+  background: var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.compare-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.35s ease;
+}
+
+/* ── Coaching Questions Accordion ───────────── */
+.cq-accordion {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 8px 16px;
+  overflow: hidden;
+}
+
+.cq-accordion:last-child {
+  margin-bottom: 16px;
+}
+
+.cq-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  list-style: none;
+  background: var(--soft);
+  transition: background var(--transition-fast);
+  user-select: none;
+}
+
+.cq-summary::-webkit-details-marker { display: none; }
+
+.cq-summary:hover {
+  background: var(--mint);
+}
+
+.cq-accordion[open] .cq-summary {
+  background: var(--mint);
+  border-bottom: 1px solid var(--line);
+}
+
+.cq-icon {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.cq-title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cq-count {
+  font-size: 10px;
+  color: var(--muted);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+
+.cq-chevron {
+  font-size: 14px;
+  color: var(--muted);
+  transition: transform var(--transition-fast);
+}
+
+.cq-accordion[open] .cq-chevron {
+  transform: rotate(180deg);
+}
+
+.cq-list {
+  padding: 12px 16px 12px 40px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

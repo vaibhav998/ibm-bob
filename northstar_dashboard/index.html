@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Northstar · Sales Intelligence</title>
+  <title>IBM Momentum · Sales Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
   <div class="app-shell">
@@ -19,7 +19,7 @@
             <path d="M12 10L12.75 13.25L16 14L12.75 14.75L12 18L11.25 14.75L8 14L11.25 13.25L12 10Z" fill="currentColor" opacity="0.6"/>
           </svg>
         </span>
-        <span>Northstar</span>
+        <span>IBM Momentum</span>
       </button>
       <nav class="nav" aria-label="Primary navigation">
         <button class="nav-item active" data-view="overview">
@@ -60,19 +60,23 @@
             <input class="topbar-search-input" id="topbar-search-input" type="text" placeholder="Search reps, accounts, deals…" autocomplete="off" aria-label="Search" />
             <kbd class="topbar-kbd">⌘K</kbd>
           </div>
+          <button class="icon-btn notification" id="notif-btn" aria-label="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <i class="notif-dot" id="notif-dot"></i>
+          </button>
         </div>
       </header>
 
       <!-- Quarter progress bar — shown at top of every view -->
       <div class="quarter-bar" id="quarter-bar">
-        <span class="quarter-label">Q3 · Week 8 of 13</span>
-        <div class="quarter-track"><div class="quarter-fill" style="width:61.5%"></div></div>
-        <span class="quarter-pct">61%</span>
+        <span class="quarter-label" id="quarter-label">Q3 · Week 8 of 13</span>
+        <div class="quarter-track"><div class="quarter-fill" id="quarter-fill" style="width:61.5%"></div></div>
+        <span class="quarter-pct" id="quarter-pct">61%</span>
       </div>
 
       <section id="overview" class="view active">
         <div class="page-head">
-          <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Good morning, Noelle.</h1><p class="lede">Your team is pacing at <strong>82% of quota.</strong> Three reps need your attention this week.</p></div>
+          <div><p class="eyebrow" id="overview-eyebrow">Q3 · WEEK 8 OF 13</p><h1 id="overview-greeting">Good morning, Noelle.</h1><p class="lede">Your team is pacing at <strong>82% of quota.</strong> Three reps need your attention this week.</p></div>
           <div class="head-actions"><button class="button secondary" id="export-brief-btn">↗ Export brief</button><button class="button primary" id="open-coaching">Open coaching queue <span id="queue-count">3</span></button></div>
         </div>
 
@@ -91,7 +95,15 @@
 
         <div class="two-col">
           <div class="panel">
-            <div class="card-head"><div><h2>Pipeline Trend</h2><p>8-week pipeline growth</p></div></div>
+            <div class="card-head">
+              <div><h2>Pipeline Trend</h2><p id="pipeline-trend-subtitle">8-week pipeline growth</p></div>
+              <div class="segmented" id="trend-range-toggle">
+                <button data-range="2W">2W</button>
+                <button data-range="4W">4W</button>
+                <button data-range="8W" class="active">8W</button>
+                <button data-range="Q">Full Q</button>
+              </div>
+            </div>
             <div style="height: 240px; padding: 10px;">
               <canvas id="pipeline-trend-chart"></canvas>
             </div>
@@ -213,7 +225,7 @@
             </div>
 
             <div class="panel coaching-questions-panel">
-              <div class="card-head"><div><p class="eyebrow">MANAGER COACHING QUESTIONS</p><h2>Questions for your 1:1</h2></div><span class="magic">💬</span></div>
+              <div class="card-head"><div><p class="eyebrow">MANAGER COACHING QUESTIONS</p><h2>Questions for your 1:1</h2></div><span class="magic" style="cursor:default;user-select:none">💬</span></div>
               <div id="coaching-questions-container"></div>
             </div>
 
@@ -244,34 +256,29 @@
         <div class="panel">
           <div class="panel-top"><div class="segmented"><button class="active">All opportunities</button><button>Stalled</button><button>Closing this month</button></div><button class="filter-btn" id="filter-products-btn">All products⌄</button></div>
           <div class="table-head"><div>OPPORTUNITY</div><div>ACCOUNT</div><div>PRODUCT</div><div>VALUE</div><div>STAGE</div><div>OWNER</div><div>CLOSE DATE</div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar">AC</span><div><strong>Acme Corp - Cloud Migration</strong><small>Enterprise · Technology</small></div></div><div><small>Acme Corporation</small></div><div><span class="badge">watsonx.data</span></div><div><strong>$45K</strong></div><div><span class="stage">Proposal</span></div><div><small>Priya Shah</small></div><div><small>Jul 15</small></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar peach">GI</span><div><strong>Global Industries - ERP Upgrade</strong><small>Enterprise · Manufacturing</small></div></div><div><small>Global Industries Inc</small></div><div><span class="badge">Db2 Warehouse</span></div><div><strong>$120K</strong></div><div><span class="stage">Negotiation</span></div><div><small>Maya Chen</small></div><div><small>Aug 1</small></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar blue">TS</span><div><strong>TechStart - Security Suite</strong><small>Mid-Market · Technology</small></div></div><div><small>TechStart Solutions</small></div><div><span class="badge">Guardium</span></div><div><strong>$28K</strong></div><div><span class="stage">Discovery</span></div><div><small>Sam Rivera</small></div><div><small>Jul 30</small></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar purple">ES</span><div><strong>Enterprise Systems - Analytics</strong><small>Enterprise · Financial Services</small></div></div><div><small>Enterprise Systems Ltd</small></div><div><span class="badge">watsonx.ai</span></div><div><strong>$95K</strong></div><div><span class="stage">Proposal</span></div><div><small>Jordan Lee</small></div><div><small>Aug 15</small></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar peach">RD</span><div><strong>Retail Dynamics - POS System</strong><small>Mid-Market · Retail</small></div></div><div><small>Retail Dynamics Corp</small></div><div><span class="badge">Instana</span></div><div><strong>$52K</strong></div><div><span class="stage">Qualification</span></div><div><small>Noah Williams</small></div><div><small>Sep 1</small></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar blue">HP</span><div><strong>Healthcare Partners - Integration</strong><small>Enterprise · Healthcare</small></div></div><div><small>Healthcare Partners</small></div><div><span class="badge">DataStage</span></div><div><strong>$78K</strong></div><div><span class="stage">Negotiation</span></div><div><small>Elena Garcia</small></div><div><small>Jul 20</small></div></div>
+          <div class="rep-row"><div class="rep-ident"><span class="avatar blue">AC</span><div><strong>Acme Corp - Cloud Migration</strong><small>Enterprise · Technology</small></div></div><div><small>Acme Corporation</small></div><div><span class="badge">watsonx.data</span></div><div><strong>$45K</strong></div><div><span class="stage">Propose</span></div><div><small>Priya Shah</small></div><div><small>Jul 15</small></div></div>
+          <div class="rep-row"><div class="rep-ident"><span class="avatar purple">GI</span><div><strong>Global Industries - ERP Upgrade</strong><small>Enterprise · Manufacturing</small></div></div><div><small>Global Industries Inc</small></div><div><span class="badge">Db2 Warehouse</span></div><div><strong>$120K</strong></div><div><span class="stage">Negotiate</span></div><div><small>Maya Chen</small></div><div><small>Aug 1</small></div></div>
+          <div class="rep-row"><div class="rep-ident"><span class="avatar">TS</span><div><strong>TechStart - Security Suite</strong><small>Mid-Market · Technology</small></div></div><div><small>TechStart Solutions</small></div><div><span class="badge">Guardium</span></div><div><strong>$28K</strong></div><div><span class="stage">Prepare</span></div><div><small>Sam Rivera</small></div><div><small>Jul 30</small></div></div>
+          <div class="rep-row"><div class="rep-ident"><span class="avatar blue">ES</span><div><strong>Enterprise Systems - Analytics</strong><small>Enterprise · Financial Services</small></div></div><div><small>Enterprise Systems Ltd</small></div><div><span class="badge">watsonx.ai</span></div><div><strong>$95K</strong></div><div><span class="stage">Propose</span></div><div><small>Jordan Lee</small></div><div><small>Aug 15</small></div></div>
+          <div class="rep-row"><div class="rep-ident"><span class="avatar peach">RD</span><div><strong>Retail Dynamics - POS System</strong><small>Mid-Market · Retail</small></div></div><div><small>Retail Dynamics Corp</small></div><div><span class="badge">Instana</span></div><div><strong>$52K</strong></div><div><span class="stage">Qualify</span></div><div><small>Noah Williams</small></div><div><small>Sep 1</small></div></div>
+          <div class="rep-row"><div class="rep-ident"><span class="avatar purple">HP</span><div><strong>Healthcare Partners - Integration</strong><small>Enterprise · Healthcare</small></div></div><div><small>Healthcare Partners</small></div><div><span class="badge">DataStage</span></div><div><strong>$78K</strong></div><div><span class="stage">Negotiate</span></div><div><small>Elena Garcia</small></div><div><small>Jul 20</small></div></div>
         </div>
 
         <div class="two-col">
           <div class="panel">
-            <div class="card-head"><div><h2>Product mix</h2><p>Opportunities by IBM product</p></div></div>
-            <div style="padding: 20px;">
-              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>watsonx.ai</strong><span>$285K (8 opps)</span></div><div style="background: #dff3ef; height: 8px; border-radius: 4px;"><div style="background: #087f75; width: 35%; height: 100%; border-radius: 4px;"></div></div></div>
-              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>watsonx.data</strong><span>$245K (7 opps)</span></div><div style="background: #dff3ef; height: 8px; border-radius: 4px;"><div style="background: #087f75; width: 30%; height: 100%; border-radius: 4px;"></div></div></div>
-              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Db2 Warehouse</strong><span>$320K (6 opps)</span></div><div style="background: #dff3ef; height: 8px; border-radius: 4px;"><div style="background: #087f75; width: 40%; height: 100%; border-radius: 4px;"></div></div></div>
-              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Instana</strong><span>$195K (5 opps)</span></div><div style="background: #dff3ef; height: 8px; border-radius: 4px;"><div style="background: #087f75; width: 24%; height: 100%; border-radius: 4px;"></div></div></div>
-              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Guardium</strong><span>$165K (4 opps)</span></div><div style="background: #dff3ef; height: 8px; border-radius: 4px;"><div style="background: #087f75; width: 20%; height: 100%; border-radius: 4px;"></div></div></div>
-              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>DataStage</strong><span>$160K (4 opps)</span></div><div style="background: #dff3ef; height: 8px; border-radius: 4px;"><div style="background: #087f75; width: 19%; height: 100%; border-radius: 4px;"></div></div></div>
-            </div>
+            <div class="card-head"><div><h2>Product mix</h2><p>Opportunities by IBM product · hover for details</p></div></div>
+            <div id="product-mix-container" style="padding: 16px 20px;"></div>
           </div>
           <div class="panel">
             <div class="card-head"><div><h2>Stage distribution</h2><p>Opportunities by sales stage</p></div></div>
             <div style="padding: 20px;">
-              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Discovery</strong><span>12 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #68767d; width: 28%; height: 100%; border-radius: 4px;"></div></div></div>
-              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Qualification</strong><span>9 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #68767d; width: 21%; height: 100%; border-radius: 4px;"></div></div></div>
-              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Proposal</strong><span>11 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #68767d; width: 26%; height: 100%; border-radius: 4px;"></div></div></div>
-              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Negotiation</strong><span>8 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #68767d; width: 19%; height: 100%; border-radius: 4px;"></div></div></div>
-              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Closing</strong><span>3 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #087f75; width: 7%; height: 100%; border-radius: 4px;"></div></div></div>
+              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Prepare</strong><span>7 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #0f62fe; width: 16%; height: 100%; border-radius: 4px;"></div></div></div>
+              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Engage</strong><span>8 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #087f75; width: 19%; height: 100%; border-radius: 4px;"></div></div></div>
+              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Qualify</strong><span>9 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #8a3ffc; width: 21%; height: 100%; border-radius: 4px;"></div></div></div>
+              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Design</strong><span>7 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #f1c21b; width: 16%; height: 100%; border-radius: 4px;"></div></div></div>
+              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Propose</strong><span>11 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #24a148; width: 26%; height: 100%; border-radius: 4px;"></div></div></div>
+              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Negotiate</strong><span>8 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #e67e22; width: 19%; height: 100%; border-radius: 4px;"></div></div></div>
+              <div style="margin-bottom: 16px;"><div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong>Closing</strong><span>3 opportunities</span></div><div style="background: #f4f7f7; height: 8px; border-radius: 4px;"><div style="background: #8e44ad; width: 7%; height: 100%; border-radius: 4px;"></div></div></div>
             </div>
           </div>
         </div>
@@ -294,19 +301,21 @@
           <div class="kpi"><small>MEETINGS BOOKED</small><strong>128</strong><span class="up">↑ 8%</span></div>
           <div class="kpi attention"><small>EMAILS SENT</small><strong>1,247</strong><span class="down">↓ 12%</span></div>
           <div class="kpi"><small>REPLY RATE</small><strong>24%</strong><span class="up">↑ 3%</span></div>
-          <div class="kpi"><small>DEMOS COMPLETED</small><strong>34</strong><span class="up">↑ 15%</span></div>
+          <div class="kpi"><small>MEETINGS COMPLETED</small><strong>128</strong><span class="up">↑ 8%</span></div>
         </div>
 
         <div class="section-heading"><div><h2>Rep activity breakdown</h2><p>Individual performance metrics</p></div></div>
         <div class="panel">
-          <div class="panel-top"><div class="segmented"><button class="active">This week</button><button>Last 30 days</button><button>This quarter</button></div><button class="filter-btn">All reps⌄</button></div>
-          <div class="table-head"><div>REP</div><div>CALLS</div><div>CONNECT %</div><div>MEETINGS</div><div>EMAILS</div><div>REPLY %</div><div>DEMOS</div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar">PS</span><div><strong>Priya Shah</strong><small>Enterprise AE · East</small></div></div><div><strong>68</strong><small>13.6/day</small></div><div><span class="up">42%</span></div><div><strong>24</strong></div><div><strong>245</strong></div><div><span class="up">28%</span></div><div><strong>8</strong></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar peach">MC</span><div><strong>Maya Chen</strong><small>Enterprise AE · West</small></div></div><div><strong>52</strong><small>10.4/day</small></div><div><span>38%</span></div><div><strong>14</strong></div><div><strong>198</strong></div><div><span class="down">18%</span></div><div><strong>5</strong></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar blue">SR</span><div><strong>Sam Rivera</strong><small>Commercial AE · South</small></div></div><div><strong>61</strong><small>12.2/day</small></div><div><span class="up">41%</span></div><div><strong>21</strong></div><div><strong>223</strong></div><div><span class="up">26%</span></div><div><strong>7</strong></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar purple">JL</span><div><strong>Jordan Lee</strong><small>Enterprise AE · Central</small></div></div><div><strong>48</strong><small>9.6/day</small></div><div><span class="down">32%</span></div><div><strong>16</strong></div><div><strong>187</strong></div><div><span class="down">21%</span></div><div><strong>4</strong></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar peach">NW</span><div><strong>Noah Williams</strong><small>Commercial AE · East</small></div></div><div><strong>38</strong><small>7.6/day</small></div><div><span class="down">28%</span></div><div><strong>11</strong></div><div><strong>142</strong></div><div><span class="down">19%</span></div><div><strong>3</strong></div></div>
-          <div class="rep-row"><div class="rep-ident"><span class="avatar blue">EG</span><div><strong>Elena Garcia</strong><small>Commercial AE · West</small></div></div><div><strong>75</strong><small>15.0/day</small></div><div><span class="up">44%</span></div><div><strong>23</strong></div><div><strong>252</strong></div><div><span class="up">29%</span></div><div><strong>7</strong></div></div>
+          <div class="panel-top"><div class="segmented" id="activity-period-toggle"><button class="active" data-period="week">This week</button><button data-period="30d">Last 30 days</button><button data-period="quarter">This quarter</button></div><button class="filter-btn">All reps⌄</button></div>
+          <div class="table-head"><div>REP</div><div>CALLS</div><div>CONNECT %</div><div>MEETINGS</div><div>EMAILS</div><div>REPLY %</div><div>MEETINGS BOOKED</div></div>
+          <div id="activity-table-body">
+            <div class="rep-row"><div class="rep-ident"><span class="avatar">PS</span><div><strong>Priya Shah</strong><small>Enterprise AE · East</small></div></div><div><strong>68</strong><small>13.6/day</small></div><div><span class="up">42%</span></div><div><strong>24</strong></div><div><strong>245</strong></div><div><span class="up">28%</span></div><div><strong>24</strong></div></div>
+            <div class="rep-row"><div class="rep-ident"><span class="avatar peach">MC</span><div><strong>Maya Chen</strong><small>Enterprise AE · West</small></div></div><div><strong>52</strong><small>10.4/day</small></div><div><span>38%</span></div><div><strong>14</strong></div><div><strong>198</strong></div><div><span class="down">18%</span></div><div><strong>14</strong></div></div>
+            <div class="rep-row"><div class="rep-ident"><span class="avatar blue">SR</span><div><strong>Sam Rivera</strong><small>Commercial AE · South</small></div></div><div><strong>61</strong><small>12.2/day</small></div><div><span class="up">41%</span></div><div><strong>21</strong></div><div><strong>223</strong></div><div><span class="up">26%</span></div><div><strong>21</strong></div></div>
+            <div class="rep-row"><div class="rep-ident"><span class="avatar purple">JL</span><div><strong>Jordan Lee</strong><small>Enterprise AE · Central</small></div></div><div><strong>48</strong><small>9.6/day</small></div><div><span class="down">32%</span></div><div><strong>16</strong></div><div><strong>187</strong></div><div><span class="down">21%</span></div><div><strong>16</strong></div></div>
+            <div class="rep-row"><div class="rep-ident"><span class="avatar peach">NW</span><div><strong>Noah Williams</strong><small>Commercial AE · East</small></div></div><div><strong>38</strong><small>7.6/day</small></div><div><span class="down">28%</span></div><div><strong>11</strong></div><div><strong>142</strong></div><div><span class="down">19%</span></div><div><strong>11</strong></div></div>
+            <div class="rep-row"><div class="rep-ident"><span class="avatar blue">EG</span><div><strong>Elena Garcia</strong><small>Commercial AE · West</small></div></div><div><strong>75</strong><small>15.0/day</small></div><div><span class="up">44%</span></div><div><strong>23</strong></div><div><strong>252</strong></div><div><span class="up">29%</span></div><div><strong>23</strong></div></div>
+          </div>
         </div>
 
         <div class="two-col">
@@ -337,20 +346,21 @@
 
       <section id="compare" class="view">
         <div class="page-head">
-          <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Rep Comparison</h1><p class="lede">Compare performance metrics side-by-side across your team.</p></div>
-          <div class="head-actions"><button class="button secondary" onclick="window.print()">↗ Export brief</button></div>
+          <div><p class="eyebrow">Q3 · WEEK 8 OF 13</p><h1>Rep Comparison</h1><p class="lede">All reps side-by-side — best value highlighted per metric.</p></div>
+          <div class="head-actions"><button class="button secondary" id="export-compare-btn">↗ Export brief</button></div>
         </div>
-        <div id="compare-controls" class="compare-controls">
-          <label>Compare rep: <select id="compare-rep-a" class="compare-select"></select></label>
-          <label>vs. <select id="compare-rep-b" class="compare-select"></select></label>
-          <label>vs. <select id="compare-rep-c" class="compare-select"><option value="">— optional —</option></select></label>
+        <div class="compare-filter-bar">
+          <span class="compare-filter-label">Show:</span>
+          <div class="segmented" id="compare-metric-toggle">
+            <button class="active" data-group="all">All metrics</button>
+            <button data-group="pipeline">Pipeline</button>
+            <button data-group="activity">Activity</button>
+            <button data-group="coverage">Coverage</button>
+          </div>
         </div>
         <div id="compare-grid" class="compare-grid"></div>
       </section>
 
-      <!-- placeholder stubs — original reports + product-intelligence sections removed -->
-      <div id="reports" class="view" style="display:none"></div>
-      <div id="product-intelligence" class="view" style="display:none"></div>
     </main>
   </div>
   
@@ -663,10 +673,13 @@
           <div class="form-row">
             <label class="form-label">Sales stage</label>
             <select id="opp-stage" class="form-input">
-              <option>Discovery</option>
-              <option>Qualification</option>
-              <option>Proposal</option>
-              <option>Negotiation</option>
+              <option>Prepare</option>
+              <option>Engage</option>
+              <option>Qualify</option>
+              <option>Design</option>
+              <option>Propose</option>
+              <option>Negotiate</option>
+              <option>Closing</option>
             </select>
           </div>
         </div>
@@ -883,6 +896,6 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>
