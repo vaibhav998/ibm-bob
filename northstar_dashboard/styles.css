@@ -217,17 +217,43 @@ body {
   transition: transform 0.25s ease;
 }
 
-/* Desktop: sidebar can be toggled closed */
-@media (min-width: 901px) {
-  .sidebar:not(.open) {
-    transform: translateX(-100%);
-  }
-  .sidebar.open {
-    transform: translateX(0);
-  }
-  .sidebar:not(.open) ~ .main {
-    margin-left: 0;
-  }
+/* Sidebar toggle behavior - works on all screen sizes */
+.sidebar:not(.open) {
+  transform: translateX(-100%);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar:not(.open) ~ .main {
+  margin-left: 0;
+}
+
+/* Desktop sidebar toggle button */
+.desktop-sidebar-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+
+.desktop-sidebar-toggle:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Show toggle button when sidebar is closed */
+.sidebar:not(.open) ~ .main .desktop-sidebar-toggle {
+  display: flex;
 }
 
 .brand {
