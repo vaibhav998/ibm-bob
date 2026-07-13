@@ -1158,8 +1158,32 @@ function setupEventListeners() {
   // Brand toggle (IBM Momentum logo)
   const brandToggle = document.getElementById('brand-toggle');
   if (brandToggle) {
-    brandToggle.addEventListener('click', () => {
-      document.getElementById('sidebar').classList.toggle('open');
+    console.log('✅ Brand toggle button found and event listener attached');
+    brandToggle.addEventListener('click', (e) => {
+      console.log('🎨 Brand toggle clicked');
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) {
+        sidebar.classList.toggle('open');
+        console.log('🎨 Sidebar toggled, open:', sidebar.classList.contains('open'));
+      } else {
+        console.error('❌ Sidebar element not found');
+      }
+    });
+  } else {
+    console.error('❌ Brand toggle button not found');
+  }
+  
+  // Desktop sidebar toggle button (hamburger in topbar)
+  const desktopToggle = document.getElementById('desktop-sidebar-toggle');
+  if (desktopToggle) {
+    console.log('✅ Desktop sidebar toggle found and event listener attached');
+    desktopToggle.addEventListener('click', (e) => {
+      console.log('🎨 Desktop toggle clicked');
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) {
+        sidebar.classList.add('open');
+        console.log('🎨 Sidebar opened');
+      }
     });
   }
   

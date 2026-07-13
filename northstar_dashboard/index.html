@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class="app-shell">
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar open" id="sidebar">
       <button class="brand" id="brand-toggle" aria-label="Toggle sidebar">
         <span class="brand-mark">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,6 +53,13 @@
     <main class="main">
       <header class="topbar">
         <button class="mobile-menu" aria-label="Open menu" id="mobile-menu">☰</button>
+        <button class="desktop-sidebar-toggle" aria-label="Toggle sidebar" id="desktop-sidebar-toggle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
         <div class="crumb"><span>Sales intelligence</span><span>/</span><strong id="crumb-label">Manager overview</strong></div>
         <div class="top-actions">
           <div class="topbar-search-wrap" id="topbar-search-wrap">

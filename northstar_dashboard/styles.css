@@ -214,6 +214,20 @@ body {
   display: flex;
   flex-direction: column;
   z-index: 20;
+  transition: transform 0.25s ease;
+}
+
+/* Desktop: sidebar can be toggled closed */
+@media (min-width: 901px) {
+  .sidebar:not(.open) {
+    transform: translateX(-100%);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar:not(.open) ~ .main {
+    margin-left: 0;
+  }
 }
 
 .brand {
