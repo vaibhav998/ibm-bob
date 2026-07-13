@@ -226,8 +226,14 @@ body {
   transform: translateX(0);
 }
 
+/* When sidebar is closed, remove the margin from main */
 .sidebar:not(.open) ~ .main {
-  margin-left: 0;
+  margin-left: 0 !important;
+}
+
+/* Ensure main has proper margin when sidebar is open */
+.sidebar.open ~ .main {
+  margin-left: 236px;
 }
 
 /* Desktop sidebar toggle button */
