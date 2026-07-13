@@ -4629,3 +4629,267 @@ textarea.form-input {
   flex-direction: column;
   gap: 8px;
 }
+
+
+/* ============================================
+   DATA ANALYSIS STYLES
+   ============================================ */
+
+.upload-zone {
+  border: 2px dashed var(--line);
+  border-radius: 8px;
+  padding: 48px 24px;
+  text-align: center;
+  background: var(--soft);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.upload-zone:hover {
+  border-color: var(--ibm-blue);
+  background: var(--ibm-blue-10);
+}
+
+.upload-zone.drag-over {
+  border-color: var(--ibm-blue);
+  background: var(--ibm-blue-20);
+  transform: scale(1.01);
+}
+
+.upload-zone svg {
+  color: var(--ibm-blue);
+  margin-bottom: 16px;
+}
+
+.upload-zone h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.upload-zone p {
+  color: var(--muted);
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+#files-container {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+#files-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.file-item:hover {
+  border-color: var(--ibm-blue);
+  box-shadow: var(--shadow-sm);
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.file-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ibm-blue-10);
+  border-radius: 6px;
+  color: var(--ibm-blue);
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.file-details {
+  flex: 1;
+}
+
+.file-name {
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.file-meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.file-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.file-status.processing {
+  color: var(--warning);
+  background: var(--warning-soft);
+}
+
+.file-status.complete {
+  color: var(--success);
+  background: var(--success-soft);
+}
+
+.file-status.error {
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+
+.file-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.file-actions button {
+  padding: 6px 12px;
+  font-size: 13px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-secondary);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.file-actions button:hover {
+  background: var(--soft);
+  border-color: var(--ibm-blue);
+  color: var(--ibm-blue);
+}
+
+.file-actions .remove-btn {
+  color: var(--danger);
+  border-color: var(--danger-soft);
+}
+
+.file-actions .remove-btn:hover {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+}
+
+#analysis-dashboard {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.table-scroll {
+  overflow-x: auto;
+  max-height: 500px;
+  overflow-y: auto;
+  border-radius: 6px;
+}
+
+#data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+#data-table th {
+  position: sticky;
+  top: 0;
+  background: var(--soft);
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ink);
+  border-bottom: 2px solid var(--line);
+  white-space: nowrap;
+  z-index: 1;
+}
+
+#data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-secondary);
+}
+
+#data-table tbody tr:hover {
+  background: var(--soft);
+}
+
+#data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ai-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--purple);
+  color: white;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 8px;
+}
+
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--line);
+  border-top-color: var(--ibm-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .upload-zone {
+    padding: 32px 16px;
+  }
+  
+  .file-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .file-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

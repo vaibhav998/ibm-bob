@@ -43,6 +43,10 @@
           <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="9" height="18" rx="1"/><rect x="13" y="3" width="9" height="18" rx="1"/></svg></span>
           <span>Rep comparison</span>
         </button>
+        <button class="nav-item" data-view="data-analysis">
+          <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></span>
+          <span>Data Analysis</span>
+        </button>
       </nav>
       <div class="sidebar-bottom">
         <div class="sync-card"><div class="sync-head"><span class="live-dot"></span> Data connected</div><div class="integration-row"><span>OR</span><span>ISC</span><span>SL</span></div><small>Updated 8 min ago</small></div>
@@ -366,6 +370,91 @@
           </div>
         </div>
         <div id="compare-grid" class="compare-grid"></div>
+      </section>
+
+      <!-- Data Analysis View -->
+      <section id="data-analysis" class="view">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow">DATA ANALYSIS</p>
+            <h1>Import & Analyze Data</h1>
+            <p class="lede">Upload files to automatically parse and visualize your data</p>
+          </div>
+          <div class="head-actions">
+            <button class="button secondary" id="clear-analysis-btn">Clear All</button>
+            <button class="button primary" id="export-analysis-btn">Export Report</button>
+          </div>
+        </div>
+
+        <!-- File Upload Area -->
+        <div class="panel">
+          <div class="upload-zone" id="upload-zone">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <h3>Drop files here or click to browse</h3>
+            <p>Supports CSV, Excel (.xlsx, .xls), PDF, and JSON files</p>
+            <input type="file" id="file-input" accept=".csv,.xlsx,.xls,.pdf,.json" multiple hidden />
+            <button class="button primary" id="browse-btn">Browse Files</button>
+          </div>
+          
+          <!-- Uploaded Files List -->
+          <div id="files-container" style="display: none;">
+            <h3 style="margin: 24px 0 16px 0; font-size: 16px;">Uploaded Files</h3>
+            <div id="files-list"></div>
+          </div>
+        </div>
+
+        <!-- Analysis Dashboard (hidden until data is loaded) -->
+        <div id="analysis-dashboard" style="display: none;">
+          
+          <!-- Summary Metrics -->
+          <div class="kpi-grid" id="summary-metrics"></div>
+
+          <!-- Charts -->
+          <div class="two-col">
+            <div class="panel">
+              <div class="card-head">
+                <div><h2>Data Distribution</h2><p>Key metrics overview</p></div>
+              </div>
+              <div style="height: 300px; padding: 20px;">
+                <canvas id="distribution-chart"></canvas>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="card-head">
+                <div><h2>Trends Analysis</h2><p>Time-series patterns</p></div>
+              </div>
+              <div style="height: 300px; padding: 20px;">
+                <canvas id="trends-chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Data Table -->
+          <div class="panel">
+            <div class="card-head">
+              <div><h2>Data Preview</h2><p>First 100 rows</p></div>
+              <button class="button secondary" id="download-csv-btn">Download CSV</button>
+            </div>
+            <div class="table-scroll">
+              <table id="data-table">
+                <thead id="table-head"></thead>
+                <tbody id="table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- AI Insights -->
+          <div class="ai-insights-panel">
+            <div class="chart-title">🤖 AI-Generated Insights <span class="ai-badge">watsonx.ai</span></div>
+            <div class="chart-subtitle">Automated analysis and recommendations</div>
+            <div id="ai-insights" class="recommendation-grid"></div>
+          </div>
+
+        </div>
       </section>
 
     </main>
