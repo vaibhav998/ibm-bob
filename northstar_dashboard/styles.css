@@ -1994,7 +1994,7 @@ body {
     transition: 0.25s;
   }
   .sidebar.open {
-    transform: none;
+    transform: translateX(0);
   }
   .main {
     margin-left: 0;
